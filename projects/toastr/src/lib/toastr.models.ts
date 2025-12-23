@@ -15,6 +15,43 @@ export type ToastPosition =
   | 'bottom-center';
 
 /**
+ * Predefined theme options
+ */
+export type ToastTheme = 'default' | 'dark' | 'light' | 'minimal' | 'outline' | 'gradient' | 'custom';
+
+/**
+ * Custom theme colors for each toast type
+ */
+export interface ToastThemeColors {
+  /** Success toast colors */
+  success?: ToastColorConfig;
+  /** Error toast colors */
+  error?: ToastColorConfig;
+  /** Warning toast colors */
+  warning?: ToastColorConfig;
+  /** Info toast colors */
+  info?: ToastColorConfig;
+}
+
+/**
+ * Color configuration for a toast type
+ */
+export interface ToastColorConfig {
+  /** Background color or gradient */
+  background?: string;
+  /** Text color */
+  textColor?: string;
+  /** Icon color */
+  iconColor?: string;
+  /** Progress bar background color */
+  progressBackground?: string;
+  /** Progress bar fill color */
+  progressColor?: string;
+  /** Border color (for outline theme) */
+  borderColor?: string;
+}
+
+/**
  * Configuration options for individual toast notifications
  */
 export interface ToastOptions {
@@ -32,6 +69,8 @@ export interface ToastOptions {
   customClass?: string;
   /** Toast position override */
   position?: ToastPosition;
+  /** Theme for the toast */
+  theme?: ToastTheme;
 }
 
 /**

@@ -10,7 +10,8 @@ import {
   inject,
   DestroyRef,
 } from '@angular/core';
-import { Toast } from './toastr.models';
+import { Toast, ToastTheme, ToastColorConfig } from './toastr.models';
+import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config';
 
 @Component({
   selector: 'pui-toast',
@@ -20,6 +21,7 @@ import { Toast } from './toastr.models';
       class="pui-toast"
       [class]="toastClasses()"
       [class.pui-toast-paused]="isPaused()"
+      [style]="toastStyles()"
       (click)="onClick()"
       (mouseenter)="onMouseEnter()"
       (mouseleave)="onMouseLeave()"
@@ -95,6 +97,11 @@ import { Toast } from './toastr.models';
       min-width: 300px;
       max-width: 400px;
       backdrop-filter: blur(8px);
+
+      /* CSS Custom Properties for theming */
+      background: var(--pui-toast-bg);
+      color: var(--pui-toast-text);
+      border: 2px solid var(--pui-toast-border, transparent);
     }
 
     .pui-toast:hover {
@@ -113,24 +120,187 @@ import { Toast } from './toastr.models';
       }
     }
 
+    /* Default theme styles (fallback) */
     .pui-toast-success {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
+      --pui-toast-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --pui-toast-text: white;
+      --pui-toast-icon: white;
+      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
+      --pui-toast-progress: rgba(255, 255, 255, 0.7);
     }
 
     .pui-toast-error {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      color: white;
+      --pui-toast-bg: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      --pui-toast-text: white;
+      --pui-toast-icon: white;
+      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
+      --pui-toast-progress: rgba(255, 255, 255, 0.7);
     }
 
     .pui-toast-warning {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: white;
+      --pui-toast-bg: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --pui-toast-text: white;
+      --pui-toast-icon: white;
+      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
+      --pui-toast-progress: rgba(255, 255, 255, 0.7);
     }
 
     .pui-toast-info {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      color: white;
+      --pui-toast-bg: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      --pui-toast-text: white;
+      --pui-toast-icon: white;
+      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
+      --pui-toast-progress: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Dark theme */
+    .pui-toast-theme-dark.pui-toast-success {
+      --pui-toast-bg: #1e293b;
+      --pui-toast-text: #10b981;
+      --pui-toast-icon: #10b981;
+      --pui-toast-border: #10b981;
+      --pui-toast-progress-bg: rgba(16, 185, 129, 0.2);
+      --pui-toast-progress: #10b981;
+    }
+
+    .pui-toast-theme-dark.pui-toast-error {
+      --pui-toast-bg: #1e293b;
+      --pui-toast-text: #ef4444;
+      --pui-toast-icon: #ef4444;
+      --pui-toast-border: #ef4444;
+      --pui-toast-progress-bg: rgba(239, 68, 68, 0.2);
+      --pui-toast-progress: #ef4444;
+    }
+
+    .pui-toast-theme-dark.pui-toast-warning {
+      --pui-toast-bg: #1e293b;
+      --pui-toast-text: #f59e0b;
+      --pui-toast-icon: #f59e0b;
+      --pui-toast-border: #f59e0b;
+      --pui-toast-progress-bg: rgba(245, 158, 11, 0.2);
+      --pui-toast-progress: #f59e0b;
+    }
+
+    .pui-toast-theme-dark.pui-toast-info {
+      --pui-toast-bg: #1e293b;
+      --pui-toast-text: #3b82f6;
+      --pui-toast-icon: #3b82f6;
+      --pui-toast-border: #3b82f6;
+      --pui-toast-progress-bg: rgba(59, 130, 246, 0.2);
+      --pui-toast-progress: #3b82f6;
+    }
+
+    /* Light theme */
+    .pui-toast-theme-light.pui-toast-success {
+      --pui-toast-bg: #ecfdf5;
+      --pui-toast-text: #065f46;
+      --pui-toast-icon: #10b981;
+      --pui-toast-border: #a7f3d0;
+      --pui-toast-progress-bg: rgba(16, 185, 129, 0.2);
+      --pui-toast-progress: #10b981;
+    }
+
+    .pui-toast-theme-light.pui-toast-error {
+      --pui-toast-bg: #fef2f2;
+      --pui-toast-text: #991b1b;
+      --pui-toast-icon: #ef4444;
+      --pui-toast-border: #fecaca;
+      --pui-toast-progress-bg: rgba(239, 68, 68, 0.2);
+      --pui-toast-progress: #ef4444;
+    }
+
+    .pui-toast-theme-light.pui-toast-warning {
+      --pui-toast-bg: #fffbeb;
+      --pui-toast-text: #92400e;
+      --pui-toast-icon: #f59e0b;
+      --pui-toast-border: #fde68a;
+      --pui-toast-progress-bg: rgba(245, 158, 11, 0.2);
+      --pui-toast-progress: #f59e0b;
+    }
+
+    .pui-toast-theme-light.pui-toast-info {
+      --pui-toast-bg: #eff6ff;
+      --pui-toast-text: #1e40af;
+      --pui-toast-icon: #3b82f6;
+      --pui-toast-border: #bfdbfe;
+      --pui-toast-progress-bg: rgba(59, 130, 246, 0.2);
+      --pui-toast-progress: #3b82f6;
+    }
+
+    /* Minimal theme */
+    .pui-toast-theme-minimal.pui-toast-success,
+    .pui-toast-theme-minimal.pui-toast-error,
+    .pui-toast-theme-minimal.pui-toast-warning,
+    .pui-toast-theme-minimal.pui-toast-info {
+      --pui-toast-bg: #ffffff;
+      --pui-toast-text: #374151;
+      --pui-toast-border: #e5e7eb;
+    }
+
+    .pui-toast-theme-minimal.pui-toast-success {
+      --pui-toast-icon: #10b981;
+      --pui-toast-progress-bg: rgba(16, 185, 129, 0.1);
+      --pui-toast-progress: #10b981;
+    }
+
+    .pui-toast-theme-minimal.pui-toast-error {
+      --pui-toast-icon: #ef4444;
+      --pui-toast-progress-bg: rgba(239, 68, 68, 0.1);
+      --pui-toast-progress: #ef4444;
+    }
+
+    .pui-toast-theme-minimal.pui-toast-warning {
+      --pui-toast-icon: #f59e0b;
+      --pui-toast-progress-bg: rgba(245, 158, 11, 0.1);
+      --pui-toast-progress: #f59e0b;
+    }
+
+    .pui-toast-theme-minimal.pui-toast-info {
+      --pui-toast-icon: #3b82f6;
+      --pui-toast-progress-bg: rgba(59, 130, 246, 0.1);
+      --pui-toast-progress: #3b82f6;
+    }
+
+    /* Outline theme */
+    .pui-toast-theme-outline.pui-toast-success,
+    .pui-toast-theme-outline.pui-toast-error,
+    .pui-toast-theme-outline.pui-toast-warning,
+    .pui-toast-theme-outline.pui-toast-info {
+      --pui-toast-bg: transparent;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .pui-toast-theme-outline.pui-toast-success {
+      --pui-toast-text: #10b981;
+      --pui-toast-icon: #10b981;
+      --pui-toast-border: #10b981;
+      --pui-toast-progress-bg: rgba(16, 185, 129, 0.1);
+      --pui-toast-progress: #10b981;
+    }
+
+    .pui-toast-theme-outline.pui-toast-error {
+      --pui-toast-text: #ef4444;
+      --pui-toast-icon: #ef4444;
+      --pui-toast-border: #ef4444;
+      --pui-toast-progress-bg: rgba(239, 68, 68, 0.1);
+      --pui-toast-progress: #ef4444;
+    }
+
+    .pui-toast-theme-outline.pui-toast-warning {
+      --pui-toast-text: #f59e0b;
+      --pui-toast-icon: #f59e0b;
+      --pui-toast-border: #f59e0b;
+      --pui-toast-progress-bg: rgba(245, 158, 11, 0.1);
+      --pui-toast-progress: #f59e0b;
+    }
+
+    .pui-toast-theme-outline.pui-toast-info {
+      --pui-toast-text: #3b82f6;
+      --pui-toast-icon: #3b82f6;
+      --pui-toast-border: #3b82f6;
+      --pui-toast-progress-bg: rgba(59, 130, 246, 0.1);
+      --pui-toast-progress: #3b82f6;
     }
 
     .pui-toast-icon {
@@ -139,6 +309,7 @@ import { Toast } from './toastr.models';
       height: 24px;
       margin-right: 12px;
       opacity: 0.9;
+      color: var(--pui-toast-icon, currentColor);
     }
 
     .pui-toast-icon svg {
@@ -196,12 +367,12 @@ import { Toast } from './toastr.models';
       left: 0;
       right: 0;
       height: 4px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--pui-toast-progress-bg, rgba(255, 255, 255, 0.2));
     }
 
     .pui-toast-progress-bar {
       height: 100%;
-      background: rgba(255, 255, 255, 0.7);
+      background: var(--pui-toast-progress, rgba(255, 255, 255, 0.7));
       transition: width 0.1s linear;
     }
 
@@ -212,6 +383,7 @@ import { Toast } from './toastr.models';
 })
 export class ToastrComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
+  private config = inject(TOASTR_CONFIG, { optional: true }) as ToastrConfig | null;
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private startTime = 0;
   private remainingTime = 0;
@@ -229,12 +401,50 @@ export class ToastrComponent implements OnInit, OnDestroy {
 
   readonly toastClasses = computed(() => {
     const t = this.toast();
-    const classes = [`pui-toast-${t.type}`];
+    const theme = t.options.theme || this.config?.theme || 'default';
+    const classes = [`pui-toast-${t.type}`, `pui-toast-theme-${theme}`];
     if (t.options.customClass) {
       classes.push(t.options.customClass);
     }
     return classes.join(' ');
   });
+
+  readonly toastStyles = computed(() => {
+    const t = this.toast();
+    const theme = t.options.theme || this.config?.theme || 'default';
+    const colors = this.getThemeColors(theme, t.type);
+
+    const styles: Record<string, string> = {};
+
+    if (colors.background) {
+      styles['--pui-toast-bg'] = colors.background;
+    }
+    if (colors.textColor) {
+      styles['--pui-toast-text'] = colors.textColor;
+    }
+    if (colors.iconColor) {
+      styles['--pui-toast-icon'] = colors.iconColor;
+    }
+    if (colors.progressBackground) {
+      styles['--pui-toast-progress-bg'] = colors.progressBackground;
+    }
+    if (colors.progressColor) {
+      styles['--pui-toast-progress'] = colors.progressColor;
+    }
+    if (colors.borderColor) {
+      styles['--pui-toast-border'] = colors.borderColor;
+    }
+
+    return styles;
+  });
+
+  private getThemeColors(theme: ToastTheme, type: string): ToastColorConfig {
+    if (theme === 'custom' && this.config?.customThemeColors) {
+      return (this.config.customThemeColors as Record<string, ToastColorConfig>)[type] || {};
+    }
+    const themeColors = TOAST_THEME_COLORS[theme as Exclude<ToastTheme, 'custom'>];
+    return (themeColors as Record<string, ToastColorConfig>)?.[type] || {};
+  }
 
   ngOnInit(): void {
     const t = this.toast();

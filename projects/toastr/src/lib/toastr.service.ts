@@ -17,7 +17,7 @@ export class ToastrService {
   private readonly injector = inject(EnvironmentInjector);
   private readonly userConfig = inject(TOASTR_CONFIG, { optional: true });
 
-  private config: Required<ToastrConfig>;
+  private config: Required<Omit<ToastrConfig, 'customThemeColors'>> & Pick<ToastrConfig, 'customThemeColors'>;
   private toasts: Toast[] = [];
   private toastId = 0;
   private containerRef: ComponentRef<ToastrContainerComponent> | null = null;
@@ -77,6 +77,7 @@ export class ToastrService {
       pauseOnHover: options?.pauseOnHover ?? this.config.pauseOnHover,
       customClass: options?.customClass ?? this.config.customClass,
       position: options?.position ?? this.config.position,
+      theme: options?.theme ?? this.config.theme ?? 'default',
     };
 
     // Check for duplicates
