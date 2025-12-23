@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee99fa3a-8832-4a28-bceb-e2184bddeffc" name="Changes" comment="Add theming support to Toastr library and update demo app&#10;&#10;- Added support for built-in themes (`default`, `dark`, `light`, `minimal`, `outline`, and `gradient`)  &#10;- Added custom theming option via `ToastThemeColors`  &#10;- Updated demo app to showcase theme selection functionality  &#10;- Refactored toast styling to use CSS variables for dynamic theming  &#10;- Enhanced Toastr configuration to include global and per-toast theme options">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/publish.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/toastr/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/toastr/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/projects/toastr/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/toastr/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/projects/toastr/package.json" afterDir="false" />
+    <list default="true" id="ee99fa3a-8832-4a28-bceb-e2184bddeffc" name="Changes" comment="Add changelog, version bump to 1.1.0, and badges to Toastr README&#10;&#10;- Added changelog to document notable changes&#10;- Updated package version to `1.1.0` in `package.json`&#10;- Enhanced Toastr `README.md` with npm version and license badges&#10;- Improved documentation with new theming options and API updates">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/publish.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +92,7 @@
       <updated>1766470665000</updated>
       <workItem from="1766470666196" duration="1917000" />
       <workItem from="1766472761592" duration="3135000" />
-      <workItem from="1766476293392" duration="3389000" />
+      <workItem from="1766476293392" duration="3873000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore">
       <option name="closed" value="true" />
@@ -123,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766477561085</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add changelog, version bump to 1.1.0, and badges to Toastr README&#10;&#10;- Added changelog to document notable changes&#10;- Updated package version to `1.1.0` in `package.json`&#10;- Enhanced Toastr `README.md` with npm version and license badges&#10;- Improved documentation with new theming options and API updates">
+      <option name="closed" value="true" />
+      <created>1766479770977</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1766479770977</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,11 +137,23 @@
       </list>
     </option>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore" />
     <MESSAGE value="refactor the folder structure" />
     <MESSAGE value="Add theming support to Toastr library and update demo app&#10;&#10;- Added support for built-in themes (`default`, `dark`, `light`, `minimal`, `outline`, and `gradient`)  &#10;- Added custom theming option via `ToastThemeColors`  &#10;- Updated demo app to showcase theme selection functionality  &#10;- Refactored toast styling to use CSS variables for dynamic theming  &#10;- Enhanced Toastr configuration to include global and per-toast theme options" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add theming support to Toastr library and update demo app&#10;&#10;- Added support for built-in themes (`default`, `dark`, `light`, `minimal`, `outline`, and `gradient`)  &#10;- Added custom theming option via `ToastThemeColors`  &#10;- Updated demo app to showcase theme selection functionality  &#10;- Refactored toast styling to use CSS variables for dynamic theming  &#10;- Enhanced Toastr configuration to include global and per-toast theme options" />
+    <MESSAGE value="Add changelog, version bump to 1.1.0, and badges to Toastr README&#10;&#10;- Added changelog to document notable changes&#10;- Updated package version to `1.1.0` in `package.json`&#10;- Enhanced Toastr `README.md` with npm version and license badges&#10;- Improved documentation with new theming options and API updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add changelog, version bump to 1.1.0, and badges to Toastr README&#10;&#10;- Added changelog to document notable changes&#10;- Updated package version to `1.1.0` in `package.json`&#10;- Enhanced Toastr `README.md` with npm version and license badges&#10;- Improved documentation with new theming options and API updates" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

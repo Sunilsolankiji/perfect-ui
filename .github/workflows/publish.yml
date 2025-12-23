@@ -42,7 +42,7 @@ jobs:
       - name: Publish to npm
         run: |
           cd dist/toastr
-          npm publish --provenance --access public
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
