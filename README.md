@@ -1,59 +1,98 @@
-# ToastrWorkspace
+# Perfect UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+A collection of modern, customizable UI components for Angular 19+.
 
-## Development server
+## Packages
 
-To start a local development server, run:
+| Package | Description | Version |
+|---------|-------------|---------|
+| [@perfectui/toastr](./projects/toastr) | Modern toast notification library | 1.1.0 |
 
-```bash
-ng serve
+## Workspace Structure
+
+```
+perfect-ui/
+├── projects/
+│   ├── demo/          # Demo application
+│   └── toastr/        # Toast notification library
+└── ...
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
+### Prerequisites
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js 18+
+- Angular CLI 19+
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installation
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+### Development
 
-To build the project run:
+Start the demo application:
 
 ```bash
-ng build
+ng serve demo
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open your browser and navigate to `http://localhost:4200/`.
 
-## Running unit tests
+### Building Libraries
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Build the toastr library:
+
+```bash
+ng build @perfectui/toastr
+```
+
+Build for production:
+
+```bash
+ng build @perfectui/toastr --configuration production
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+## Running Tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Publishing
 
-For end-to-end (e2e) testing, run:
+The project uses GitHub Actions for automated publishing to npm.
 
-```bash
-ng e2e
-```
+### Automatic Publishing
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Publishing is triggered automatically when a new GitHub release is created.
 
-## Additional Resources
+### Manual Publishing
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+You can also trigger the publish workflow manually from the GitHub Actions tab.
+
+### Setup
+
+To enable publishing, add the `NPM_TOKEN` secret to your GitHub repository:
+
+1. Generate an npm access token at [npmjs.com](https://www.npmjs.com/settings/~/tokens)
+2. Go to your repository **Settings** → **Secrets and variables** → **Actions**
+3. Add a new secret named `NPM_TOKEN` with your npm token
+
+## Packages Documentation
+
+- **[@perfectui/toastr](./projects/toastr/README.md)** - A modern, customizable toast notification library featuring:
+  - ✨ Beautiful design with gradients and themes
+  - 📍 Multiple position options
+  - ⏱️ Configurable duration and auto-dismiss
+  - 📊 Progress bar with pause on hover
+  - ♿ Accessible (ARIA support)
+  - 🚫 Duplicate prevention
+
+## License
+
+MIT
