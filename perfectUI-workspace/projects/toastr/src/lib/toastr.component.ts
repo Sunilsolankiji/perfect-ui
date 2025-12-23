@@ -1,0 +1,322 @@
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  signal,
+  computed,
+  effect,
+  inject,
+  DestroyRef,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Toast } from './toastr.models';
+
+@Component({
+  selector: 'pui-toast',
+  standalone: true,
+  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div
+      class="pui-toast"
+      [class]="toastClasses()"
+      [class.pui-toast-paused]="isPaused()"
+      (click)="onClick()"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()"
+      role="alert"
+      aria-live="polite"
+    >
+      <div class="pui-toast-icon">
+        @switch (toast.type) {
+          @case ('success') {
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          }
+          @case ('error') {
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          }
+          @case ('warning') {
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+            </svg>
+          }
+          @case ('info') {
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+          }
+        }
+      </div>
+
+      <div class="pui-toast-content">
+        @if (toast.title) {
+          <div class="pui-toast-title">{{ toast.title }}</div>
+        }
+        <div class="pui-toast-message">{{ toast.message }}</div>
+      </div>
+
+      @if (toast.options.showCloseButton) {
+        <button
+          class="pui-toast-close"
+          (click)="onClose($event)"
+          aria-label="Close notification"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      }
+
+      @if (toast.options.showProgressBar && toast.options.duration > 0) {
+        <div class="pui-toast-progress">
+          <div
+            class="pui-toast-progress-bar"
+            [style.width.%]="progress()"
+          ></div>
+        </div>
+      }
+    </div>
+  `,
+  styles: [`
+    .pui-toast {
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      animation: pui-toast-slide-in 0.3s ease forwards;
+      min-width: 300px;
+      max-width: 400px;
+      backdrop-filter: blur(8px);
+    }
+
+    .pui-toast:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    @keyframes pui-toast-slide-in {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .pui-toast-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+    }
+
+    .pui-toast-error {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+    }
+
+    .pui-toast-warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+    }
+
+    .pui-toast-info {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+    }
+
+    .pui-toast-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+      opacity: 0.9;
+    }
+
+    .pui-toast-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .pui-toast-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pui-toast-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .pui-toast-message {
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.95;
+      word-wrap: break-word;
+    }
+
+    .pui-toast-close {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin-left: 12px;
+      border: none;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .pui-toast-close:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .pui-toast-close svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .pui-toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .pui-toast-progress-bar {
+      height: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      transition: width 0.1s linear;
+    }
+
+    .pui-toast-paused .pui-toast-progress-bar {
+      animation-play-state: paused;
+    }
+  `]
+})
+export class ToastrComponent implements OnInit, OnDestroy {
+  private destroyRef = inject(DestroyRef);
+  private intervalId: ReturnType<typeof setInterval> | null = null;
+  private startTime = 0;
+  private remainingTime = 0;
+
+  @Input({ required: true }) toast!: Toast;
+  @Output() toastClick = new EventEmitter<Toast>();
+  @Output() toastClose = new EventEmitter<Toast>();
+  @Output() toastTimeout = new EventEmitter<Toast>();
+
+  readonly progress = signal(100);
+  readonly isPaused = signal(false);
+
+  readonly toastClasses = computed(() => {
+    const classes = [`pui-toast-${this.toast.type}`];
+    if (this.toast.options.customClass) {
+      classes.push(this.toast.options.customClass);
+    }
+    return classes.join(' ');
+  });
+
+  ngOnInit(): void {
+    if (this.toast.options.duration > 0) {
+      this.startTimer();
+    }
+
+    this.destroyRef.onDestroy(() => {
+      this.clearTimer();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.clearTimer();
+  }
+
+  onClick(): void {
+    this.toastClick.emit(this.toast);
+  }
+
+  onClose(event: Event): void {
+    event.stopPropagation();
+    this.toastClose.emit(this.toast);
+  }
+
+  onMouseEnter(): void {
+    if (this.toast.options.pauseOnHover && this.toast.options.duration > 0) {
+      this.pauseTimer();
+    }
+  }
+
+  onMouseLeave(): void {
+    if (this.toast.options.pauseOnHover && this.toast.options.duration > 0) {
+      this.resumeTimer();
+    }
+  }
+
+  private startTimer(): void {
+    this.startTime = Date.now();
+    this.remainingTime = this.toast.options.duration;
+    this.runTimer();
+  }
+
+  private runTimer(): void {
+    this.clearTimer();
+
+    const updateInterval = 50; // Update every 50ms for smooth progress
+
+    this.intervalId = setInterval(() => {
+      if (this.isPaused()) {
+        return;
+      }
+
+      const elapsed = Date.now() - this.startTime;
+      const remaining = this.remainingTime - elapsed;
+
+      if (remaining <= 0) {
+        this.progress.set(0);
+        this.clearTimer();
+        this.toastTimeout.emit(this.toast);
+      } else {
+        const progressPercent = (remaining / this.toast.options.duration) * 100;
+        this.progress.set(progressPercent);
+      }
+    }, updateInterval);
+  }
+
+  private pauseTimer(): void {
+    this.isPaused.set(true);
+    this.remainingTime = this.remainingTime - (Date.now() - this.startTime);
+  }
+
+  private resumeTimer(): void {
+    this.isPaused.set(false);
+    this.startTime = Date.now();
+  }
+
+  private clearTimer(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+}
+
