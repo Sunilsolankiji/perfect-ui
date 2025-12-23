@@ -1,6 +1,27 @@
 {
-  "name": "@perfectUI/toastr",
+  "name": "@perfectui/toastr",
   "version": "1.0.0",
+  "description": "A modern, customizable toast notification library for Angular 19+",
+  "author": "perfectUI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/perfectui/toastr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/perfectui/toastr/issues"
+  },
+  "homepage": "https://github.com/perfectui/toastr#readme",
+  "keywords": [
+    "angular",
+    "toastr",
+    "toast",
+    "notification",
+    "notifications",
+    "alert",
+    "angular19",
+    "perfectui"
+  ],
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0"

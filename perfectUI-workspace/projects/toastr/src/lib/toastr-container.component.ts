@@ -1,23 +1,20 @@
 import {
   Component,
-  Input,
+  input,
   ChangeDetectionStrategy,
   inject,
-  ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Toast, ToastPosition } from './toastr.models';
 import { ToastrComponent } from './toastr.component';
 import { ToastrService } from './toastr.service';
 
 @Component({
   selector: 'pui-toastr-container',
-  standalone: true,
-  imports: [CommonModule, ToastrComponent],
+  imports: [ToastrComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="pui-toastr-container" [class]="'pui-toastr-' + position">
-      @for (toast of toasts; track toast.id) {
+    <div class="pui-toastr-container" [class]="'pui-toastr-' + position()">
+      @for (toast of toasts(); track toast.id) {
         <pui-toast
           [toast]="toast"
           (toastClick)="onToastClick(toast)"
@@ -100,30 +97,10 @@ import { ToastrService } from './toastr.service';
 })
 export class ToastrContainerComponent {
   private toastrService = inject(ToastrService);
-  private cdr = inject(ChangeDetectorRef);
 
-  private _toasts: Toast[] = [];
-  private _position: ToastPosition = 'top-right';
-
-  @Input()
-  set toasts(value: Toast[]) {
-    this._toasts = value;
-    this.cdr.markForCheck();
-  }
-
-  get toasts(): Toast[] {
-    return this._toasts;
-  }
-
-  @Input()
-  set position(value: ToastPosition) {
-    this._position = value;
-    this.cdr.markForCheck();
-  }
-
-  get position(): ToastPosition {
-    return this._position;
-  }
+  // Signal-based inputs (Angular 19+)
+  readonly toasts = input<Toast[]>([]);
+  readonly position = input<ToastPosition>('top-right');
 
   onToastClick(toast: Toast): void {
     this.toastrService.handleClick(toast);

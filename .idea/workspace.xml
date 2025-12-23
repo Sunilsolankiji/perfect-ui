@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee99fa3a-8832-4a28-bceb-e2184bddeffc" name="Changes" comment="" />
+    <list default="true" id="ee99fa3a-8832-4a28-bceb-e2184bddeffc" name="Changes" comment="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore">
+      <change afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/demo/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/demo/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/demo/src/app/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/demo/src/app/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/ng-package.json" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/ng-package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr-container.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr-container.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/projects/toastr/src/lib/toastr.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perfectUI-workspace/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/perfectUI-workspace/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +30,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Sunilsolankiji"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Sunilsolankiji/perfect-ui.git",
@@ -26,6 +45,9 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -79,12 +101,30 @@
       <option name="presentableId" value="Default" />
       <updated>1766470665000</updated>
       <workItem from="1766470666196" duration="1917000" />
-      <workItem from="1766472761592" duration="757000" />
+      <workItem from="1766472761592" duration="3135000" />
     </task>
+    <task id="LOCAL-00001" summary="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore">
+      <option name="closed" value="true" />
+      <created>1766473640699</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766473640699</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="additionalRoots">
+      <list>
+        <option value="$PROJECT_DIR$/perfectUI-workspace/dist/toastr" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial setup for Angular workspace and Toastr library with a demo app&#10;&#10;- Configured an Angular workspace for `perfectUI`&#10;- Created a new library `@perfectUI/toastr` with peer dependencies&#10;- Added a demo application showcasing ngx-toastr features&#10;- Includes configurations for ESLint, Prettier, .editorconfig, and .gitignore" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideToastr } from '@perfectUI/toastr';
+import { provideToastr } from '@perfectui/toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [

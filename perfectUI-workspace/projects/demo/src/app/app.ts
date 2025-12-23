@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ToastrService } from '@perfectUI/toastr';
+import { ToastrService } from '@perfectui/toastr';
 
 @Component({
   selector: 'app-root',

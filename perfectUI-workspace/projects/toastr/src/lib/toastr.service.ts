@@ -1,4 +1,4 @@
-import { Injectable, inject, ApplicationRef, createComponent, EnvironmentInjector } from '@angular/core';
+import { Injectable, inject, ApplicationRef, createComponent, EnvironmentInjector, ComponentRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Subject, Observable } from 'rxjs';
 import { Toast, ToastType, ToastOptions, ToastEvent } from './toastr.models';
@@ -20,8 +20,7 @@ export class ToastrService {
   private config: Required<ToastrConfig>;
   private toasts: Toast[] = [];
   private toastId = 0;
-  private containerRef: any = null;
-  private container: ToastrContainerComponent | null = null;
+  private containerRef: ComponentRef<ToastrContainerComponent> | null = null;
 
   private readonly toastsSubject = new Subject<Toast[]>();
   private readonly eventsSubject = new Subject<ToastEvent>();
@@ -214,15 +213,14 @@ export class ToastrService {
       hostElement: containerElement,
     });
 
-    this.container = this.containerRef.instance;
     this.appRef.attachView(this.containerRef.hostView);
   }
 
   private emitToasts(): void {
     this.toastsSubject.next([...this.toasts]);
-    if (this.container) {
-      this.container.toasts = [...this.toasts];
-      this.container.position = this.config.position;
+    if (this.containerRef) {
+      this.containerRef.setInput('toasts', [...this.toasts]);
+      this.containerRef.setInput('position', this.config.position);
     }
   }
 }

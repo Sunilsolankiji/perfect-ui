@@ -112,7 +112,7 @@ export class AppComponent {
 Subscribe to toast events:
 
 ```typescript
-import { ToastrService } from '@perfectUI/toastr';
+import { ToastrService } from '@perfectui/toastr';
 
 constructor() {
   const toastr = inject(ToastrService);

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@perfectUI/toastr": [
+      "@perfectui/toastr": [
         "dist/toastr"
       ]
     },

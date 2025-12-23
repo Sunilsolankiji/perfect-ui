@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "toastr": {
+    "@perfectui/toastr": {
       "projectType": "library",
       "root": "projects/toastr",
       "sourceRoot": "projects/toastr/src",

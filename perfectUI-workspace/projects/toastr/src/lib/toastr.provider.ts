@@ -7,7 +7,7 @@ import { ToastrConfig, TOASTR_CONFIG, DEFAULT_TOASTR_CONFIG } from './toastr.con
  * @example
  * ```typescript
  * // In your app.config.ts
- * import { provideToastr } from '@perfectUI/toastr';
+ * import { provideToastr } from '@perfectui/toastr';
  *
  * export const appConfig = {
  *   providers: [

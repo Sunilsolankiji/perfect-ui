@@ -1,24 +1,19 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
+  input,
+  output,
   OnInit,
   OnDestroy,
   ChangeDetectionStrategy,
   signal,
   computed,
-  effect,
   inject,
   DestroyRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Toast } from './toastr.models';
 
 @Component({
   selector: 'pui-toast',
-  standalone: true,
-  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -32,7 +27,7 @@ import { Toast } from './toastr.models';
       aria-live="polite"
     >
       <div class="pui-toast-icon">
-        @switch (toast.type) {
+        @switch (toast().type) {
           @case ('success') {
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -57,13 +52,13 @@ import { Toast } from './toastr.models';
       </div>
 
       <div class="pui-toast-content">
-        @if (toast.title) {
-          <div class="pui-toast-title">{{ toast.title }}</div>
+        @if (toast().title) {
+          <div class="pui-toast-title">{{ toast().title }}</div>
         }
-        <div class="pui-toast-message">{{ toast.message }}</div>
+        <div class="pui-toast-message">{{ toast().message }}</div>
       </div>
 
-      @if (toast.options.showCloseButton) {
+      @if (toast().options.showCloseButton) {
         <button
           class="pui-toast-close"
           (click)="onClose($event)"
@@ -75,7 +70,7 @@ import { Toast } from './toastr.models';
         </button>
       }
 
-      @if (toast.options.showProgressBar && toast.options.duration > 0) {
+      @if (toast().options.showProgressBar && toast().options.duration > 0) {
         <div class="pui-toast-progress">
           <div
             class="pui-toast-progress-bar"
@@ -221,24 +216,29 @@ export class ToastrComponent implements OnInit, OnDestroy {
   private startTime = 0;
   private remainingTime = 0;
 
-  @Input({ required: true }) toast!: Toast;
-  @Output() toastClick = new EventEmitter<Toast>();
-  @Output() toastClose = new EventEmitter<Toast>();
-  @Output() toastTimeout = new EventEmitter<Toast>();
+  // Signal-based input (Angular 19+)
+  readonly toast = input.required<Toast>();
+
+  // Signal-based outputs (Angular 19+)
+  readonly toastClick = output<Toast>();
+  readonly toastClose = output<Toast>();
+  readonly toastTimeout = output<Toast>();
 
   readonly progress = signal(100);
   readonly isPaused = signal(false);
 
   readonly toastClasses = computed(() => {
-    const classes = [`pui-toast-${this.toast.type}`];
-    if (this.toast.options.customClass) {
-      classes.push(this.toast.options.customClass);
+    const t = this.toast();
+    const classes = [`pui-toast-${t.type}`];
+    if (t.options.customClass) {
+      classes.push(t.options.customClass);
     }
     return classes.join(' ');
   });
 
   ngOnInit(): void {
-    if (this.toast.options.duration > 0) {
+    const t = this.toast();
+    if (t.options.duration > 0) {
       this.startTimer();
     }
 
@@ -252,29 +252,31 @@ export class ToastrComponent implements OnInit, OnDestroy {
   }
 
   onClick(): void {
-    this.toastClick.emit(this.toast);
+    this.toastClick.emit(this.toast());
   }
 
   onClose(event: Event): void {
     event.stopPropagation();
-    this.toastClose.emit(this.toast);
+    this.toastClose.emit(this.toast());
   }
 
   onMouseEnter(): void {
-    if (this.toast.options.pauseOnHover && this.toast.options.duration > 0) {
+    const t = this.toast();
+    if (t.options.pauseOnHover && t.options.duration > 0) {
       this.pauseTimer();
     }
   }
 
   onMouseLeave(): void {
-    if (this.toast.options.pauseOnHover && this.toast.options.duration > 0) {
+    const t = this.toast();
+    if (t.options.pauseOnHover && t.options.duration > 0) {
       this.resumeTimer();
     }
   }
 
   private startTimer(): void {
     this.startTime = Date.now();
-    this.remainingTime = this.toast.options.duration;
+    this.remainingTime = this.toast().options.duration;
     this.runTimer();
   }
 
@@ -294,9 +296,9 @@ export class ToastrComponent implements OnInit, OnDestroy {
       if (remaining <= 0) {
         this.progress.set(0);
         this.clearTimer();
-        this.toastTimeout.emit(this.toast);
+        this.toastTimeout.emit(this.toast());
       } else {
-        const progressPercent = (remaining / this.toast.options.duration) * 100;
+        const progressPercent = (remaining / this.toast().options.duration) * 100;
         this.progress.set(progressPercent);
       }
     }, updateInterval);
@@ -304,7 +306,7 @@ export class ToastrComponent implements OnInit, OnDestroy {
 
   private pauseTimer(): void {
     this.isPaused.set(true);
-    this.remainingTime = this.remainingTime - (Date.now() - this.startTime);
+    this.remainingTime -= Date.now() - this.startTime;
   }
 
   private resumeTimer(): void {
