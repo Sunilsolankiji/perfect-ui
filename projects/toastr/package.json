@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/perfectui/toastr.git"
+    "url": "https://github.com/Sunilsolankiji/perfect-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/perfectui/toastr/issues"
+    "url": "https://github.com/Sunilsolankiji/perfect-ui/issues"
   },
-  "homepage": "https://github.com/perfectui/toastr#readme",
+  "homepage": "https://github.com/Sunilsolankiji/perfect-ui/tree/main/projects/toastr#readme",
   "keywords": [
     "angular",
     "toastr",
