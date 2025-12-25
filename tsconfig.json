@@ -8,6 +8,9 @@
       ],
       "@perfectui/dialog": [
         "dist/dialog"
+      ],
+      "@perfectui/core": [
+        "dist/core"
       ]
     },
     "strict": true,
@@ -32,6 +35,12 @@
   "references": [
     {
       "path": "./projects/demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/core/tsconfig.spec.json"
     }
   ]
 }
