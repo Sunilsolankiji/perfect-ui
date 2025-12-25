@@ -13,6 +13,10 @@ export const routes: Routes = [
   {
     path: 'dialog',
     loadComponent: () => import('./pages/dialog-demo/dialog-demo').then(m => m.DialogDemo)
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFoundComponent)
   }
 ];
 
