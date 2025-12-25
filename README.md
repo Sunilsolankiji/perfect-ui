@@ -116,6 +116,12 @@ perfect-ui/
 
 Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details.
 
+## Documentation
+
+- [Development Guide](./docs/DEVELOPMENT.md) - How to create new components
+- [Release Process](./docs/RELEASE.md) - How to release new versions
+- [Roadmap](./ROADMAP.md) - Planned features and components
+
 ## License
 
 MIT © [PerfectUI](https://github.com/sunilsolankiji)
