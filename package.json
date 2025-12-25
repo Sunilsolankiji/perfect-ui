@@ -1,12 +1,19 @@
 {
-  "name": "perfectUI-workspace",
+  "name": "perfect-ui-workspace",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng build @perfectui/toastr && ng build @perfectui/dialog && ng serve demo",
     "build": "ng build",
+    "build:toastr": "ng build @perfectui/toastr --configuration production",
+    "build:dialog": "ng build @perfectui/dialog --configuration production",
+    "build:libs": "ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production",
+    "build:demo": "ng build demo --configuration production",
+    "build:all": "npm run build:libs && npm run build:demo",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publish:toastr": "cd dist/toastr && npm publish --access public",
+    "publish:dialog": "cd dist/dialog && npm publish --access public"
   },
   "prettier": {
     "printWidth": 100,
