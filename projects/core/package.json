@@ -1,0 +1,39 @@
+{
+  "name": "@perfectui/core",
+  "version": "1.0.0",
+  "description": "Complete PerfectUI component library for Angular 19+ - includes all @perfectui packages",
+  "author": "PerfectUI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunilsolankiji/perfect-ui.git",
+    "directory": "projects/core"
+  },
+  "bugs": {
+    "url": "https://github.com/sunilsolankiji/perfect-ui/issues"
+  },
+  "homepage": "https://github.com/sunilsolankiji/perfect-ui#readme",
+  "keywords": [
+    "angular",
+    "ui",
+    "components",
+    "library",
+    "toastr",
+    "toast",
+    "dialog",
+    "modal",
+    "notification",
+    "angular19",
+    "standalone",
+    "accessible",
+    "a11y",
+    "perfectui"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@perfectui/toastr": "^1.0.0",
+    "@perfectui/dialog": "^1.0.0"
+  },
+  "sideEffects": false
+}

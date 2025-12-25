@@ -3,17 +3,20 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build @perfectui/toastr && ng build @perfectui/dialog && ng serve demo",
+    "start": "npm run build:libs && ng serve demo",
     "build": "ng build",
     "build:toastr": "ng build @perfectui/toastr --configuration production",
     "build:dialog": "ng build @perfectui/dialog --configuration production",
+    "build:core": "npm run build:libs && ng build core --configuration production",
     "build:libs": "ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production",
-    "build:demo": "ng build demo --configuration production",
-    "build:all": "npm run build:libs && npm run build:demo",
+    "build:demo": "npm run build:libs && ng build demo --configuration production",
+    "build:all": "npm run build:libs && npm run build:core && npm run build:demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "publish:toastr": "cd dist/toastr && npm publish --access public",
-    "publish:dialog": "cd dist/dialog && npm publish --access public"
+    "publish:dialog": "cd dist/dialog && npm publish --access public",
+    "publish:core": "cd dist/core && npm publish --access public",
+    "publish:all": "npm run publish:toastr && npm run publish:dialog && npm run publish:core"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,7 +47,9 @@
     "@angular/build": "^21.0.4",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.0.0",
+    "jsdom": "^27.1.0",
     "ng-packagr": "^21.0.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
   }
 }
