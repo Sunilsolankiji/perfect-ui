@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Build Toastr
-        run: npm run build -- @perfectui/toastr --configuration=production
+        run: npx ng build @perfectui/toastr --configuration production
 
       - name: Publish to NPM
         run: |
@@ -62,7 +62,7 @@ jobs:
         run: npm ci
 
       - name: Build Dialog
-        run: npm run build -- @perfectui/dialog --configuration=production
+        run: npx ng build @perfectui/dialog --configuration production
 
       - name: Publish to NPM
         run: |
