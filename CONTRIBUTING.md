@@ -36,6 +36,7 @@ Thank you for your interest in contributing to PerfectUI! 🎉
 ```
 perfect-ui/
 ├── projects/
+│   ├── core/            # @perfectui/core library (all-in-one)
 │   ├── toastr/          # @perfectui/toastr library
 │   ├── dialog/          # @perfectui/dialog library
 │   └── demo/            # Demo application
@@ -54,9 +55,13 @@ npm run build:libs
 # Build individual library
 npm run build:toastr
 npm run build:dialog
+npm run build:core
 
 # Build demo
 npm run build:demo
+
+# Build everything
+npm run build:all
 ```
 
 ### Running the Demo
@@ -69,8 +74,8 @@ The demo will be available at `http://localhost:4200`
 
 ### Testing Changes
 
-1. Make changes to a library in `projects/toastr/` or `projects/dialog/`
-2. Rebuild the library: `npm run build:toastr` or `npm run build:dialog`
+1. Make changes to a library in `projects/core/`, `projects/toastr/`, or `projects/dialog/`
+2. Rebuild the library: `npm run build:toastr`, `npm run build:dialog`, or `npm run build:core`
 3. The demo app will use the updated library from `dist/`
 
 ## Submitting Changes

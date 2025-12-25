@@ -10,6 +10,7 @@ assignees: ''
 A clear and concise description of the bug.
 
 ## Package
+- [ ] @perfectui/core
 - [ ] @perfectui/toastr
 - [ ] @perfectui/dialog
 
