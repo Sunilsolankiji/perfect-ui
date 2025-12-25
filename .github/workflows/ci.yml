@@ -37,7 +37,7 @@ jobs:
         run: npx ng build demo --configuration production
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: dist-node-${{ matrix.node-version }}
           path: dist/
