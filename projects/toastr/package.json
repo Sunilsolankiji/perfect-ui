@@ -1,6 +1,6 @@
 {
   "name": "@perfectui/toastr",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A modern, customizable toast notification library for Angular 19+",
   "author": "perfectUI",
   "license": "MIT",
