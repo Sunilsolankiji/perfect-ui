@@ -7,6 +7,7 @@ assignees: ''
 ---
 
 ## Package
+- [ ] @perfectui/core
 - [ ] @perfectui/toastr
 - [ ] @perfectui/dialog
 - [ ] New package

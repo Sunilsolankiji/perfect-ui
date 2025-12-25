@@ -48,6 +48,9 @@ jobs:
       - name: Build dialog library
         run: npx ng build @perfectui/dialog --configuration production
 
+      - name: Build core library
+        run: npx ng build core --configuration production
+
       - name: Build demo for GitHub Pages
         run: npx ng build demo --configuration production --base-href /perfect-ui/
 
