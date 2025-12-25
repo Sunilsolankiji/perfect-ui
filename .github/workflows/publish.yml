@@ -1,22 +1,24 @@
-name: Publish to npm
+name: Publish to NPM
 
 on:
   release:
     types: [published]
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version to publish (leave empty to use package.json version)'
-        required: false
-        type: string
+      package:
+        description: 'Package to publish'
+        required: true
+        default: 'toastr'
+        type: choice
+        options:
+          - toastr
+          - dialog
 
 jobs:
-  build-and-publish:
+  publish-toastr:
+    if: github.event.inputs.package == 'toastr' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'toastr'))
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      id-token: write
+    name: Publish @perfectui/toastr
 
     steps:
       - name: Checkout repository
@@ -27,22 +29,44 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build library
-        run: npm run build @perfectui/toastr -- --configuration production
+      - name: Build Toastr
+        run: npm run build -- @perfectui/toastr --configuration=production
 
-      - name: Run tests
-        run: npm test -- --project @perfectui/toastr --watch=false --browsers=ChromeHeadless
-        continue-on-error: true
-
-      - name: Publish to npm
+      - name: Publish to NPM
         run: |
           cd dist/toastr
-          npm publish
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  publish-dialog:
+    if: github.event.inputs.package == 'dialog' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'dialog'))
+    runs-on: ubuntu-latest
+    name: Publish @perfectui/dialog
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Dialog
+        run: npm run build -- @perfectui/dialog --configuration=production
+
+      - name: Publish to NPM
+        run: |
+          cd dist/dialog
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

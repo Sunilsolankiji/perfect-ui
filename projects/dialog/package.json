@@ -1,27 +1,29 @@
 {
-  "name": "@perfectui/toastr",
-  "version": "1.2.0",
-  "description": "A modern, customizable toast notification library for Angular 19+",
+  "name": "@perfectui/dialog",
+  "version": "1.0.0",
+  "description": "A modern, customizable dialog/modal library for Angular 19+",
   "author": "PerfectUI",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sunilsolankiji/perfect-ui.git",
-    "directory": "projects/toastr"
+    "directory": "projects/dialog"
   },
   "bugs": {
     "url": "https://github.com/sunilsolankiji/perfect-ui/issues"
   },
-  "homepage": "https://github.com/sunilsolankiji/perfect-ui/tree/main/projects/toastr#readme",
+  "homepage": "https://github.com/sunilsolankiji/perfect-ui/tree/main/projects/dialog#readme",
   "keywords": [
     "angular",
-    "toastr",
-    "toast",
-    "notification",
-    "notifications",
+    "dialog",
+    "modal",
+    "popup",
+    "confirm",
     "alert",
-    "snackbar",
-    "message",
+    "prompt",
+    "notification",
+    "ui",
+    "component",
     "angular19",
     "standalone",
     "accessible",
@@ -31,9 +33,6 @@
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
   },
   "sideEffects": false
 }

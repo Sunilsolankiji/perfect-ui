@@ -7,6 +7,7 @@ A collection of modern, customizable UI components for Angular 19+.
 | Package | Description | Version |
 |---------|-------------|---------|
 | [@perfectui/toastr](./projects/toastr) | Modern toast notification library | 1.1.0 |
+| [@perfectui/dialog](./projects/dialog) | Modern dialog/modal library | 1.0.0 |
 
 ## Workspace Structure
 
@@ -14,7 +15,8 @@ A collection of modern, customizable UI components for Angular 19+.
 perfect-ui/
 ├── projects/
 │   ├── demo/          # Demo application
-│   └── toastr/        # Toast notification library
+│   ├── toastr/        # Toast notification library
+│   └── dialog/        # Dialog/modal library
 └── ...
 ```
 
@@ -47,6 +49,12 @@ Build the toastr library:
 
 ```bash
 ng build @perfectui/toastr
+```
+
+Build the dialog library:
+
+```bash
+ng build @perfectui/dialog
 ```
 
 Build for production:
@@ -92,6 +100,15 @@ To enable publishing, add the `NPM_TOKEN` secret to your GitHub repository:
   - 📊 Progress bar with pause on hover
   - ♿ Accessible (ARIA support)
   - 🚫 Duplicate prevention
+
+- **[@perfectui/dialog](./projects/dialog/README.md)** - A modern, customizable dialog/modal library featuring:
+  - ✨ Beautiful design with multiple themes
+  - 📐 5 size options (sm, md, lg, xl, fullscreen)
+  - 📍 3 position options (center, top, bottom)
+  - 🔔 Built-in alert, confirm, and prompt dialogs
+  - 🧩 Custom component dialogs with data injection
+  - ⌨️ Keyboard support (ESC to close)
+  - ♿ Accessible (ARIA support)
 
 ## License
 

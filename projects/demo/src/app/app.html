@@ -1,76 +1,27 @@
-<div class="demo-container">
-  <h1>🔔 PerfectUI Toastr Demo</h1>
-  <p class="subtitle">A modern toast notification library for Angular with theming support</p>
-
-  <div class="section">
-    <h2>🎨 Theme Selection</h2>
-    <div class="button-group theme-group">
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'default'" (click)="setTheme('default')">
-        Default
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'dark'" (click)="setTheme('dark')">
-        Dark
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'light'" (click)="setTheme('light')">
-        Light
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'minimal'" (click)="setTheme('minimal')">
-        Minimal
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'outline'" (click)="setTheme('outline')">
-        Outline
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'gradient'" (click)="setTheme('gradient')">
-        Gradient
-      </button>
+<div class="app-layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-container">
+        <img src="/logo.svg" alt="PerfectUI Logo" class="logo" />
+      </div>
+      <h1>PerfectUI</h1>
+      <p>Angular Component Library</p>
     </div>
-    <p class="theme-hint">Selected: <strong>{{ selectedTheme }}</strong></p>
-  </div>
-
-  <div class="section">
-    <h2>📣 Toast Types</h2>
-    <div class="button-group">
-      <button class="btn btn-success" (click)="showSuccess()">
-        ✅ Success
-      </button>
-      <button class="btn btn-error" (click)="showError()">
-        ❌ Error
-      </button>
-      <button class="btn btn-warning" (click)="showWarning()">
-        ⚠️ Warning
-      </button>
-      <button class="btn btn-info" (click)="showInfo()">
-        ℹ️ Info
-      </button>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>⚡ Actions</h2>
-    <div class="button-group">
-      <button class="btn btn-custom" (click)="showCustom()">
-        ⏱️ Custom (10s)
-      </button>
-      <button class="btn btn-all-themes" (click)="showAllThemes()">
-        🌈 Show All Themes
-      </button>
-      <button class="btn btn-clear" (click)="clearAll()">
-        🗑️ Clear All
-      </button>
-    </div>
-  </div>
-
-  <div class="features">
-    <h2>✨ Features</h2>
-    <ul>
-      <li>🎨 <strong>6 Built-in Themes</strong> - Default, Dark, Light, Minimal, Outline, Gradient</li>
-      <li>🎯 <strong>Custom Themes</strong> - Create your own with CSS variables</li>
-      <li>📍 <strong>Multiple Positions</strong> - Top/Bottom, Left/Center/Right</li>
-      <li>⏱️ <strong>Configurable Duration</strong> - Auto-dismiss or persistent</li>
-      <li>📊 <strong>Progress Bar</strong> - Visual countdown with pause on hover</li>
-      <li>♿ <strong>Accessible</strong> - Full ARIA support</li>
-      <li>📱 <strong>Responsive</strong> - Works on all screen sizes</li>
+    <ul class="nav-list">
+      <li>
+        <a routerLink="/toastr" routerLinkActive="active">
+          🔔 Toastr
+        </a>
+      </li>
+      <li>
+        <a routerLink="/dialog" routerLinkActive="active">
+          💬 Dialog
+        </a>
+      </li>
     </ul>
-  </div>
+  </nav>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
 </div>
 

@@ -5,6 +5,9 @@
     "paths": {
       "@perfectui/toastr": [
         "dist/toastr"
+      ],
+      "@perfectui/dialog": [
+        "dist/dialog"
       ]
     },
     "strict": true,
