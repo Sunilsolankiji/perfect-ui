@@ -12,6 +12,11 @@ export class ToastrDemo {
   private toastr = inject(ToastrService);
   selectedTheme: ToastTheme = 'default';
 
+  // Package info
+  packageName = '@perfectui/toastr';
+  version = '1.3.0';
+  npmUrl = 'https://www.npmjs.com/package/@perfectui/toastr';
+
   showSuccess() {
     this.toastr.success('This is a success message!', 'Success', { theme: this.selectedTheme });
   }

@@ -12,6 +12,11 @@ import { UserFormDialogComponent, UserFormData } from './user-form-dialog.compon
 export class DialogDemo {
   private dialog = inject(DialogService);
 
+  // Package info
+  packageName = '@perfectui/dialog';
+  version = '1.1.0';
+  npmUrl = 'https://www.npmjs.com/package/@perfectui/dialog';
+
   // Template references
   customTemplate = viewChild<TemplateRef<any>>('customTemplate');
 

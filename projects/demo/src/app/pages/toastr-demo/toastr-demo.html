@@ -1,6 +1,17 @@
 <div class="demo-container">
-  <h1>🔔 PerfectUI Toastr Demo</h1>
-  <p class="subtitle">A modern toast notification library for Angular with theming support</p>
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🔔 PerfectUI Toastr</h1>
+      <p class="subtitle">A modern toast notification library for Angular with theming support</p>
+    </div>
+    <a [href]="npmUrl" target="_blank" rel="noopener noreferrer" class="package-badge">
+      <svg class="npm-icon" viewBox="0 0 780 250">
+        <path d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"/>
+      </svg>
+      <span class="package-name">{{ packageName }}</span>
+      <span class="package-version">v{{ version }}</span>
+    </a>
+  </div>
 
   <div class="section">
     <h2>🎨 Theme Selection</h2>
