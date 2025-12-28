@@ -1,0 +1,104 @@
+<div class="demo-container">
+  <h1>🎨 Theme Configurator</h1>
+  <p class="subtitle">Customize PerfectUI colors and see changes live</p>
+
+  <!-- Live Preview Section -->
+  <div class="preview-section">
+    <h3>Live Preview</h3>
+    <p class="preview-hint">Click buttons to test your theme with actual components</p>
+    <div class="preview-buttons">
+      <button class="btn btn-success" (click)="previewSuccess()">✓ Success Toast</button>
+      <button class="btn btn-error" (click)="previewError()">✕ Error Toast</button>
+      <button class="btn btn-warning" (click)="previewWarning()">⚠ Warning Toast</button>
+      <button class="btn btn-info" (click)="previewInfo()">ℹ Info Toast</button>
+      <button class="btn btn-custom" (click)="previewDialog()">💬 Dialog</button>
+      <button class="btn btn-custom" (click)="previewAlert()">📢 Alert</button>
+    </div>
+  </div>
+
+  <div class="config-layout">
+    <!-- Color Picker Sections -->
+    <div class="config-panel">
+      @for (section of sections(); track section.title; let sectionIndex = $index) {
+        <div class="config-section">
+          <div class="section-header">
+            <h3>{{ section.title }}</h3>
+            <button class="btn-reset-section" (click)="resetSection(sectionIndex)">
+              Reset
+            </button>
+          </div>
+          <div class="color-grid">
+            @for (color of section.colors; track color.name; let colorIndex = $index) {
+              <div class="color-item">
+                <label [for]="color.name">{{ color.label }}</label>
+                <div class="color-input-group">
+                  @if (isColor(color.value)) {
+                    <input
+                      type="color"
+                      [id]="color.name"
+                      [value]="color.value"
+                      (input)="updateColor(sectionIndex, colorIndex, $any($event.target).value)"
+                      class="color-picker"
+                    />
+                  }
+                  <input
+                    type="text"
+                    [value]="color.value"
+                    (input)="updateColor(sectionIndex, colorIndex, $any($event.target).value)"
+                    class="color-text"
+                    [class.full-width]="!isColor(color.value)"
+                  />
+                </div>
+                @if (color.value !== color.default) {
+                  <span class="changed-badge">Modified</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="action-buttons">
+        <button class="btn btn-clear" (click)="resetAll()">
+          🔄 Reset All to Defaults
+        </button>
+      </div>
+    </div>
+
+    <!-- Generated CSS Panel -->
+    <div class="css-panel">
+      <div class="css-header">
+        <h3>Generated CSS</h3>
+        <div class="css-actions">
+          <button class="btn btn-info" (click)="copyCSS(false)">
+            {{ copied() ? '✓ Copied!' : '📋 Copy Changes' }}
+          </button>
+          <button class="btn btn-custom" (click)="copyCSS(true)">
+            📋 Copy Full Theme
+          </button>
+        </div>
+      </div>
+
+      <div class="css-preview">
+        <pre><code>{{ generatedCSS() }}</code></pre>
+      </div>
+
+      <div class="css-instructions">
+        <h4>How to use:</h4>
+        <ol>
+          <li>Customize colors using the pickers above</li>
+          <li>Click "Copy Changes" or "Copy Full Theme"</li>
+          <li>Paste in your project's <code>styles.css</code></li>
+        </ol>
+      </div>
+
+      <div class="css-header" style="margin-top: 24px;">
+        <h3>Full Theme CSS</h3>
+      </div>
+      <div class="css-preview css-preview-full">
+        <pre><code>{{ fullCSS() }}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+

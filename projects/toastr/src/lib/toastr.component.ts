@@ -85,83 +85,37 @@ import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
     /*
      * PerfectUI Toast - CSS Custom Properties Theme
      *
-     * Override these in your global styles:
+     * Override these in your global styles.css:
      *
      * :root {
      *   --pui-success-500: #22c55e;
      *   --pui-error-500: #f43f5e;
      * }
-     *
-     * Or target specific toast elements:
-     *
-     * .pui-toast {
-     *   --pui-toast-radius: 12px;
-     * }
      */
 
-    /* ========== ROOT CSS VARIABLES ========== */
     :host {
-      /* Color palette - override at :root level */
-      --pui-success-50: #ecfdf5;
-      --pui-success-500: #10b981;
-      --pui-success-600: #059669;
-      --pui-success-800: #065f46;
-
-      --pui-error-50: #fef2f2;
-      --pui-error-500: #ef4444;
-      --pui-error-600: #dc2626;
-      --pui-error-800: #991b1b;
-
-      --pui-warning-50: #fffbeb;
-      --pui-warning-500: #f59e0b;
-      --pui-warning-600: #d97706;
-      --pui-warning-800: #92400e;
-
-      --pui-info-50: #eff6ff;
-      --pui-info-500: #3b82f6;
-      --pui-info-600: #2563eb;
-      --pui-info-800: #1e40af;
-
-      --pui-neutral-100: #f3f4f6;
-      --pui-neutral-200: #e5e7eb;
-      --pui-neutral-700: #374151;
-      --pui-neutral-900: #111827;
-
-      --pui-slate-800: #1e293b;
-
-      --pui-white: #ffffff;
-      --pui-black: #000000;
-
-      /* Toast-specific variables */
-      --pui-toast-radius: 8px;
-      --pui-toast-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      --pui-toast-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.2);
-      --pui-toast-min-width: 300px;
-      --pui-toast-max-width: 400px;
-      --pui-toast-padding: 14px 16px;
-      --pui-toast-gap: 12px;
-      --pui-toast-animation-duration: 0.3s;
+      display: contents;
     }
 
     .pui-toast {
       display: flex;
       align-items: flex-start;
-      padding: var(--pui-toast-padding);
-      border-radius: var(--pui-toast-radius);
-      box-shadow: var(--pui-toast-shadow);
+      padding: var(--pui-toast-padding, 14px 16px);
+      border-radius: var(--pui-toast-radius, 8px);
+      box-shadow: var(--pui-toast-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
       position: relative;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-      animation: pui-toast-slide-in var(--pui-toast-animation-duration) ease forwards;
-      min-width: var(--pui-toast-min-width);
-      max-width: var(--pui-toast-max-width);
+      animation: pui-toast-slide-in var(--pui-toast-animation-duration, 0.3s) ease forwards;
+      min-width: var(--pui-toast-min-width, 300px);
+      max-width: var(--pui-toast-max-width, 400px);
       backdrop-filter: blur(8px);
       border: 2px solid transparent;
     }
 
     .pui-toast:hover {
-      box-shadow: var(--pui-toast-shadow-hover);
+      box-shadow: var(--pui-toast-shadow-hover, 0 6px 16px rgba(0, 0, 0, 0.2));
       transform: translateY(-2px);
     }
 
@@ -172,99 +126,99 @@ import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
 
     /* ========== DEFAULT THEME (Gradient) ========== */
     .pui-toast-success {
-      background: linear-gradient(135deg, var(--pui-success-500) 0%, var(--pui-success-600) 100%);
-      color: var(--pui-white);
+      background: linear-gradient(135deg, var(--pui-success-500, #10b981) 0%, var(--pui-success-600, #059669) 100%);
+      color: var(--pui-white, #ffffff);
     }
-    .pui-toast-success .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-success .pui-toast-icon { color: var(--pui-white, #ffffff); }
     .pui-toast-success .pui-toast-progress { background: rgba(255,255,255,0.2); }
     .pui-toast-success .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-error {
-      background: linear-gradient(135deg, var(--pui-error-500) 0%, var(--pui-error-600) 100%);
-      color: var(--pui-white);
+      background: linear-gradient(135deg, var(--pui-error-500, #ef4444) 0%, var(--pui-error-600, #dc2626) 100%);
+      color: var(--pui-white, #ffffff);
     }
-    .pui-toast-error .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-error .pui-toast-icon { color: var(--pui-white, #ffffff); }
     .pui-toast-error .pui-toast-progress { background: rgba(255,255,255,0.2); }
     .pui-toast-error .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-warning {
-      background: linear-gradient(135deg, var(--pui-warning-500) 0%, var(--pui-warning-600) 100%);
-      color: var(--pui-white);
+      background: linear-gradient(135deg, var(--pui-warning-500, #f59e0b) 0%, var(--pui-warning-600, #d97706) 100%);
+      color: var(--pui-white, #ffffff);
     }
-    .pui-toast-warning .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-warning .pui-toast-icon { color: var(--pui-white, #ffffff); }
     .pui-toast-warning .pui-toast-progress { background: rgba(255,255,255,0.2); }
     .pui-toast-warning .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-info {
-      background: linear-gradient(135deg, var(--pui-info-500) 0%, var(--pui-info-600) 100%);
-      color: var(--pui-white);
+      background: linear-gradient(135deg, var(--pui-info-500, #3b82f6) 0%, var(--pui-info-600, #2563eb) 100%);
+      color: var(--pui-white, #ffffff);
     }
-    .pui-toast-info .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-info .pui-toast-icon { color: var(--pui-white, #ffffff); }
     .pui-toast-info .pui-toast-progress { background: rgba(255,255,255,0.2); }
     .pui-toast-info .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     /* ========== DARK THEME ========== */
     .pui-toast-theme-dark {
-      background: var(--pui-slate-800) !important;
+      background: var(--pui-slate-800, #1e293b) !important;
       border-color: currentColor;
     }
-    .pui-toast-theme-dark.pui-toast-success { color: var(--pui-success-500); }
-    .pui-toast-theme-dark.pui-toast-error { color: var(--pui-error-500); }
-    .pui-toast-theme-dark.pui-toast-warning { color: var(--pui-warning-500); }
-    .pui-toast-theme-dark.pui-toast-info { color: var(--pui-info-500); }
+    .pui-toast-theme-dark.pui-toast-success { color: var(--pui-success-500, #10b981); }
+    .pui-toast-theme-dark.pui-toast-error { color: var(--pui-error-500, #ef4444); }
+    .pui-toast-theme-dark.pui-toast-warning { color: var(--pui-warning-500, #f59e0b); }
+    .pui-toast-theme-dark.pui-toast-info { color: var(--pui-info-500, #3b82f6); }
 
     .pui-toast-theme-dark .pui-toast-progress { background: rgba(255,255,255,0.1); }
     .pui-toast-theme-dark .pui-toast-progress-bar { background: currentColor; }
 
     /* ========== LIGHT THEME ========== */
     .pui-toast-theme-light.pui-toast-success {
-      background: var(--pui-success-50) !important;
-      color: var(--pui-success-800);
-      border-color: var(--pui-success-500);
+      background: var(--pui-success-50, #ecfdf5) !important;
+      color: var(--pui-success-800, #065f46);
+      border-color: var(--pui-success-500, #10b981);
     }
-    .pui-toast-theme-light.pui-toast-success .pui-toast-icon { color: var(--pui-success-500); }
-    .pui-toast-theme-light.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500); }
+    .pui-toast-theme-light.pui-toast-success .pui-toast-icon { color: var(--pui-success-500, #10b981); }
+    .pui-toast-theme-light.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500, #10b981); }
 
     .pui-toast-theme-light.pui-toast-error {
-      background: var(--pui-error-50) !important;
-      color: var(--pui-error-800);
-      border-color: var(--pui-error-500);
+      background: var(--pui-error-50, #fef2f2) !important;
+      color: var(--pui-error-800, #991b1b);
+      border-color: var(--pui-error-500, #ef4444);
     }
-    .pui-toast-theme-light.pui-toast-error .pui-toast-icon { color: var(--pui-error-500); }
-    .pui-toast-theme-light.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500); }
+    .pui-toast-theme-light.pui-toast-error .pui-toast-icon { color: var(--pui-error-500, #ef4444); }
+    .pui-toast-theme-light.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500, #ef4444); }
 
     .pui-toast-theme-light.pui-toast-warning {
-      background: var(--pui-warning-50) !important;
-      color: var(--pui-warning-800);
-      border-color: var(--pui-warning-500);
+      background: var(--pui-warning-50, #fffbeb) !important;
+      color: var(--pui-warning-800, #92400e);
+      border-color: var(--pui-warning-500, #f59e0b);
     }
-    .pui-toast-theme-light.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500); }
-    .pui-toast-theme-light.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500); }
+    .pui-toast-theme-light.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500, #f59e0b); }
+    .pui-toast-theme-light.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500, #f59e0b); }
 
     .pui-toast-theme-light.pui-toast-info {
-      background: var(--pui-info-50) !important;
-      color: var(--pui-info-800);
-      border-color: var(--pui-info-500);
+      background: var(--pui-info-50, #eff6ff) !important;
+      color: var(--pui-info-800, #1e40af);
+      border-color: var(--pui-info-500, #3b82f6);
     }
-    .pui-toast-theme-light.pui-toast-info .pui-toast-icon { color: var(--pui-info-500); }
-    .pui-toast-theme-light.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500); }
+    .pui-toast-theme-light.pui-toast-info .pui-toast-icon { color: var(--pui-info-500, #3b82f6); }
+    .pui-toast-theme-light.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500, #3b82f6); }
 
     .pui-toast-theme-light .pui-toast-progress { background: rgba(0,0,0,0.1); }
 
     /* ========== MINIMAL THEME ========== */
     .pui-toast-theme-minimal {
-      background: var(--pui-white) !important;
-      color: var(--pui-neutral-700);
-      border-color: var(--pui-neutral-200);
+      background: var(--pui-white, #ffffff) !important;
+      color: var(--pui-neutral-700, #374151);
+      border-color: var(--pui-neutral-200, #e5e7eb);
     }
-    .pui-toast-theme-minimal.pui-toast-success .pui-toast-icon { color: var(--pui-success-500); }
-    .pui-toast-theme-minimal.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500); }
-    .pui-toast-theme-minimal.pui-toast-error .pui-toast-icon { color: var(--pui-error-500); }
-    .pui-toast-theme-minimal.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500); }
-    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500); }
-    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500); }
-    .pui-toast-theme-minimal.pui-toast-info .pui-toast-icon { color: var(--pui-info-500); }
-    .pui-toast-theme-minimal.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500); }
+    .pui-toast-theme-minimal.pui-toast-success .pui-toast-icon { color: var(--pui-success-500, #10b981); }
+    .pui-toast-theme-minimal.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500, #10b981); }
+    .pui-toast-theme-minimal.pui-toast-error .pui-toast-icon { color: var(--pui-error-500, #ef4444); }
+    .pui-toast-theme-minimal.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500, #ef4444); }
+    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500, #f59e0b); }
+    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500, #f59e0b); }
+    .pui-toast-theme-minimal.pui-toast-info .pui-toast-icon { color: var(--pui-info-500, #3b82f6); }
+    .pui-toast-theme-minimal.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500, #3b82f6); }
     .pui-toast-theme-minimal .pui-toast-progress { background: rgba(0,0,0,0.05); }
 
     /* ========== OUTLINE THEME ========== */
@@ -273,20 +227,20 @@ import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
       backdrop-filter: blur(12px);
     }
     .pui-toast-theme-outline.pui-toast-success {
-      color: var(--pui-success-500);
-      border-color: var(--pui-success-500);
+      color: var(--pui-success-500, #10b981);
+      border-color: var(--pui-success-500, #10b981);
     }
     .pui-toast-theme-outline.pui-toast-error {
-      color: var(--pui-error-500);
-      border-color: var(--pui-error-500);
+      color: var(--pui-error-500, #ef4444);
+      border-color: var(--pui-error-500, #ef4444);
     }
     .pui-toast-theme-outline.pui-toast-warning {
-      color: var(--pui-warning-500);
-      border-color: var(--pui-warning-500);
+      color: var(--pui-warning-500, #f59e0b);
+      border-color: var(--pui-warning-500, #f59e0b);
     }
     .pui-toast-theme-outline.pui-toast-info {
-      color: var(--pui-info-500);
-      border-color: var(--pui-info-500);
+      color: var(--pui-info-500, #3b82f6);
+      border-color: var(--pui-info-500, #3b82f6);
     }
     .pui-toast-theme-outline .pui-toast-progress { background: rgba(0,0,0,0.1); }
     .pui-toast-theme-outline .pui-toast-progress-bar { background: currentColor; }
@@ -296,7 +250,7 @@ import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
       flex-shrink: 0;
       width: 24px;
       height: 24px;
-      margin-right: var(--pui-toast-gap);
+      margin-right: var(--pui-toast-gap, 12px);
       opacity: 0.9;
     }
 
@@ -329,7 +283,7 @@ import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
       width: 20px;
       height: 20px;
       padding: 0;
-      margin-left: var(--pui-toast-gap);
+      margin-left: var(--pui-toast-gap, 12px);
       border: none;
       background: transparent;
       color: inherit;
