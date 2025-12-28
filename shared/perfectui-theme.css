@@ -1,0 +1,147 @@
+/**
+ * PerfectUI Theme CSS
+ *
+ * Import this in your styles.css to get default CSS custom properties:
+ * @import '@perfectui/toastr/theme.css';
+ *
+ * Or copy the :root block to your styles and customize:
+ */
+
+:root {
+  /* ========== COLOR PALETTE ========== */
+
+  /* Success */
+  --pui-success-50: #ecfdf5;
+  --pui-success-100: #d1fae5;
+  --pui-success-200: #a7f3d0;
+  --pui-success-500: #10b981;
+  --pui-success-600: #059669;
+  --pui-success-800: #065f46;
+
+  /* Error */
+  --pui-error-50: #fef2f2;
+  --pui-error-100: #fee2e2;
+  --pui-error-200: #fecaca;
+  --pui-error-500: #ef4444;
+  --pui-error-600: #dc2626;
+  --pui-error-800: #991b1b;
+
+  /* Warning */
+  --pui-warning-50: #fffbeb;
+  --pui-warning-100: #fef3c7;
+  --pui-warning-200: #fde68a;
+  --pui-warning-500: #f59e0b;
+  --pui-warning-600: #d97706;
+  --pui-warning-800: #92400e;
+
+  /* Info */
+  --pui-info-50: #eff6ff;
+  --pui-info-100: #dbeafe;
+  --pui-info-200: #bfdbfe;
+  --pui-info-500: #3b82f6;
+  --pui-info-600: #2563eb;
+  --pui-info-800: #1e40af;
+
+  /* Neutral */
+  --pui-neutral-50: #f9fafb;
+  --pui-neutral-100: #f3f4f6;
+  --pui-neutral-200: #e5e7eb;
+  --pui-neutral-300: #d1d5db;
+  --pui-neutral-400: #9ca3af;
+  --pui-neutral-500: #6b7280;
+  --pui-neutral-600: #4b5563;
+  --pui-neutral-700: #374151;
+  --pui-neutral-800: #1f2937;
+  --pui-neutral-900: #111827;
+
+  /* Slate (dark backgrounds) */
+  --pui-slate-800: #1e293b;
+  --pui-slate-900: #0f172a;
+
+  /* Common */
+  --pui-white: #ffffff;
+  --pui-black: #000000;
+
+  /* ========== TOAST COMPONENT ========== */
+  --pui-toast-radius: 8px;
+  --pui-toast-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --pui-toast-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.2);
+  --pui-toast-min-width: 300px;
+  --pui-toast-max-width: 400px;
+  --pui-toast-padding: 14px 16px;
+  --pui-toast-gap: 12px;
+  --pui-toast-animation-duration: 0.3s;
+
+  /* ========== DIALOG COMPONENT ========== */
+  --pui-dialog-bg: #ffffff;
+  --pui-dialog-radius: 12px;
+  --pui-dialog-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --pui-dialog-border: #e5e7eb;
+  --pui-dialog-title-color: #111827;
+  --pui-dialog-text-color: #374151;
+  --pui-dialog-close-color: #6b7280;
+  --pui-dialog-close-hover-bg: #f3f4f6;
+  --pui-dialog-close-hover-color: #111827;
+  --pui-dialog-animation-duration: 200ms;
+
+  /* Dialog Input */
+  --pui-dialog-input-bg: #ffffff;
+  --pui-dialog-input-border: #d1d5db;
+  --pui-dialog-input-color: #111827;
+  --pui-dialog-input-focus-border: #3b82f6;
+  --pui-dialog-input-focus-ring: rgba(59, 130, 246, 0.15);
+
+  /* Dialog Buttons */
+  --pui-dialog-btn-primary-bg: #3b82f6;
+  --pui-dialog-btn-primary-color: #ffffff;
+  --pui-dialog-btn-primary-hover-bg: #2563eb;
+
+  --pui-dialog-btn-secondary-bg: #f3f4f6;
+  --pui-dialog-btn-secondary-color: #374151;
+  --pui-dialog-btn-secondary-hover-bg: #e5e7eb;
+
+  --pui-dialog-btn-danger-bg: #ef4444;
+  --pui-dialog-btn-danger-color: #ffffff;
+  --pui-dialog-btn-danger-hover-bg: #dc2626;
+
+  --pui-dialog-btn-success-bg: #22c55e;
+  --pui-dialog-btn-success-color: #ffffff;
+  --pui-dialog-btn-success-hover-bg: #16a34a;
+
+  --pui-dialog-btn-warning-bg: #f59e0b;
+  --pui-dialog-btn-warning-color: #ffffff;
+  --pui-dialog-btn-warning-hover-bg: #d97706;
+
+  /* ========== Z-INDEX ========== */
+  --pui-z-toast: 9999;
+  --pui-z-dialog: 10000;
+  --pui-z-dialog-backdrop: 9998;
+}
+
+/* ========== DARK MODE ========== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dialog dark mode */
+    --pui-dialog-bg: #1f2937;
+    --pui-dialog-border: #374151;
+    --pui-dialog-title-color: #f9fafb;
+    --pui-dialog-text-color: #d1d5db;
+    --pui-dialog-close-color: #9ca3af;
+    --pui-dialog-close-hover-bg: #374151;
+    --pui-dialog-close-hover-color: #f9fafb;
+    --pui-dialog-input-bg: #111827;
+    --pui-dialog-input-border: #4b5563;
+    --pui-dialog-input-color: #f9fafb;
+    --pui-dialog-btn-secondary-bg: #374151;
+    --pui-dialog-btn-secondary-color: #f9fafb;
+    --pui-dialog-btn-secondary-hover-bg: #4b5563;
+  }
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --pui-toast-animation-duration: 0s;
+    --pui-dialog-animation-duration: 0s;
+  }
+}

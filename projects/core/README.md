@@ -1,50 +1,36 @@
 # @perfectui/core
 
-The complete PerfectUI component library for Angular 19+.
+Complete PerfectUI component library for Angular 19+.
 
 [![npm version](https://img.shields.io/npm/v/@perfectui/core.svg)](https://www.npmjs.com/package/@perfectui/core)
 [![license](https://img.shields.io/npm/l/@perfectui/core.svg)](https://github.com/sunilsolankiji/perfect-ui/blob/main/LICENSE)
 
 ## Why @perfectui/core?
 
-Instead of installing each package separately, you can install `@perfectui/core` to get **all PerfectUI components** in one package.
+Install `@perfectui/core` to get **all PerfectUI components** in one import.
 
 ## Installation
 
 ```bash
-npm install @perfectui/core
+npm install @perfectui/core @perfectui/toastr @perfectui/dialog
 ```
-
-This single package includes:
-- 🔔 **@perfectui/toastr** - Toast notifications
-- 💬 **@perfectui/dialog** - Dialogs & modals
-- 🚀 *More components coming soon...*
 
 ## Usage
 
 ```typescript
-import { ApplicationConfig } from '@angular/core';
 import { provideToastr, provideDialog } from '@perfectui/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideToastr({
-      position: 'top-right',
-      duration: 5000,
-    }),
-    provideDialog({
-      size: 'md',
-      theme: 'default',
-    }),
+    provideToastr(),
+    provideDialog(),
   ],
 };
 ```
 
 ```typescript
-import { Component, inject } from '@angular/core';
 import { ToastrService, DialogService } from '@perfectui/core';
 
-@Component({...})
 export class AppComponent {
   private toastr = inject(ToastrService);
   private dialog = inject(DialogService);
@@ -55,9 +41,6 @@ export class AppComponent {
 
   async showDialog() {
     const result = await this.dialog.confirm('Are you sure?', 'Confirm');
-    if (result.confirmed) {
-      console.log('Confirmed!');
-    }
   }
 }
 ```
@@ -66,25 +49,30 @@ export class AppComponent {
 
 | Package | Description |
 |---------|-------------|
-| [@perfectui/toastr](https://www.npmjs.com/package/@perfectui/toastr) | Modern toast notification library |
-| [@perfectui/dialog](https://www.npmjs.com/package/@perfectui/dialog) | Modern dialog/modal library |
+| [@perfectui/toastr](https://www.npmjs.com/package/@perfectui/toastr) | Toast notifications |
+| [@perfectui/dialog](https://www.npmjs.com/package/@perfectui/dialog) | Dialogs & modals |
 
-## Individual Installation
+## Theming
 
-If you only need specific components, you can install them individually:
+Customize colors using CSS custom properties in your `styles.css`:
 
-```bash
-# Toast notifications only
-npm install @perfectui/toastr
+```css
+:root {
+  /* Colors */
+  --pui-success-500: #22c55e;
+  --pui-error-500: #f43f5e;
+  --pui-warning-500: #eab308;
+  --pui-info-500: #0ea5e9;
 
-# Dialogs only
-npm install @perfectui/dialog
+  /* Toast customization */
+  --pui-toast-radius: 12px;
+
+  /* Dialog customization */
+  --pui-dialog-radius: 16px;
+}
 ```
 
-## Documentation
-
-- [Toastr Documentation](https://github.com/sunilsolankiji/perfect-ui/tree/main/projects/toastr#readme)
-- [Dialog Documentation](https://github.com/sunilsolankiji/perfect-ui/tree/main/projects/dialog#readme)
+See the individual package docs for all available CSS variables.
 
 ## License
 

@@ -13,7 +13,7 @@ export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
 /**
  * Dialog theme
  */
-export type DialogTheme = 'default' | 'dark' | 'minimal';
+export type DialogTheme = 'default' | 'dark' | 'light' | 'minimal' | 'outline' | 'gradient' | 'custom';
 
 /**
  * Dialog type for built-in dialogs

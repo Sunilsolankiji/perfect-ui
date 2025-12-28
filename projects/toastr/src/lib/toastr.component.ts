@@ -10,8 +10,8 @@ import {
   inject,
   DestroyRef,
 } from '@angular/core';
-import { Toast, ToastTheme, ToastColorConfig } from './toastr.models';
-import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config';
+import { Toast } from './toastr.models';
+import { TOASTR_CONFIG, ToastrConfig } from './toastr.config';
 
 @Component({
   selector: 'pui-toast',
@@ -21,7 +21,6 @@ import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config
       class="pui-toast"
       [class]="toastClasses()"
       [class.pui-toast-paused]="isPaused()"
-      [style]="toastStyles()"
       (click)="onClick()"
       (mouseenter)="onMouseEnter()"
       (mouseleave)="onMouseLeave()"
@@ -83,233 +82,222 @@ import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config
     </div>
   `,
   styles: [`
+    /*
+     * PerfectUI Toast - CSS Custom Properties Theme
+     *
+     * Override these in your global styles:
+     *
+     * :root {
+     *   --pui-success-500: #22c55e;
+     *   --pui-error-500: #f43f5e;
+     * }
+     *
+     * Or target specific toast elements:
+     *
+     * .pui-toast {
+     *   --pui-toast-radius: 12px;
+     * }
+     */
+
+    /* ========== ROOT CSS VARIABLES ========== */
+    :host {
+      /* Color palette - override at :root level */
+      --pui-success-50: #ecfdf5;
+      --pui-success-500: #10b981;
+      --pui-success-600: #059669;
+      --pui-success-800: #065f46;
+
+      --pui-error-50: #fef2f2;
+      --pui-error-500: #ef4444;
+      --pui-error-600: #dc2626;
+      --pui-error-800: #991b1b;
+
+      --pui-warning-50: #fffbeb;
+      --pui-warning-500: #f59e0b;
+      --pui-warning-600: #d97706;
+      --pui-warning-800: #92400e;
+
+      --pui-info-50: #eff6ff;
+      --pui-info-500: #3b82f6;
+      --pui-info-600: #2563eb;
+      --pui-info-800: #1e40af;
+
+      --pui-neutral-100: #f3f4f6;
+      --pui-neutral-200: #e5e7eb;
+      --pui-neutral-700: #374151;
+      --pui-neutral-900: #111827;
+
+      --pui-slate-800: #1e293b;
+
+      --pui-white: #ffffff;
+      --pui-black: #000000;
+
+      /* Toast-specific variables */
+      --pui-toast-radius: 8px;
+      --pui-toast-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --pui-toast-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.2);
+      --pui-toast-min-width: 300px;
+      --pui-toast-max-width: 400px;
+      --pui-toast-padding: 14px 16px;
+      --pui-toast-gap: 12px;
+      --pui-toast-animation-duration: 0.3s;
+    }
+
     .pui-toast {
       display: flex;
       align-items: flex-start;
-      padding: 14px 16px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: var(--pui-toast-padding);
+      border-radius: var(--pui-toast-radius);
+      box-shadow: var(--pui-toast-shadow);
       position: relative;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-      animation: pui-toast-slide-in 0.3s ease forwards;
-      min-width: 300px;
-      max-width: 400px;
+      animation: pui-toast-slide-in var(--pui-toast-animation-duration) ease forwards;
+      min-width: var(--pui-toast-min-width);
+      max-width: var(--pui-toast-max-width);
       backdrop-filter: blur(8px);
-
-      /* CSS Custom Properties for theming */
-      background: var(--pui-toast-bg);
-      color: var(--pui-toast-text);
-      border: 2px solid var(--pui-toast-border, transparent);
+      border: 2px solid transparent;
     }
 
     .pui-toast:hover {
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--pui-toast-shadow-hover);
       transform: translateY(-2px);
     }
 
     @keyframes pui-toast-slide-in {
-      from {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
-    /* Default theme styles (fallback) */
+    /* ========== DEFAULT THEME (Gradient) ========== */
     .pui-toast-success {
-      --pui-toast-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      --pui-toast-text: white;
-      --pui-toast-icon: white;
-      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
-      --pui-toast-progress: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(135deg, var(--pui-success-500) 0%, var(--pui-success-600) 100%);
+      color: var(--pui-white);
     }
+    .pui-toast-success .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-success .pui-toast-progress { background: rgba(255,255,255,0.2); }
+    .pui-toast-success .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-error {
-      --pui-toast-bg: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      --pui-toast-text: white;
-      --pui-toast-icon: white;
-      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
-      --pui-toast-progress: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(135deg, var(--pui-error-500) 0%, var(--pui-error-600) 100%);
+      color: var(--pui-white);
     }
+    .pui-toast-error .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-error .pui-toast-progress { background: rgba(255,255,255,0.2); }
+    .pui-toast-error .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-warning {
-      --pui-toast-bg: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      --pui-toast-text: white;
-      --pui-toast-icon: white;
-      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
-      --pui-toast-progress: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(135deg, var(--pui-warning-500) 0%, var(--pui-warning-600) 100%);
+      color: var(--pui-white);
     }
+    .pui-toast-warning .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-warning .pui-toast-progress { background: rgba(255,255,255,0.2); }
+    .pui-toast-warning .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
     .pui-toast-info {
-      --pui-toast-bg: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      --pui-toast-text: white;
-      --pui-toast-icon: white;
-      --pui-toast-progress-bg: rgba(255, 255, 255, 0.2);
-      --pui-toast-progress: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(135deg, var(--pui-info-500) 0%, var(--pui-info-600) 100%);
+      color: var(--pui-white);
     }
+    .pui-toast-info .pui-toast-icon { color: var(--pui-white); }
+    .pui-toast-info .pui-toast-progress { background: rgba(255,255,255,0.2); }
+    .pui-toast-info .pui-toast-progress-bar { background: rgba(255,255,255,0.7); }
 
-    /* Dark theme */
-    .pui-toast-theme-dark.pui-toast-success {
-      --pui-toast-bg: #1e293b;
-      --pui-toast-text: #10b981;
-      --pui-toast-icon: #10b981;
-      --pui-toast-border: #10b981;
-      --pui-toast-progress-bg: rgba(16, 185, 129, 0.2);
-      --pui-toast-progress: #10b981;
+    /* ========== DARK THEME ========== */
+    .pui-toast-theme-dark {
+      background: var(--pui-slate-800) !important;
+      border-color: currentColor;
     }
+    .pui-toast-theme-dark.pui-toast-success { color: var(--pui-success-500); }
+    .pui-toast-theme-dark.pui-toast-error { color: var(--pui-error-500); }
+    .pui-toast-theme-dark.pui-toast-warning { color: var(--pui-warning-500); }
+    .pui-toast-theme-dark.pui-toast-info { color: var(--pui-info-500); }
 
-    .pui-toast-theme-dark.pui-toast-error {
-      --pui-toast-bg: #1e293b;
-      --pui-toast-text: #ef4444;
-      --pui-toast-icon: #ef4444;
-      --pui-toast-border: #ef4444;
-      --pui-toast-progress-bg: rgba(239, 68, 68, 0.2);
-      --pui-toast-progress: #ef4444;
-    }
+    .pui-toast-theme-dark .pui-toast-progress { background: rgba(255,255,255,0.1); }
+    .pui-toast-theme-dark .pui-toast-progress-bar { background: currentColor; }
 
-    .pui-toast-theme-dark.pui-toast-warning {
-      --pui-toast-bg: #1e293b;
-      --pui-toast-text: #f59e0b;
-      --pui-toast-icon: #f59e0b;
-      --pui-toast-border: #f59e0b;
-      --pui-toast-progress-bg: rgba(245, 158, 11, 0.2);
-      --pui-toast-progress: #f59e0b;
-    }
-
-    .pui-toast-theme-dark.pui-toast-info {
-      --pui-toast-bg: #1e293b;
-      --pui-toast-text: #3b82f6;
-      --pui-toast-icon: #3b82f6;
-      --pui-toast-border: #3b82f6;
-      --pui-toast-progress-bg: rgba(59, 130, 246, 0.2);
-      --pui-toast-progress: #3b82f6;
-    }
-
-    /* Light theme */
+    /* ========== LIGHT THEME ========== */
     .pui-toast-theme-light.pui-toast-success {
-      --pui-toast-bg: #ecfdf5;
-      --pui-toast-text: #065f46;
-      --pui-toast-icon: #10b981;
-      --pui-toast-border: #a7f3d0;
-      --pui-toast-progress-bg: rgba(16, 185, 129, 0.2);
-      --pui-toast-progress: #10b981;
+      background: var(--pui-success-50) !important;
+      color: var(--pui-success-800);
+      border-color: var(--pui-success-500);
     }
+    .pui-toast-theme-light.pui-toast-success .pui-toast-icon { color: var(--pui-success-500); }
+    .pui-toast-theme-light.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500); }
 
     .pui-toast-theme-light.pui-toast-error {
-      --pui-toast-bg: #fef2f2;
-      --pui-toast-text: #991b1b;
-      --pui-toast-icon: #ef4444;
-      --pui-toast-border: #fecaca;
-      --pui-toast-progress-bg: rgba(239, 68, 68, 0.2);
-      --pui-toast-progress: #ef4444;
+      background: var(--pui-error-50) !important;
+      color: var(--pui-error-800);
+      border-color: var(--pui-error-500);
     }
+    .pui-toast-theme-light.pui-toast-error .pui-toast-icon { color: var(--pui-error-500); }
+    .pui-toast-theme-light.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500); }
 
     .pui-toast-theme-light.pui-toast-warning {
-      --pui-toast-bg: #fffbeb;
-      --pui-toast-text: #92400e;
-      --pui-toast-icon: #f59e0b;
-      --pui-toast-border: #fde68a;
-      --pui-toast-progress-bg: rgba(245, 158, 11, 0.2);
-      --pui-toast-progress: #f59e0b;
+      background: var(--pui-warning-50) !important;
+      color: var(--pui-warning-800);
+      border-color: var(--pui-warning-500);
     }
+    .pui-toast-theme-light.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500); }
+    .pui-toast-theme-light.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500); }
 
     .pui-toast-theme-light.pui-toast-info {
-      --pui-toast-bg: #eff6ff;
-      --pui-toast-text: #1e40af;
-      --pui-toast-icon: #3b82f6;
-      --pui-toast-border: #bfdbfe;
-      --pui-toast-progress-bg: rgba(59, 130, 246, 0.2);
-      --pui-toast-progress: #3b82f6;
+      background: var(--pui-info-50) !important;
+      color: var(--pui-info-800);
+      border-color: var(--pui-info-500);
     }
+    .pui-toast-theme-light.pui-toast-info .pui-toast-icon { color: var(--pui-info-500); }
+    .pui-toast-theme-light.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500); }
 
-    /* Minimal theme */
-    .pui-toast-theme-minimal.pui-toast-success,
-    .pui-toast-theme-minimal.pui-toast-error,
-    .pui-toast-theme-minimal.pui-toast-warning,
-    .pui-toast-theme-minimal.pui-toast-info {
-      --pui-toast-bg: #ffffff;
-      --pui-toast-text: #374151;
-      --pui-toast-border: #e5e7eb;
+    .pui-toast-theme-light .pui-toast-progress { background: rgba(0,0,0,0.1); }
+
+    /* ========== MINIMAL THEME ========== */
+    .pui-toast-theme-minimal {
+      background: var(--pui-white) !important;
+      color: var(--pui-neutral-700);
+      border-color: var(--pui-neutral-200);
     }
+    .pui-toast-theme-minimal.pui-toast-success .pui-toast-icon { color: var(--pui-success-500); }
+    .pui-toast-theme-minimal.pui-toast-success .pui-toast-progress-bar { background: var(--pui-success-500); }
+    .pui-toast-theme-minimal.pui-toast-error .pui-toast-icon { color: var(--pui-error-500); }
+    .pui-toast-theme-minimal.pui-toast-error .pui-toast-progress-bar { background: var(--pui-error-500); }
+    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-icon { color: var(--pui-warning-500); }
+    .pui-toast-theme-minimal.pui-toast-warning .pui-toast-progress-bar { background: var(--pui-warning-500); }
+    .pui-toast-theme-minimal.pui-toast-info .pui-toast-icon { color: var(--pui-info-500); }
+    .pui-toast-theme-minimal.pui-toast-info .pui-toast-progress-bar { background: var(--pui-info-500); }
+    .pui-toast-theme-minimal .pui-toast-progress { background: rgba(0,0,0,0.05); }
 
-    .pui-toast-theme-minimal.pui-toast-success {
-      --pui-toast-icon: #10b981;
-      --pui-toast-progress-bg: rgba(16, 185, 129, 0.1);
-      --pui-toast-progress: #10b981;
-    }
-
-    .pui-toast-theme-minimal.pui-toast-error {
-      --pui-toast-icon: #ef4444;
-      --pui-toast-progress-bg: rgba(239, 68, 68, 0.1);
-      --pui-toast-progress: #ef4444;
-    }
-
-    .pui-toast-theme-minimal.pui-toast-warning {
-      --pui-toast-icon: #f59e0b;
-      --pui-toast-progress-bg: rgba(245, 158, 11, 0.1);
-      --pui-toast-progress: #f59e0b;
-    }
-
-    .pui-toast-theme-minimal.pui-toast-info {
-      --pui-toast-icon: #3b82f6;
-      --pui-toast-progress-bg: rgba(59, 130, 246, 0.1);
-      --pui-toast-progress: #3b82f6;
-    }
-
-    /* Outline theme */
-    .pui-toast-theme-outline.pui-toast-success,
-    .pui-toast-theme-outline.pui-toast-error,
-    .pui-toast-theme-outline.pui-toast-warning,
-    .pui-toast-theme-outline.pui-toast-info {
-      --pui-toast-bg: transparent;
+    /* ========== OUTLINE THEME ========== */
+    .pui-toast-theme-outline {
+      background: transparent !important;
       backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.05);
     }
-
     .pui-toast-theme-outline.pui-toast-success {
-      --pui-toast-text: #10b981;
-      --pui-toast-icon: #10b981;
-      --pui-toast-border: #10b981;
-      --pui-toast-progress-bg: rgba(16, 185, 129, 0.1);
-      --pui-toast-progress: #10b981;
+      color: var(--pui-success-500);
+      border-color: var(--pui-success-500);
     }
-
     .pui-toast-theme-outline.pui-toast-error {
-      --pui-toast-text: #ef4444;
-      --pui-toast-icon: #ef4444;
-      --pui-toast-border: #ef4444;
-      --pui-toast-progress-bg: rgba(239, 68, 68, 0.1);
-      --pui-toast-progress: #ef4444;
+      color: var(--pui-error-500);
+      border-color: var(--pui-error-500);
     }
-
     .pui-toast-theme-outline.pui-toast-warning {
-      --pui-toast-text: #f59e0b;
-      --pui-toast-icon: #f59e0b;
-      --pui-toast-border: #f59e0b;
-      --pui-toast-progress-bg: rgba(245, 158, 11, 0.1);
-      --pui-toast-progress: #f59e0b;
+      color: var(--pui-warning-500);
+      border-color: var(--pui-warning-500);
     }
-
     .pui-toast-theme-outline.pui-toast-info {
-      --pui-toast-text: #3b82f6;
-      --pui-toast-icon: #3b82f6;
-      --pui-toast-border: #3b82f6;
-      --pui-toast-progress-bg: rgba(59, 130, 246, 0.1);
-      --pui-toast-progress: #3b82f6;
+      color: var(--pui-info-500);
+      border-color: var(--pui-info-500);
     }
+    .pui-toast-theme-outline .pui-toast-progress { background: rgba(0,0,0,0.1); }
+    .pui-toast-theme-outline .pui-toast-progress-bar { background: currentColor; }
 
+    /* ========== COMMON ELEMENTS ========== */
     .pui-toast-icon {
       flex-shrink: 0;
       width: 24px;
       height: 24px;
-      margin-right: 12px;
+      margin-right: var(--pui-toast-gap);
       opacity: 0.9;
-      color: var(--pui-toast-icon, currentColor);
     }
 
     .pui-toast-icon svg {
@@ -341,7 +329,7 @@ import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config
       width: 20px;
       height: 20px;
       padding: 0;
-      margin-left: 12px;
+      margin-left: var(--pui-toast-gap);
       border: none;
       background: transparent;
       color: inherit;
@@ -367,12 +355,12 @@ import { TOASTR_CONFIG, ToastrConfig, TOAST_THEME_COLORS } from './toastr.config
       left: 0;
       right: 0;
       height: 4px;
-      background: var(--pui-toast-progress-bg, rgba(255, 255, 255, 0.2));
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .pui-toast-progress-bar {
       height: 100%;
-      background: var(--pui-toast-progress, rgba(255, 255, 255, 0.7));
+      background: rgba(255, 255, 255, 0.7);
       transition: width 0.1s linear;
     }
 
@@ -402,49 +390,18 @@ export class ToastrComponent implements OnInit, OnDestroy {
   readonly toastClasses = computed(() => {
     const t = this.toast();
     const theme = t.options.theme || this.config?.theme || 'default';
-    const classes = [`pui-toast-${t.type}`, `pui-toast-theme-${theme}`];
+    const classes = [`pui-toast-${t.type}`];
+
+    // Only add theme class if not default (default uses base type styles)
+    if (theme !== 'default' && theme !== 'gradient') {
+      classes.push(`pui-toast-theme-${theme}`);
+    }
+
     if (t.options.customClass) {
       classes.push(t.options.customClass);
     }
     return classes.join(' ');
   });
-
-  readonly toastStyles = computed(() => {
-    const t = this.toast();
-    const theme = t.options.theme || this.config?.theme || 'default';
-    const colors = this.getThemeColors(theme, t.type);
-
-    const styles: Record<string, string> = {};
-
-    if (colors.background) {
-      styles['--pui-toast-bg'] = colors.background;
-    }
-    if (colors.textColor) {
-      styles['--pui-toast-text'] = colors.textColor;
-    }
-    if (colors.iconColor) {
-      styles['--pui-toast-icon'] = colors.iconColor;
-    }
-    if (colors.progressBackground) {
-      styles['--pui-toast-progress-bg'] = colors.progressBackground;
-    }
-    if (colors.progressColor) {
-      styles['--pui-toast-progress'] = colors.progressColor;
-    }
-    if (colors.borderColor) {
-      styles['--pui-toast-border'] = colors.borderColor;
-    }
-
-    return styles;
-  });
-
-  private getThemeColors(theme: ToastTheme, type: string): ToastColorConfig {
-    if (theme === 'custom' && this.config?.customThemeColors) {
-      return (this.config.customThemeColors as Record<string, ToastColorConfig>)[type] || {};
-    }
-    const themeColors = TOAST_THEME_COLORS[theme as Exclude<ToastTheme, 'custom'>];
-    return (themeColors as Record<string, ToastColorConfig>)?.[type] || {};
-  }
 
   ngOnInit(): void {
     const t = this.toast();
@@ -492,13 +449,10 @@ export class ToastrComponent implements OnInit, OnDestroy {
 
   private runTimer(): void {
     this.clearTimer();
-
-    const updateInterval = 50; // Update every 50ms for smooth progress
+    const updateInterval = 50;
 
     this.intervalId = setInterval(() => {
-      if (this.isPaused()) {
-        return;
-      }
+      if (this.isPaused()) return;
 
       const elapsed = Date.now() - this.startTime;
       const remaining = this.remainingTime - elapsed;
@@ -508,8 +462,7 @@ export class ToastrComponent implements OnInit, OnDestroy {
         this.clearTimer();
         this.toastTimeout.emit(this.toast());
       } else {
-        const progressPercent = (remaining / this.toast().options.duration) * 100;
-        this.progress.set(progressPercent);
+        this.progress.set((remaining / this.toast().options.duration) * 100);
       }
     }, updateInterval);
   }
@@ -531,4 +484,3 @@ export class ToastrComponent implements OnInit, OnDestroy {
     }
   }
 }
-
