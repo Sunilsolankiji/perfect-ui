@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-12-28
+
+### Changed
+
+- 🎨 **CSS Custom Properties Theming** - All colors now use CSS variables for easy customization
+- Users can override colors in their `styles.css` using `:root { --pui-success-500: #color; }`
+- Removed `:host` variable definitions in favor of `var()` with fallbacks
+- Better compatibility with global style overrides
+
+### Added
+
+- New CSS variables for toast layout: `--pui-toast-radius`, `--pui-toast-padding`, `--pui-toast-gap`
+- New CSS variables for effects: `--pui-toast-shadow`, `--pui-toast-shadow-hover`, `--pui-toast-animation-duration`
+
 ## [1.2.0] - 2025-12-25
 
 ### Changed

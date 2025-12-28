@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-12-28
+
+### Changed
+- 🎨 **CSS Custom Properties Theming** - All colors now use CSS variables with fallbacks
+- Users can override colors in their `styles.css` using `:root { --pui-dialog-bg: #color; }`
+- Improved theming compatibility with global styles
+
+### Added
+- Comprehensive CSS variables for dialog layout, text, input, and buttons
+- `--pui-dialog-radius`, `--pui-dialog-bg`, `--pui-dialog-border`, `--pui-dialog-shadow`
+- `--pui-dialog-title-color`, `--pui-dialog-text-color`, `--pui-dialog-close-color`
+- `--pui-dialog-input-*` variables for input customization
+- `--pui-dialog-btn-*` variables for button customization
+
 ## [1.0.0] - 2025-12-25
 
 ### Added

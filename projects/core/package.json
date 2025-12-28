@@ -1,6 +1,6 @@
 {
   "name": "@perfectui/core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Complete PerfectUI component library for Angular 19+ - includes all @perfectui packages",
   "author": "PerfectUI",
   "license": "MIT",
@@ -32,8 +32,11 @@
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0",
-    "@perfectui/toastr": "^1.0.0",
-    "@perfectui/dialog": "^1.0.0"
+    "@perfectui/toastr": "^1.3.0",
+    "@perfectui/dialog": "^1.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
   },
   "sideEffects": false
 }
