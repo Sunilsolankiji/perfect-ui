@@ -155,38 +155,44 @@ provideToastr({
 });
 ```
 
-### Custom Theme
+### CSS Custom Properties (Recommended)
 
-Create your own theme with full color control:
+Customize colors using CSS variables in your `styles.css`:
 
-```typescript
-provideToastr({
-  theme: 'custom',
-  customThemeColors: {
-    success: {
-      background: '#your-color',
-      textColor: '#your-color',
-      iconColor: '#your-color',
-      progressBackground: 'rgba(0, 0, 0, 0.1)',
-      progressColor: '#your-color',
-      borderColor: '#your-color',
-    },
-    error: {
-      background: '#your-color',
-      textColor: '#your-color',
-      iconColor: '#your-color',
-      progressBackground: 'rgba(0, 0, 0, 0.1)',
-      progressColor: '#your-color',
-    },
-    warning: {
-      // ... same structure
-    },
-    info: {
-      // ... same structure
-    },
-  },
-});
+```css
+:root {
+  /* Override colors */
+  --pui-success-500: #22c55e;
+  --pui-success-600: #16a34a;
+  --pui-error-500: #f43f5e;
+  --pui-error-600: #e11d48;
+  --pui-warning-500: #eab308;
+  --pui-info-500: #0ea5e9;
+  
+  /* Customize toast appearance */
+  --pui-toast-radius: 12px;
+  --pui-toast-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --pui-toast-min-width: 320px;
+  --pui-toast-max-width: 450px;
+}
 ```
+
+### Available CSS Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--pui-success-500` | `#10b981` | Main success color |
+| `--pui-success-600` | `#059669` | Success gradient end |
+| `--pui-error-500` | `#ef4444` | Main error color |
+| `--pui-error-600` | `#dc2626` | Error gradient end |
+| `--pui-warning-500` | `#f59e0b` | Main warning color |
+| `--pui-warning-600` | `#d97706` | Warning gradient end |
+| `--pui-info-500` | `#3b82f6` | Main info color |
+| `--pui-info-600` | `#2563eb` | Info gradient end |
+| `--pui-toast-radius` | `8px` | Border radius |
+| `--pui-toast-shadow` | `...` | Box shadow |
+| `--pui-toast-min-width` | `300px` | Minimum width |
+| `--pui-toast-max-width` | `400px` | Maximum width |
 
 ### Per-Toast Theme Override
 

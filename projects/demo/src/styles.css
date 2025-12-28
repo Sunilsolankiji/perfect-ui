@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+/*
+ * Customize PerfectUI theme by adding CSS variables here:
+ *
+ * :root {
+ *   --pui-success-500: #22c55e;
+ *   --pui-error-500: #f43f5e;
+ * }
+ */
+
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;

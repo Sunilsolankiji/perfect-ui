@@ -1,6 +1,6 @@
 {
   "name": "@perfectui/dialog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A modern, customizable dialog/modal library for Angular 19+",
   "author": "PerfectUI",
   "license": "MIT",
@@ -33,6 +33,9 @@
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
   },
   "sideEffects": false
 }

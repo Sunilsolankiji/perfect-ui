@@ -20,20 +20,6 @@ export type ToastPosition =
 export type ToastTheme = 'default' | 'dark' | 'light' | 'minimal' | 'outline' | 'gradient' | 'custom';
 
 /**
- * Custom theme colors for each toast type
- */
-export interface ToastThemeColors {
-  /** Success toast colors */
-  success?: ToastColorConfig;
-  /** Error toast colors */
-  error?: ToastColorConfig;
-  /** Warning toast colors */
-  warning?: ToastColorConfig;
-  /** Info toast colors */
-  info?: ToastColorConfig;
-}
-
-/**
  * Color configuration for a toast type
  */
 export interface ToastColorConfig {
@@ -49,6 +35,20 @@ export interface ToastColorConfig {
   progressColor?: string;
   /** Border color (for outline theme) */
   borderColor?: string;
+}
+
+/**
+ * Custom theme colors for each toast type
+ */
+export interface ToastThemeColors {
+  /** Success toast colors */
+  success?: ToastColorConfig;
+  /** Error toast colors */
+  error?: ToastColorConfig;
+  /** Warning toast colors */
+  warning?: ToastColorConfig;
+  /** Info toast colors */
+  info?: ToastColorConfig;
 }
 
 /**
@@ -94,4 +94,3 @@ export interface ToastEvent {
   type: 'click' | 'close' | 'timeout';
   toast: Toast;
 }
-

@@ -78,22 +78,14 @@ npm install
 ### Scripts
 
 ```bash
-# Start demo app (builds libraries first)
+# Start demo app
 npm start
 
 # Build all libraries
 npm run build:libs
 
-# Build individual library
-npm run build:toastr
-npm run build:dialog
-npm run build:core
-
 # Build demo
 npm run build:demo
-
-# Build everything
-npm run build:all
 
 # Publish all packages
 npm run publish:all
@@ -103,14 +95,65 @@ npm run publish:all
 
 ```
 perfect-ui/
+├── shared/
+│   └── perfectui-theme.css  # CSS variables reference
 ├── projects/
-│   ├── core/          # @perfectui/core (all-in-one)
-│   ├── toastr/        # @perfectui/toastr library
-│   ├── dialog/        # @perfectui/dialog library
-│   └── demo/          # Demo application
-├── dist/              # Built packages
-└── .github/           # CI/CD workflows
+│   ├── core/                # @perfectui/core (re-exports all)
+│   ├── toastr/              # @perfectui/toastr
+│   ├── dialog/              # @perfectui/dialog
+│   └── demo/                # Demo application
+└── dist/                    # Built packages
 ```
+
+## Theme Colors
+
+All components use **CSS custom properties** (CSS variables) for theming.
+This makes it easy to customize colors in your global styles, similar to Angular Material.
+
+### Customizing Colors
+
+Add to your `styles.css` or `styles.scss`:
+
+```css
+:root {
+  /* Override default colors */
+  --pui-success-500: #22c55e;
+  --pui-error-500: #f43f5e;
+  --pui-warning-500: #eab308;
+  --pui-info-500: #0ea5e9;
+  
+  /* Customize toast appearance */
+  --pui-toast-radius: 12px;
+  --pui-toast-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+```
+
+### Dark Mode
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pui-neutral-50: #111827;
+    --pui-neutral-900: #f9fafb;
+    --pui-white: #1f2937;
+    --pui-slate-800: #0f172a;
+  }
+}
+```
+
+### Available CSS Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--pui-success-500` | `#10b981` | Success color |
+| `--pui-error-500` | `#ef4444` | Error color |
+| `--pui-warning-500` | `#f59e0b` | Warning color |
+| `--pui-info-500` | `#3b82f6` | Info color |
+| `--pui-neutral-*` | - | Neutral shades (50-900) |
+| `--pui-white` | `#ffffff` | White |
+| `--pui-black` | `#000000` | Black |
+
+See `shared/perfectui-theme.css` for all available variables.
 
 ## Contributing
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-12-28
+
+### Changed
+- Updated to use @perfectui/toastr v1.3.0
+- Updated to use @perfectui/dialog v1.1.0
+- 🎨 All components now support CSS custom properties theming
+
 ## [1.0.0] - 2025-12-25
 
 ### Added
