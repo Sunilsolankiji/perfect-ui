@@ -1,6 +1,6 @@
 # Release Process
 
-This document describes how to release new versions of PerfectUI packages.
+This document describes how to release new versions of PerfectUI.
 
 ## Version Strategy
 
@@ -15,9 +15,9 @@ We follow [Semantic Versioning](https://semver.org/):
 ### Before Release
 
 - [ ] All tests pass
-- [ ] Build succeeds locally
+- [ ] Build succeeds locally: `npm run build:perfectui`
 - [ ] CHANGELOG.md is updated
-- [ ] Version number is bumped in package.json
+- [ ] Version number is bumped in `projects/components/package.json`
 - [ ] Documentation is updated
 - [ ] Breaking changes are documented (if any)
 
@@ -25,25 +25,21 @@ We follow [Semantic Versioning](https://semver.org/):
 
 #### 1. Update Version
 
-Update the version in the package's `package.json`:
+Update the version in `projects/components/package.json`:
 
-```bash
-# For toastr
-# Edit projects/toastr/package.json
-
-# For dialog
-# Edit projects/dialog/package.json
-
-# For core
-# Edit projects/core/package.json
+```json
+{
+  "name": "perfectui",
+  "version": "2.1.0"
+}
 ```
 
 #### 2. Update Changelog
 
-Add release notes to `CHANGELOG.md`:
+Add release notes to `projects/components/CHANGELOG.md`:
 
 ```markdown
-## [1.2.0] - 2025-12-25
+## [2.1.0] - 2026-03-25
 
 ### Added
 - New feature X
@@ -55,52 +51,57 @@ Add release notes to `CHANGELOG.md`:
 - Bug fix for Z
 ```
 
-#### 3. Commit Changes
+#### 3. Build and Test
+
+```bash
+npm run build:perfectui
+npm start
+# Test the changes in the demo app
+```
+
+#### 4. Commit Changes
 
 ```bash
 git add .
-git commit -m "chore: release @perfectui/package-name v1.2.0"
+git commit -m "chore: release perfectui v2.1.0"
 git push origin main
 ```
 
-#### 4. Create GitHub Release
+#### 5. Create GitHub Release
 
 **Option A: Via GitHub UI**
 1. Go to Releases → Create new release
-2. Tag: `toastr-v1.2.0` or `dialog-v1.2.0` or `core-v1.2.0`
-3. Title: `@perfectui/package-name v1.2.0`
+2. Tag: `v2.1.0`
+3. Title: `perfectui v2.1.0`
 4. Description: Copy from CHANGELOG
 5. Publish → Workflow auto-publishes to npm
 
 **Option B: Via GitHub Actions (Manual)**
 1. Go to Actions → "Publish to NPM"
 2. Click "Run workflow"
-3. Select package to publish
-4. Run
+3. Run
 
-#### 5. Verify Release
+#### 6. Publish to npm (Manual)
 
-- [ ] Check npm: https://www.npmjs.com/package/@perfectui/package-name
+```bash
+npm run publish:perfectui
+```
+
+Or manually:
+
+```bash
+cd dist/components
+npm publish --access public
+```
+
+#### 7. Verify Release
+
+- [ ] Check npm: https://www.npmjs.com/package/perfectui
 - [ ] Check GitHub release page
-- [ ] Test installation in a new project
-
----
-
-## Releasing Multiple Packages
-
-When releasing breaking changes that affect multiple packages:
-
-1. Release individual packages first (toastr, dialog)
-2. Update @perfectui/core peerDependencies
-3. Release @perfectui/core last
-
-### Order of Release
-
-```
-1. @perfectui/toastr
-2. @perfectui/dialog
-3. @perfectui/core (depends on above)
-```
+- [ ] Test installation in a new project:
+  ```bash
+  npm install perfectui@latest
+  ```
 
 ---
 
@@ -110,7 +111,7 @@ For urgent bug fixes:
 
 1. Create hotfix branch: `git checkout -b hotfix/issue-123`
 2. Fix the bug
-3. Bump patch version (1.0.0 → 1.0.1)
+3. Bump patch version (2.0.0 → 2.0.1)
 4. Update CHANGELOG
 5. Create PR → Merge → Release
 
@@ -129,7 +130,7 @@ Example deprecation:
 
 ```typescript
 /**
- * @deprecated Use `newMethod()` instead. Will be removed in v2.0.0
+ * @deprecated Use `newMethod()` instead. Will be removed in v3.0.0
  */
 oldMethod() {
   console.warn('oldMethod is deprecated, use newMethod instead');
@@ -141,11 +142,11 @@ oldMethod() {
 
 ## Release Tags Convention
 
-| Package | Tag Format | Example |
-|---------|------------|---------|
-| @perfectui/toastr | `toastr-vX.X.X` | `toastr-v1.2.0` |
-| @perfectui/dialog | `dialog-vX.X.X` | `dialog-v1.0.0` |
-| @perfectui/core | `core-vX.X.X` | `core-v1.0.0` |
+| Release Type | Tag Format | Example |
+|--------------|------------|---------|
+| Stable | `vX.X.X` | `v2.1.0` |
+| Pre-release | `vX.X.X-beta.X` | `v2.1.0-beta.1` |
+| RC | `vX.X.X-rc.X` | `v2.1.0-rc.1` |
 
 ---
 

@@ -21,9 +21,9 @@ Thank you for your interest in contributing to PerfectUI! 🎉
    npm install
    ```
 
-3. **Build the libraries**
+3. **Build the library**
    ```bash
-   npm run build:libs
+   npm run build:perfectui
    ```
 
 4. **Start the demo app**
@@ -36,26 +36,29 @@ Thank you for your interest in contributing to PerfectUI! 🎉
 ```
 perfect-ui/
 ├── projects/
-│   ├── core/            # @perfectui/core library (all-in-one)
-│   ├── toastr/          # @perfectui/toastr library
-│   ├── dialog/          # @perfectui/dialog library
-│   └── demo/            # Demo application
-├── dist/                # Built packages
-└── .github/workflows/   # CI/CD workflows
+│   ├── components/          # perfectui library
+│   │   ├── src/             # Main entry point (re-exports all)
+│   │   ├── dialog/          # perfectui/dialog (secondary entry point)
+│   │   │   ├── ng-package.json
+│   │   │   └── src/
+│   │   ├── toastr/          # perfectui/toastr (secondary entry point)
+│   │   │   ├── ng-package.json
+│   │   │   └── src/
+│   │   └── otp/             # perfectui/otp (secondary entry point)
+│   │       ├── ng-package.json
+│   │       └── src/
+│   └── demo/                # Demo application
+├── dist/                    # Built packages
+└── .github/workflows/       # CI/CD workflows
 ```
 
 ## Development Workflow
 
-### Building Libraries
+### Building the Library
 
 ```bash
-# Build all libraries
-npm run build:libs
-
-# Build individual library
-npm run build:toastr
-npm run build:dialog
-npm run build:core
+# Build the library (includes all secondary entry points)
+npm run build:perfectui
 
 # Build demo
 npm run build:demo
@@ -74,9 +77,53 @@ The demo will be available at `http://localhost:4200`
 
 ### Testing Changes
 
-1. Make changes to a library in `projects/core/`, `projects/toastr/`, or `projects/dialog/`
-2. Rebuild the library: `npm run build:toastr`, `npm run build:dialog`, or `npm run build:core`
+1. Make changes to a component in `projects/components/dialog/`, `projects/components/toastr/`, or `projects/components/otp/`
+2. Rebuild the library: `npm run build:perfectui`
 3. The demo app will use the updated library from `dist/`
+
+## Adding a New Component
+
+### 1. Create Secondary Entry Point
+
+Create a new folder in `projects/components/`:
+
+```
+projects/components/new-component/
+├── ng-package.json
+└── src/
+    ├── index.ts
+    ├── new-component.models.ts
+    ├── new-component.config.ts
+    ├── new-component.provider.ts
+    ├── new-component.service.ts
+    └── new-component.component.ts
+```
+
+### 2. Create ng-package.json
+
+```json
+{
+  "$schema": "../../../../node_modules/ng-packagr/ng-package.schema.json",
+  "lib": {
+    "entryFile": "src/index.ts"
+  }
+}
+```
+
+### 3. Export from Main Entry Point
+
+Update `projects/components/src/public-api.ts`:
+
+```typescript
+export * from 'perfectui/new-component';
+```
+
+### 4. Build and Test
+
+```bash
+npm run build:perfectui
+npm start
+```
 
 ## Submitting Changes
 
@@ -85,7 +132,7 @@ The demo will be available at `http://localhost:4200`
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/my-feature`
 3. Make your changes
-4. Ensure builds pass: `npm run build:libs`
+4. Ensure builds pass: `npm run build:perfectui`
 5. Commit your changes: `git commit -m "feat: add new feature"`
 6. Push to your fork: `git push origin feature/my-feature`
 7. Open a Pull Request
