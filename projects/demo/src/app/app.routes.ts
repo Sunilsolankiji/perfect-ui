@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dialog-demo/dialog-demo').then(m => m.DialogDemo)
   },
   {
+    path: 'otp',
+    loadComponent: () => import('./pages/otp-demo/otp-demo').then(m => m.OtpDemoComponent)
+  },
+  {
     path: 'theme',
     loadComponent: () => import('./pages/theme-config/theme-config').then(m => m.ThemeConfigComponent)
   },

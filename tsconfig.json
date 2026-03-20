@@ -9,6 +9,9 @@
       "@perfectui/dialog": [
         "dist/dialog"
       ],
+      "@perfectui/otp": [
+        "dist/otp"
+      ],
       "@perfectui/core": [
         "dist/core"
       ]
