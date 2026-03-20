@@ -1,0 +1,44 @@
+{
+  "name": "perfectui",
+  "version": "2.0.0",
+  "description": "A modern, tree-shakable UI component library for Angular 19+",
+  "author": "PerfectUI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunilsolankiji/perfect-ui.git",
+    "directory": "projects/components"
+  },
+  "bugs": {
+    "url": "https://github.com/sunilsolankiji/perfect-ui/issues"
+  },
+  "homepage": "https://github.com/sunilsolankiji/perfect-ui#readme",
+  "keywords": [
+    "angular",
+    "ui",
+    "components",
+    "library",
+    "toastr",
+    "toast",
+    "dialog",
+    "modal",
+    "otp",
+    "notification",
+    "angular21",
+    "angular19",
+    "standalone",
+    "accessible",
+    "a11y",
+    "perfectui",
+    "tree-shaking"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/forms": "^19.0.0 || ^20.0.0 || ^21.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

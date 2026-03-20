@@ -3,22 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run build:libs && ng serve demo",
+    "start": "npm run build:perfectui && ng serve demo",
     "build": "ng build",
-    "build:toastr": "ng build @perfectui/toastr --configuration production",
-    "build:dialog": "ng build @perfectui/dialog --configuration production",
-    "build:otp": "ng build @perfectui/otp --configuration production",
-    "build:core": "ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
-    "build:libs": "ng build @perfectui/otp --configuration production && ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
-    "build:demo": "npm run build:libs && ng build demo --base-href /perfect-ui/ --configuration production",
-    "build:all": "npm run build:libs && ng build demo --base-href /perfect-ui/ --configuration production",
-    "watch": "ng build --watch --configuration development",
+    "build:perfectui": "ng build perfectui --configuration production",
+    "build:demo": "npm run build:perfectui && ng build demo --base-href /perfect-ui/ --configuration production",
+    "build:all": "npm run build:perfectui && npm run build:demo",
+    "watch": "ng build perfectui --watch --configuration development",
     "test": "ng test",
-    "publish:toastr": "cd dist/toastr && npm publish --access public",
-    "publish:dialog": "cd dist/dialog && npm publish --access public",
-    "publish:otp": "cd dist/otp && npm publish --access public",
-    "publish:core": "npm run build:core && cd dist/core && npm publish --access public",
-    "publish:all": "npm run publish:toastr && npm run publish:dialog && npm run publish:core"
+    "publish:perfectui": "npm run build:perfectui && cd dist/components && npm publish --access public"
   },
   "prettier": {
     "printWidth": 100,
