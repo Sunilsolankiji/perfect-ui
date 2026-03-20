@@ -7,6 +7,7 @@
     "build": "ng build",
     "build:toastr": "ng build @perfectui/toastr --configuration production",
     "build:dialog": "ng build @perfectui/dialog --configuration production",
+    "build:otp": "ng build @perfectui/otp --configuration production",
     "build:core": "ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
     "build:libs": "ng build @perfectui/otp --configuration production && ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
     "build:demo": "npm run build:libs && ng build demo --configuration production",
@@ -15,6 +16,7 @@
     "test": "ng test",
     "publish:toastr": "cd dist/toastr && npm publish --access public",
     "publish:dialog": "cd dist/dialog && npm publish --access public",
+    "publish:otp": "cd dist/otp && npm publish --access public",
     "publish:core": "cd dist/core && npm publish --access public",
     "publish:all": "npm run publish:toastr && npm run publish:dialog && npm run publish:core"
   },
