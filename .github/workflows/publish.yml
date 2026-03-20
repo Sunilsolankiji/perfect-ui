@@ -15,12 +15,12 @@ on:
           - dialog
           - otp
           - core
+          # Add new libraries here
 
 jobs:
-  publish-toastr:
-    if: github.event.inputs.package == 'toastr' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'toastr'))
+  publish:
     runs-on: ubuntu-latest
-    name: Publish @perfectui/toastr
+    name: Publish @perfectui/${{ github.event.inputs.package || 'release' }}
 
     steps:
       - name: Checkout repository
@@ -29,108 +29,40 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Toastr
-        run: npx ng build @perfectui/toastr --configuration production
+      - name: Determine package to publish
+        id: package
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "name=${{ github.event.inputs.package }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+            if [[ "$TAG" == *"toastr"* ]]; then
+              echo "name=toastr" >> $GITHUB_OUTPUT
+            elif [[ "$TAG" == *"dialog"* ]]; then
+              echo "name=dialog" >> $GITHUB_OUTPUT
+            elif [[ "$TAG" == *"otp"* ]]; then
+              echo "name=otp" >> $GITHUB_OUTPUT
+            elif [[ "$TAG" == *"core"* ]]; then
+              echo "name=core" >> $GITHUB_OUTPUT
+            # Add new libraries here
+            else
+              echo "No matching package found in tag: $TAG"
+              exit 1
+            fi
+          fi
+
+      - name: Build package
+        run: npm run build:${{ steps.package.outputs.name }}
 
       - name: Publish to NPM
-        run: |
-          cd dist/toastr
-          npm publish --access public
+        run: npm run publish:${{ steps.package.outputs.name }} --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  publish-dialog:
-    if: github.event.inputs.package == 'dialog' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'dialog'))
-    runs-on: ubuntu-latest
-    name: Publish @perfectui/dialog
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Dialog
-        run: npx ng build @perfectui/dialog --configuration production
-
-      - name: Publish to NPM
-        run: |
-          cd dist/dialog
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-otp:
-    if: github.event.inputs.package == 'otp' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'otp'))
-    runs-on: ubuntu-latest
-    name: Publish @perfectui/otp
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build OTP
-        run: npx ng build @perfectui/otp --configuration production
-
-      - name: Publish to NPM
-        run: |
-          cd dist/otp
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-core:
-    if: github.event.inputs.package == 'core' || (github.event_name == 'release' && contains(github.event.release.tag_name, 'core'))
-    runs-on: ubuntu-latest
-    name: Publish @perfectui/core
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build all libraries
-        run: |
-          npx ng build @perfectui/toastr --configuration production
-          npx ng build @perfectui/dialog --configuration production
-          npx ng build core --configuration production
-
-      - name: Publish to NPM
-        run: |
-          cd dist/core
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
