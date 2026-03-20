@@ -22,12 +22,13 @@ interface ExternalLink {
   styleUrl: './app.css'
 })
 export class App {
-  coreVersion = '1.1.0';
+  coreVersion = '1.2.0';
   coreNpmUrl = 'https://www.npmjs.com/package/@perfectui/core';
 
   navItems: NavItem[] = [
     { path: '/toastr', label: 'Toastr', icon: '🔔', version: '1.3.0', npmUrl: 'https://www.npmjs.com/package/@perfectui/toastr' },
     { path: '/dialog', label: 'Dialog', icon: '💬', version: '1.1.0', npmUrl: 'https://www.npmjs.com/package/@perfectui/dialog' },
+    { path: '/otp', label: 'OTP', icon: '🔢', version: '1.0.0', npmUrl: 'https://www.npmjs.com/package/@perfectui/otp' },
     { path: '/theme', label: 'Theme', icon: '🎨', version: '', npmUrl: '' },
   ];
 

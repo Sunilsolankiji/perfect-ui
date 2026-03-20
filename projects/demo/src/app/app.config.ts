@@ -2,6 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideToastr } from '@perfectui/toastr';
 import { provideDialog } from '@perfectui/dialog';
+import { provideOtp } from '@perfectui/otp';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -21,6 +22,13 @@ export const appConfig: ApplicationConfig = {
       closeOnBackdropClick: true,
       closeOnEscape: true,
       showCloseButton: true,
+    }),
+    provideOtp({
+      length: 6,
+      inputType: 'numeric',
+      theme: 'default',
+      size: 'medium',
+      autoFocus: true,
     }),
   ]
 };

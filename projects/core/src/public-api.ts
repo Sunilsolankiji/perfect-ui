@@ -14,3 +14,4 @@
 // Re-export all @perfectui packages
 export * from '@perfectui/toastr';
 export * from '@perfectui/dialog';
+export * from '@perfectui/otp';

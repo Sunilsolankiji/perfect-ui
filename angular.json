@@ -52,6 +52,29 @@
         }
       }
     },
+    "@perfectui/otp": {
+      "projectType": "library",
+      "root": "projects/otp",
+      "sourceRoot": "projects/otp/src",
+      "prefix": "pui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/otp/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/otp/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/otp/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
     "demo": {
       "projectType": "application",
       "schematics": {

@@ -28,13 +28,16 @@ jobs:
         run: npm ci
 
       - name: Build Toastr Library
-        run: npx ng build @perfectui/toastr --configuration production
+        run: npm run build:toastr
 
       - name: Build Dialog Library
-        run: npx ng build @perfectui/dialog --configuration production
+        run: npm run build:dialog
+
+      - name: Build OTP Library
+        run: npm run build:otp
 
       - name: Build Core Library
-        run: npx ng build core --configuration production
+        run: npm run build:core
 
       - name: Build Demo Application
         run: npx ng build demo --configuration production
