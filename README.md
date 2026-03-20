@@ -193,15 +193,27 @@ Add to your `styles.css`:
 
 See `shared/perfectui-theme.css` for all available variables.
 
+## Versioning
+
+This project uses [Semantic Versioning](https://semver.org/) with automated changelog generation based on [Conventional Commits](https://www.conventionalcommits.org/).
+
+- **Patch** (1.0.x) - Bug fixes, performance improvements
+- **Minor** (1.x.0) - New features (backward compatible)
+- **Major** (x.0.0) - Breaking changes
+
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details.
+Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details on:
+
+- Development setup
+- Commit message conventions
+- Pull request process
+- Release process
 
 ## Documentation
 
-- [Development Guide](./docs/DEVELOPMENT.md) - How to create new components
-- [Release Process](./docs/RELEASE.md) - How to release new versions
-- [Roadmap](./ROADMAP.md) - Planned features and components
+- [Contributing Guide](./CONTRIBUTING.md) - How to contribute
+- [Changelog](./projects/components/CHANGELOG.md) - Version history
 
 ## License
 

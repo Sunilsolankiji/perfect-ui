@@ -139,22 +139,76 @@ npm start
 
 ### Commit Message Convention
 
-We follow [Conventional Commits](https://www.conventionalcommits.org/):
+We use [Conventional Commits](https://www.conventionalcommits.org/) for automatic versioning and changelog generation.
 
-- `feat:` - New feature
-- `fix:` - Bug fix
-- `docs:` - Documentation changes
-- `style:` - Code style changes (formatting, etc.)
-- `refactor:` - Code refactoring
-- `perf:` - Performance improvements
-- `test:` - Adding or updating tests
-- `chore:` - Maintenance tasks
+#### Commit Message Format
 
-Examples:
 ```
-feat(dialog): add template support
-fix(toastr): fix progress bar animation
-docs: update README with new examples
+<type>(<scope>): <subject>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+#### Types
+
+| Type | Description | Version Bump |
+|------|-------------|--------------|
+| `feat` | New feature | Minor |
+| `fix` | Bug fix | Patch |
+| `docs` | Documentation changes | None |
+| `style` | Code style changes | None |
+| `refactor` | Code refactoring | None |
+| `perf` | Performance improvements | Patch |
+| `test` | Adding or updating tests | None |
+| `build` | Build system changes | None |
+| `ci` | CI/CD changes | None |
+| `chore` | Maintenance tasks | None |
+| `revert` | Revert commits | Patch |
+
+#### Scopes
+
+- `dialog` - Dialog component
+- `toastr` - Toastr component
+- `otp` - OTP component
+- `core` - Core functionality
+- `demo` - Demo application
+- `deps` - Dependencies
+
+#### Examples
+
+```bash
+# Feature (bumps minor version)
+git commit -m "feat(dialog): add animation options"
+
+# Bug fix (bumps patch version)
+git commit -m "fix(toastr): prevent duplicate notifications"
+
+# Breaking change (bumps major version)
+git commit -m "feat(dialog)!: change API for dialog configuration
+
+BREAKING CHANGE: DialogConfig interface has been renamed to DialogOptions"
+```
+
+## Release Process
+
+Releases are automated using semantic versioning based on commit messages:
+
+| Commit Type | Version Bump |
+|-------------|--------------|
+| `fix`, `perf` | Patch (1.0.x) |
+| `feat` | Minor (1.x.0) |
+| `feat!`, `BREAKING CHANGE` | Major (x.0.0) |
+
+### Release Commands (Maintainers)
+
+```bash
+npm run release:dry    # Preview changes
+npm run release:patch  # Release patch
+npm run release:minor  # Release minor
+npm run release:major  # Release major
+npm run release        # Auto-detect from commits
 ```
 
 ## Code Style
