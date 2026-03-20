@@ -65,4 +65,3 @@ jobs:
         run: npm run publish:${{ steps.package.outputs.name }} --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
