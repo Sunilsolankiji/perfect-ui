@@ -22,7 +22,7 @@ interface ExternalLink {
   styleUrl: './app.css'
 })
 export class App {
-  coreVersion = '1.1.0';
+  coreVersion = '1.2.0';
   coreNpmUrl = 'https://www.npmjs.com/package/@perfectui/core';
 
   navItems: NavItem[] = [

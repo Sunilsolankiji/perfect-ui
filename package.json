@@ -17,7 +17,7 @@
     "publish:toastr": "cd dist/toastr && npm publish --access public",
     "publish:dialog": "cd dist/dialog && npm publish --access public",
     "publish:otp": "cd dist/otp && npm publish --access public",
-    "publish:core": "cd dist/core && npm publish --access public",
+    "publish:core": "npm run build:core && cd dist/core && npm publish --access public",
     "publish:all": "npm run publish:toastr && npm run publish:dialog && npm run publish:core"
   },
   "prettier": {
