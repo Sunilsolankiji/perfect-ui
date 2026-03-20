@@ -2,6 +2,8 @@
 
 A modern, tree-shakable UI component library for Angular 19+.
 
+🔗 **[Live Demo](https://sunilsolankiji.github.io/perfect-ui/)**
+
 ## Features
 
 - 🌳 **Tree-shakable** - Only include what you use with secondary entry points

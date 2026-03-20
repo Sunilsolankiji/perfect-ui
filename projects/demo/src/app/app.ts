@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { VERSION } from '@sunilsolankiji/perfectui';
 
 interface NavItem {
   path: string;
@@ -22,7 +23,7 @@ interface ExternalLink {
   styleUrl: './app.css'
 })
 export class App {
-  coreVersion = '2.0.0';
+  coreVersion = VERSION;
   coreNpmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
   navItems: NavItem[] = [

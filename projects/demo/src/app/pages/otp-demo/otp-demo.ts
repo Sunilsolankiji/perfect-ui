@@ -1,44 +1,30 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
-import { OtpComponent, OtpCompleteEvent, OtpChangeEvent, OtpService } from '@sunilsolankiji/perfectui/otp';
+import { OtpComponent, OtpCompleteEvent, OtpChangeEvent, OtpService, OtpTheme, OtpSize, OtpInputType } from '@sunilsolankiji/perfectui/otp';
+
+type OtpGenerateType = 'numeric' | 'alphanumeric' | 'alphabetic';
 
 @Component({
   selector: 'app-otp-demo',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, OtpComponent],
   templateUrl: './otp-demo.html',
-  styleUrls: ['./otp-demo.css'],
+  styleUrl: './otp-demo.css',
 })
 export class OtpDemoComponent {
-  // Basic usage
-  basicOtp = '';
-  basicCompleted = signal(false);
+  readonly packageName = '@sunilsolankiji/perfectui/otp';
+  readonly npmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
-  // Theme examples
-  defaultThemeOtp = '';
-  outlineThemeOtp = '';
-  underlineThemeOtp = '';
-  filledThemeOtp = '';
+  // Theme and size selection
+  selectedTheme: OtpTheme = 'default';
+  selectedSize: OtpSize = 'medium';
+  selectedInputType: OtpInputType = 'numeric';
 
-  // Size examples
-  smallOtp = '';
-  mediumOtp = '';
-  largeOtp = '';
-
-  // Input types
-  numericOtp = '';
-  alphanumericOtp = '';
-
-  // Special features
-  maskedOtp = '';
-  separatorOtp = '';
-  fourDigitPin = '';
-
-  // Status examples
-  errorOtp = '';
-  successOtp = '123456';
-  showError = signal(false);
+  // Demo values
+  demoOtp = '';
+  demoCompleted = signal(false);
+  lastResult = '';
 
   // Reactive forms
   otpControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
@@ -48,34 +34,45 @@ export class OtpDemoComponent {
 
   constructor(private otpService: OtpService) {}
 
-  onBasicComplete(event: OtpCompleteEvent) {
-    console.log('OTP Completed:', event);
-    this.basicCompleted.set(true);
-    // Simulate verification
-    setTimeout(() => {
-      this.basicCompleted.set(false);
-    }, 2000);
+  setTheme(theme: OtpTheme) {
+    this.selectedTheme = theme;
   }
 
-  onOtpChange(event: OtpChangeEvent) {
+  setSize(size: OtpSize) {
+    this.selectedSize = size;
+  }
+
+  setInputType(type: OtpInputType) {
+    this.selectedInputType = type;
+    this.demoOtp = '';
+  }
+
+  onComplete(event: OtpCompleteEvent) {
+    this.demoCompleted.set(true);
+    this.lastResult = `OTP Completed: ${event.value}`;
+    setTimeout(() => this.demoCompleted.set(false), 2000);
+  }
+
+  onChange(event: OtpChangeEvent) {
     console.log('OTP Changed:', event);
   }
 
-  simulateError() {
-    this.showError.set(true);
-    setTimeout(() => {
-      this.showError.set(false);
-      this.errorOtp = '';
-    }, 2000);
-  }
-
   generateOtp() {
-    this.generatedOtp.set(this.otpService.generateOtp(6, 'numeric'));
+    const type = this.selectedInputType === 'any' ? 'alphanumeric' : this.selectedInputType as OtpGenerateType;
+    this.generatedOtp.set(this.otpService.generateOtp(6, type));
+    this.lastResult = `Generated OTP: ${this.generatedOtp()}`;
   }
 
   validateOtp() {
-    const isValid = this.otpService.validateOtp(this.otpControl.value || '', 6, 'numeric');
-    console.log('OTP Valid:', isValid);
-    alert(isValid ? 'OTP is valid!' : 'OTP is invalid!');
+    const type = this.selectedInputType === 'any' ? 'alphanumeric' : this.selectedInputType as OtpGenerateType;
+    const isValid = this.otpService.validateOtp(this.otpControl.value || '', 6, type);
+    this.lastResult = isValid ? '✅ OTP is valid!' : '❌ OTP is invalid!';
+  }
+
+  clearOtp() {
+    this.demoOtp = '';
+    this.otpControl.reset();
+    this.generatedOtp.set('');
+    this.lastResult = '';
   }
 }

@@ -1,198 +1,135 @@
-<div class="otp-demo">
-  <h1>OTP Component Demo</h1>
-  <p class="subtitle">A modern, customizable OTP input component for Angular</p>
+<div class="demo-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🔢 PerfectUI OTP</h1>
+      <p class="subtitle">A modern OTP input component for Angular with theming support</p>
+    </div>
+    <a rel="noopener noreferrer" class="package-badge">
+      <span class="package-name">{{ packageName }}</span>
+    </a>
+  </div>
 
-  <!-- Basic Usage -->
-  <section class="demo-section">
-    <h2>Basic Usage</h2>
-    <p>Simple 6-digit OTP input with default settings.</p>
-    <div class="demo-box">
+  <div class="section">
+    <h2>🎨 Theme Selection</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'default'" (click)="setTheme('default')">
+        Default
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'outline'" (click)="setTheme('outline')">
+        Outline
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'underline'" (click)="setTheme('underline')">
+        Underline
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'filled'" (click)="setTheme('filled')">
+        Filled
+      </button>
+    </div>
+    <p class="theme-hint">Selected: <strong>{{ selectedTheme }}</strong></p>
+  </div>
+
+  <div class="section">
+    <h2>📐 Size Selection</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedSize === 'small'" (click)="setSize('small')">
+        Small
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedSize === 'medium'" (click)="setSize('medium')">
+        Medium
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedSize === 'large'" (click)="setSize('large')">
+        Large
+      </button>
+    </div>
+    <p class="theme-hint">Selected: <strong>{{ selectedSize }}</strong></p>
+  </div>
+
+  <div class="section">
+    <h2>⌨️ Input Type</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedInputType === 'numeric'" (click)="setInputType('numeric')">
+        Numeric
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedInputType === 'alphanumeric'" (click)="setInputType('alphanumeric')">
+        Alphanumeric
+      </button>
+      <button class="btn btn-theme" [class.active]="selectedInputType === 'alphabetic'" (click)="setInputType('alphabetic')">
+        Alphabetic
+      </button>
+    </div>
+    <p class="theme-hint">Selected: <strong>{{ selectedInputType }}</strong></p>
+  </div>
+
+  <div class="section">
+    <h2>🔢 Live Demo</h2>
+    <div class="otp-demo-box">
       <pui-otp
-        [(value)]="basicOtp"
-        (completed)="onBasicComplete($event)"
-        (changed)="onOtpChange($event)"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [inputType]="selectedInputType"
+        [(value)]="demoOtp"
+        (completed)="onComplete($event)"
+        (changed)="onChange($event)"
       />
-      <div class="demo-info">
-        <span>Value: {{ basicOtp || '(empty)' }}</span>
-        @if (basicCompleted()) {
+      <div class="otp-value">
+        Value: <code>{{ demoOtp || '(empty)' }}</code>
+        @if (demoCompleted()) {
           <span class="success-badge">✓ Completed!</span>
         }
       </div>
     </div>
-    <pre><code>&lt;pui-otp [(value)]="otp" (completed)="onComplete($event)" /&gt;</code></pre>
-  </section>
+  </div>
 
-  <!-- Themes -->
-  <section class="demo-section">
-    <h2>Themes</h2>
-    <p>Choose from multiple visual themes.</p>
-
-    <div class="demo-grid">
-      <div class="demo-item">
-        <h3>Default</h3>
-        <pui-otp theme="default" [(value)]="defaultThemeOtp" />
-      </div>
-
-      <div class="demo-item">
-        <h3>Outline</h3>
-        <pui-otp theme="outline" [(value)]="outlineThemeOtp" />
-      </div>
-
-      <div class="demo-item">
-        <h3>Underline</h3>
-        <pui-otp theme="underline" [(value)]="underlineThemeOtp" />
-      </div>
-
-      <div class="demo-item">
-        <h3>Filled</h3>
-        <pui-otp theme="filled" [(value)]="filledThemeOtp" />
-      </div>
-    </div>
-  </section>
-
-  <!-- Sizes -->
-  <section class="demo-section">
-    <h2>Sizes</h2>
-    <p>Available in small, medium, and large sizes.</p>
-
-    <div class="demo-grid">
-      <div class="demo-item">
-        <h3>Small</h3>
-        <pui-otp size="small" [(value)]="smallOtp" />
-      </div>
-
-      <div class="demo-item">
-        <h3>Medium (Default)</h3>
-        <pui-otp size="medium" [(value)]="mediumOtp" />
-      </div>
-
-      <div class="demo-item">
-        <h3>Large</h3>
-        <pui-otp size="large" [(value)]="largeOtp" />
-      </div>
-    </div>
-  </section>
-
-  <!-- Input Types -->
-  <section class="demo-section">
-    <h2>Input Types</h2>
-    <p>Support for numeric, alphanumeric, and alphabetic inputs.</p>
-
-    <div class="demo-grid">
-      <div class="demo-item">
-        <h3>Numeric (Default)</h3>
-        <pui-otp inputType="numeric" [(value)]="numericOtp" />
-        <span class="hint">Only numbers allowed</span>
-      </div>
-
-      <div class="demo-item">
-        <h3>Alphanumeric</h3>
-        <pui-otp inputType="alphanumeric" [(value)]="alphanumericOtp" />
-        <span class="hint">Letters and numbers allowed</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Special Features -->
-  <section class="demo-section">
-    <h2>Special Features</h2>
-
-    <div class="demo-grid">
-      <div class="demo-item">
-        <h3>4-Digit PIN (Masked)</h3>
-        <pui-otp
-          [length]="4"
-          [masked]="true"
-          theme="filled"
-          size="large"
-          [(value)]="fourDigitPin"
-        />
-        <span class="hint">Characters are hidden for security</span>
-      </div>
-
-      <div class="demo-item">
-        <h3>With Separator</h3>
-        <pui-otp
-          [length]="8"
-          [separatorAfter]="4"
-          separatorChar="-"
-          [(value)]="separatorOtp"
-        />
-        <span class="hint">Separator shown after every 4 digits</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Status States -->
-  <section class="demo-section">
-    <h2>Status States</h2>
-    <p>Visual feedback for validation states.</p>
-
-    <div class="demo-grid">
-      <div class="demo-item">
-        <h3>Error State</h3>
-        <pui-otp
-          [status]="showError() ? 'error' : 'default'"
-          [(value)]="errorOtp"
-        />
-        <button class="demo-btn" (click)="simulateError()">Simulate Error</button>
-      </div>
-
-      <div class="demo-item">
-        <h3>Success State</h3>
-        <pui-otp
-          status="success"
-          [(value)]="successOtp"
-          [readonly]="true"
-        />
-        <span class="hint">Read-only with success styling</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Disabled State -->
-  <section class="demo-section">
-    <h2>Disabled State</h2>
-    <div class="demo-box">
-      <pui-otp [disabled]="true" [value]="'123456'" />
-    </div>
-  </section>
-
-  <!-- Reactive Forms -->
-  <section class="demo-section">
-    <h2>Reactive Forms Integration</h2>
-    <p>Works seamlessly with Angular Reactive Forms.</p>
-
-    <div class="demo-box">
-      <pui-otp [formControl]="otpControl" theme="outline" />
-      <div class="demo-info">
-        <span>Value: {{ otpControl.value || '(empty)' }}</span>
-        <span [class.invalid]="otpControl.invalid">
-          Status: {{ otpControl.valid ? 'Valid' : 'Invalid' }}
-        </span>
-      </div>
-      <button
-        class="demo-btn"
-        [disabled]="otpControl.invalid"
-        (click)="validateOtp()"
-      >
-        Validate OTP
+  <div class="section">
+    <h2>⚡ Actions</h2>
+    <div class="button-group">
+      <button class="btn btn-success" (click)="generateOtp()">
+        🎲 Generate OTP
+      </button>
+      <button class="btn btn-info" (click)="validateOtp()">
+        ✅ Validate
+      </button>
+      <button class="btn btn-clear" (click)="clearOtp()">
+        🗑️ Clear
       </button>
     </div>
-  </section>
+  </div>
 
-  <!-- Service Usage -->
-  <section class="demo-section">
-    <h2>OtpService</h2>
-    <p>Utility service for OTP operations.</p>
-
-    <div class="demo-box">
-      <button class="demo-btn" (click)="generateOtp()">Generate Random OTP</button>
-      @if (generatedOtp()) {
-        <div class="generated-otp">
-          Generated: <strong>{{ generatedOtp() }}</strong>
-        </div>
-      }
+  <div class="section">
+    <h2>📝 Reactive Forms</h2>
+    <div class="otp-demo-box">
+      <pui-otp
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [inputType]="selectedInputType"
+        [formControl]="otpControl"
+      />
+      <div class="otp-value">
+        Value: <code>{{ otpControl.value || '(empty)' }}</code>
+        <span [class]="otpControl.valid ? 'success-badge' : 'error-badge'">
+          {{ otpControl.valid ? '✓ Valid' : '✗ Invalid' }}
+        </span>
+      </div>
     </div>
-  </section>
+  </div>
+
+  @if (lastResult) {
+    <div class="result-box">
+      <h3>Last Result:</h3>
+      <p>{{ lastResult }}</p>
+    </div>
+  }
+
+  <div class="features">
+    <h2>✨ Features</h2>
+    <ul>
+      <li>🎨 <strong>4 Built-in Themes</strong> - Default, Outline, Underline, Filled</li>
+      <li>📐 <strong>3 Sizes</strong> - Small, Medium, Large</li>
+      <li>⌨️ <strong>Input Types</strong> - Numeric, Alphanumeric, Alphabetic</li>
+      <li>🔒 <strong>Masked Mode</strong> - Hide characters for security</li>
+      <li>📋 <strong>Paste Support</strong> - Auto-fill from clipboard</li>
+      <li>📝 <strong>Reactive Forms</strong> - Full Angular forms integration</li>
+      <li>♿ <strong>Accessible</strong> - Full ARIA support</li>
+    </ul>
+  </div>
 </div>
