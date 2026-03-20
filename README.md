@@ -135,63 +135,105 @@ perfect-ui/
 ├── projects/
 │   ├── components/          # @sunilsolankiji/perfectui library
 │   │   ├── src/             # Main entry point
+│   │   ├── core/            # @sunilsolankiji/perfectui/core (theming)
 │   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog
 │   │   ├── toastr/          # @sunilsolankiji/perfectui/toastr
-│   │   └── otp/             # @sunilsolankiji/perfectui/otp
+│   │   ├── otp/             # @sunilsolankiji/perfectui/otp
+│   │   ├── themes/          # Prebuilt CSS themes
+│   │   └── _index.scss      # SCSS theming API
 │   └── demo/                # Demo application
-├── dist/                    # Built packages
-└── shared/
-    └── perfectui-theme.css  # CSS variables reference
+└── dist/                    # Built packages
 ```
 
-## Theme Colors
+## Theming
 
-All components use **CSS custom properties** (CSS variables) for theming.
+PerfectUI provides an Angular Material-inspired theming system with prebuilt themes and full customization support.
 
-### Customizing Colors
+### Quick Start - Prebuilt Themes
 
-Add to your `styles.css`:
+Import a prebuilt theme CSS in your `styles.css`:
 
 ```css
-:root {
-  /* Override default colors */
-  --pui-success-500: #22c55e;
-  --pui-error-500: #f43f5e;
-  --pui-warning-500: #eab308;
-  --pui-info-500: #0ea5e9;
-  
-  /* Customize toast appearance */
-  --pui-toast-radius: 12px;
-  --pui-toast-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
+@import '@sunilsolankiji/perfectui/themes/indigo-pink.css';
 ```
 
-### Dark Mode
+Available prebuilt themes:
+- `indigo-pink.css` (default)
+- `deep-purple-amber.css`
 
-```css
-@media (prefers-color-scheme: dark) {
-  :root {
-    --pui-neutral-50: #111827;
-    --pui-neutral-900: #f9fafb;
-    --pui-white: #1f2937;
-    --pui-slate-800: #0f172a;
+### Programmatic Theming
+
+Use the `providePerfectUI` function for dynamic theming:
+
+```typescript
+import { providePerfectUI } from '@sunilsolankiji/perfectui/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    providePerfectUI({
+      theme: 'indigo-pink',
+      darkMode: 'auto',     // 'light' | 'dark' | 'auto'
+      density: 'default',   // 'compact' | 'default' | 'comfortable'
+    }),
+  ],
+};
+```
+
+### Using ThemeService
+
+```typescript
+import { ThemeService } from '@sunilsolankiji/perfectui/core';
+
+@Component({...})
+export class MyComponent {
+  private theme = inject(ThemeService);
+
+  toggleDarkMode() {
+    this.theme.toggleDarkMode();
+  }
+
+  setTheme() {
+    this.theme.setTheme('deep-purple-amber');
   }
 }
 ```
 
-### Available CSS Variables
+### SCSS Theming (Advanced)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--pui-success-500` | `#10b981` | Success color |
-| `--pui-error-500` | `#ef4444` | Error color |
-| `--pui-warning-500` | `#f59e0b` | Warning color |
-| `--pui-info-500` | `#3b82f6` | Info color |
-| `--pui-neutral-*` | - | Neutral shades (50-900) |
-| `--pui-white` | `#ffffff` | White |
-| `--pui-black` | `#000000` | Black |
+For full control, use the SCSS API:
 
-See `shared/perfectui-theme.css` for all available variables.
+```scss
+@use '@sunilsolankiji/perfectui' as pui;
+
+// Include core styles
+@include pui.core();
+
+// Define your theme
+$my-theme: pui.define-light-theme(
+  pui.define-palette(pui.$indigo),
+  pui.define-palette(pui.$pink)
+);
+
+// Apply theme
+@include pui.theme($my-theme);
+```
+
+### CSS Variables Reference
+
+| Variable | Description |
+|----------|-------------|
+| `--pui-primary` | Primary color (500 shade) |
+| `--pui-primary-{50-900}` | Primary color shades |
+| `--pui-accent` | Accent color |
+| `--pui-warn` | Warning/error color |
+| `--pui-success` | Success color |
+| `--pui-info` | Info color |
+| `--pui-foreground-text` | Text color |
+| `--pui-background` | Background color |
+| `--pui-background-card` | Card background |
+| `--pui-border-radius` | Global border radius |
+| `--pui-shadow-{1-5}` | Shadow elevation levels |
+
 
 ## Versioning
 

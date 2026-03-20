@@ -6,6 +6,9 @@
       "@sunilsolankiji/perfectui": [
         "dist/components"
       ],
+      "@sunilsolankiji/perfectui/core": [
+        "dist/components/core"
+      ],
       "@sunilsolankiji/perfectui/dialog": [
         "dist/components/dialog"
       ],

@@ -1,104 +1,132 @@
 <div class="demo-container">
   <h1>🎨 Theme Configurator</h1>
-  <p class="subtitle">Customize PerfectUI colors and see changes live</p>
+  <p class="subtitle">Switch between prebuilt themes and customize appearance</p>
+
+  <!-- Theme Selection -->
+  <section class="config-section">
+    <h2>Choose Theme</h2>
+    <p class="section-description">Select a prebuilt theme palette</p>
+
+    <div class="theme-grid">
+      @for (theme of themes; track theme.id) {
+        <button
+          class="theme-card"
+          [class.active]="currentThemeId() === theme.id"
+          (click)="setTheme(theme.id)"
+        >
+          <div class="theme-colors">
+            <span class="color-dot primary" [style.background-color]="theme.primaryColor"></span>
+            <span class="color-dot accent" [style.background-color]="theme.accentColor"></span>
+          </div>
+          <span class="theme-name">{{ theme.name }}</span>
+          @if (currentThemeId() === theme.id) {
+            <span class="active-badge">✓ Active</span>
+          }
+        </button>
+      }
+    </div>
+  </section>
+
+  <!-- Dark Mode Toggle -->
+  <section class="config-section">
+    <h2>Appearance Mode</h2>
+    <p class="section-description">Toggle between light and dark mode</p>
+
+    <div class="mode-toggle">
+      <button
+        class="mode-btn"
+        [class.active]="!isDarkMode()"
+        (click)="setDarkMode(false)"
+      >
+        ☀️ Light
+      </button>
+      <button
+        class="mode-btn"
+        [class.active]="isDarkMode()"
+        (click)="setDarkMode(true)"
+      >
+        🌙 Dark
+      </button>
+    </div>
+  </section>
+
+  <!-- Density Selection -->
+  <section class="config-section">
+    <h2>Density</h2>
+    <p class="section-description">Adjust spacing and sizing throughout the UI</p>
+
+    <div class="density-options">
+      @for (density of densities; track density.id) {
+        <button
+          class="density-card"
+          [class.active]="currentDensity() === density.id"
+          (click)="setDensity(density.id)"
+        >
+          <span class="density-name">{{ density.name }}</span>
+          <span class="density-description">{{ density.description }}</span>
+          @if (currentDensity() === density.id) {
+            <span class="active-badge">✓</span>
+          }
+        </button>
+      }
+    </div>
+  </section>
 
   <!-- Live Preview Section -->
-  <div class="preview-section">
-    <h3>Live Preview</h3>
-    <p class="preview-hint">Click buttons to test your theme with actual components</p>
+  <section class="config-section preview-section">
+    <h2>Live Preview</h2>
+    <p class="section-description">Test your theme with actual components</p>
+
     <div class="preview-buttons">
-      <button class="btn btn-success" (click)="previewSuccess()">✓ Success Toast</button>
-      <button class="btn btn-error" (click)="previewError()">✕ Error Toast</button>
-      <button class="btn btn-warning" (click)="previewWarning()">⚠ Warning Toast</button>
-      <button class="btn btn-info" (click)="previewInfo()">ℹ Info Toast</button>
-      <button class="btn btn-custom" (click)="previewDialog()">💬 Dialog</button>
-      <button class="btn btn-custom" (click)="previewAlert()">📢 Alert</button>
+      <button class="btn btn-success" (click)="previewSuccess()">✓ Success</button>
+      <button class="btn btn-error" (click)="previewError()">✕ Error</button>
+      <button class="btn btn-warning" (click)="previewWarning()">⚠ Warning</button>
+      <button class="btn btn-info" (click)="previewInfo()">ℹ Info</button>
+      <button class="btn btn-primary" (click)="previewDialog()">💬 Dialog</button>
+      <button class="btn btn-secondary" (click)="previewAlert()">📢 Alert</button>
     </div>
-  </div>
+  </section>
 
-  <div class="config-layout">
-    <!-- Color Picker Sections -->
-    <div class="config-panel">
-      @for (section of sections(); track section.title; let sectionIndex = $index) {
-        <div class="config-section">
-          <div class="section-header">
-            <h3>{{ section.title }}</h3>
-            <button class="btn-reset-section" (click)="resetSection(sectionIndex)">
-              Reset
-            </button>
-          </div>
-          <div class="color-grid">
-            @for (color of section.colors; track color.name; let colorIndex = $index) {
-              <div class="color-item">
-                <label [for]="color.name">{{ color.label }}</label>
-                <div class="color-input-group">
-                  @if (isColor(color.value)) {
-                    <input
-                      type="color"
-                      [id]="color.name"
-                      [value]="color.value"
-                      (input)="updateColor(sectionIndex, colorIndex, $any($event.target).value)"
-                      class="color-picker"
-                    />
-                  }
-                  <input
-                    type="text"
-                    [value]="color.value"
-                    (input)="updateColor(sectionIndex, colorIndex, $any($event.target).value)"
-                    class="color-text"
-                    [class.full-width]="!isColor(color.value)"
-                  />
-                </div>
-                @if (color.value !== color.default) {
-                  <span class="changed-badge">Modified</span>
-                }
-              </div>
-            }
-          </div>
-        </div>
-      }
-
-      <div class="action-buttons">
-        <button class="btn btn-clear" (click)="resetAll()">
-          🔄 Reset All to Defaults
-        </button>
+  <!-- Current Theme Info -->
+  <section class="config-section info-section">
+    <h2>Current Configuration</h2>
+    <div class="config-info">
+      <div class="info-item">
+        <span class="info-label">Theme:</span>
+        <span class="info-value">{{ currentTheme()?.name || 'Not set' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Mode:</span>
+        <span class="info-value">{{ isDarkMode() ? 'Dark' : 'Light' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Density:</span>
+        <span class="info-value">{{ currentDensity() }}</span>
       </div>
     </div>
+  </section>
 
-    <!-- Generated CSS Panel -->
-    <div class="css-panel">
-      <div class="css-header">
-        <h3>Generated CSS</h3>
-        <div class="css-actions">
-          <button class="btn btn-info" (click)="copyCSS(false)">
-            {{ copied() ? '✓ Copied!' : '📋 Copy Changes' }}
-          </button>
-          <button class="btn btn-custom" (click)="copyCSS(true)">
-            📋 Copy Full Theme
-          </button>
-        </div>
-      </div>
+  <!-- Usage Instructions -->
+  <section class="config-section usage-section">
+    <h2>How to Use</h2>
+    <div class="usage-content">
+      <h3>1. Import the provider</h3>
+      <pre><code>import {{ '{' }} providePerfectUI {{ '}' }} from '@sunilsolankiji/perfectui/core';</code></pre>
 
-      <div class="css-preview">
-        <pre><code>{{ generatedCSS() }}</code></pre>
-      </div>
+      <h3>2. Configure in your app</h3>
+      <pre><code>providePerfectUI({{ '{' }}
+  theme: 'indigo-pink',
+  darkMode: 'auto',
+  density: 'default'
+{{ '}' }})</code></pre>
 
-      <div class="css-instructions">
-        <h4>How to use:</h4>
-        <ol>
-          <li>Customize colors using the pickers above</li>
-          <li>Click "Copy Changes" or "Copy Full Theme"</li>
-          <li>Paste in your project's <code>styles.css</code></li>
-        </ol>
-      </div>
+      <h3>3. Use ThemeService for runtime changes</h3>
+      <pre><code>themeService.setTheme('deep-purple-amber');
+themeService.toggleDarkMode();
+themeService.setDensity('compact');</code></pre>
 
-      <div class="css-header" style="margin-top: 24px;">
-        <h3>Full Theme CSS</h3>
-      </div>
-      <div class="css-preview css-preview-full">
-        <pre><code>{{ fullCSS() }}</code></pre>
-      </div>
+      <h3>4. Or import a prebuilt CSS theme</h3>
+      <pre><code>@import '@sunilsolankiji/perfectui/themes/indigo-pink.css';</code></pre>
     </div>
-  </div>
+  </section>
 </div>
-

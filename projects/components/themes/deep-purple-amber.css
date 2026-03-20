@@ -1,0 +1,160 @@
+/**
+ * PerfectUI Deep-Purple-Amber Theme (Light)
+ *
+ * Usage:
+ * @import '@sunilsolankiji/perfectui/themes/deep-purple-amber.css';
+ */
+
+:root {
+  /* Primary - Deep Purple */
+  --pui-primary-50: #ede7f6;
+  --pui-primary-100: #d1c4e9;
+  --pui-primary-200: #b39ddb;
+  --pui-primary-300: #9575cd;
+  --pui-primary-400: #7e57c2;
+  --pui-primary-500: #673ab7;
+  --pui-primary-600: #5e35b1;
+  --pui-primary-700: #512da8;
+  --pui-primary-800: #4527a0;
+  --pui-primary-900: #311b92;
+  --pui-primary: var(--pui-primary-500);
+  --pui-primary-contrast: #ffffff;
+
+  /* Accent - Amber */
+  --pui-accent-50: #fff8e1;
+  --pui-accent-100: #ffecb3;
+  --pui-accent-200: #ffe082;
+  --pui-accent-300: #ffd54f;
+  --pui-accent-400: #ffca28;
+  --pui-accent-500: #ffc107;
+  --pui-accent-600: #ffb300;
+  --pui-accent-700: #ffa000;
+  --pui-accent-800: #ff8f00;
+  --pui-accent-900: #ff6f00;
+  --pui-accent: var(--pui-accent-500);
+  --pui-accent-contrast: rgba(0, 0, 0, 0.87);
+
+  /* Warn - Red */
+  --pui-warn-50: #ffebee;
+  --pui-warn-100: #ffcdd2;
+  --pui-warn-200: #ef9a9a;
+  --pui-warn-300: #e57373;
+  --pui-warn-400: #ef5350;
+  --pui-warn-500: #f44336;
+  --pui-warn-600: #e53935;
+  --pui-warn-700: #d32f2f;
+  --pui-warn-800: #c62828;
+  --pui-warn-900: #b71c1c;
+  --pui-warn: var(--pui-warn-500);
+  --pui-warn-contrast: #ffffff;
+
+  /* Success - Green */
+  --pui-success-50: #e8f5e9;
+  --pui-success-100: #c8e6c9;
+  --pui-success-200: #a5d6a7;
+  --pui-success-300: #81c784;
+  --pui-success-400: #66bb6a;
+  --pui-success-500: #4caf50;
+  --pui-success-600: #43a047;
+  --pui-success-700: #388e3c;
+  --pui-success-800: #2e7d32;
+  --pui-success-900: #1b5e20;
+  --pui-success: var(--pui-success-500);
+  --pui-success-contrast: #ffffff;
+
+  /* Info - Blue */
+  --pui-info-50: #e3f2fd;
+  --pui-info-100: #bbdefb;
+  --pui-info-200: #90caf9;
+  --pui-info-300: #64b5f6;
+  --pui-info-400: #42a5f5;
+  --pui-info-500: #2196f3;
+  --pui-info-600: #1e88e5;
+  --pui-info-700: #1976d2;
+  --pui-info-800: #1565c0;
+  --pui-info-900: #0d47a1;
+  --pui-info: var(--pui-info-500);
+  --pui-info-contrast: #ffffff;
+
+  /* Foreground (Light theme) */
+  --pui-foreground-base: #000000;
+  --pui-foreground-text: rgba(0, 0, 0, 0.87);
+  --pui-foreground-secondary-text: rgba(0, 0, 0, 0.54);
+  --pui-foreground-hint-text: rgba(0, 0, 0, 0.38);
+  --pui-foreground-disabled-text: rgba(0, 0, 0, 0.38);
+  --pui-foreground-divider: rgba(0, 0, 0, 0.12);
+  --pui-foreground-icon: rgba(0, 0, 0, 0.54);
+
+  /* Background (Light theme) */
+  --pui-background-status-bar: #e0e0e0;
+  --pui-background-app-bar: #f5f5f5;
+  --pui-background: #fafafa;
+  --pui-background-card: #ffffff;
+  --pui-background-dialog: #ffffff;
+  --pui-background-hover: rgba(0, 0, 0, 0.04);
+  --pui-background-selected: rgba(0, 0, 0, 0.08);
+  --pui-background-disabled: rgba(0, 0, 0, 0.12);
+
+  /* Core */
+  --pui-is-dark: 0;
+  --pui-density-scale: 1;
+  --pui-border-radius: 8px;
+  --pui-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --pui-font-size: 14px;
+
+  /* Shadows */
+  --pui-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --pui-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --pui-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --pui-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  --pui-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+  /* Transitions */
+  --pui-transition-fast: 150ms ease-in-out;
+  --pui-transition-normal: 250ms ease-in-out;
+  --pui-transition-slow: 400ms ease-in-out;
+
+  /* Z-index */
+  --pui-z-toast: 9999;
+  --pui-z-dialog: 10000;
+  --pui-z-dialog-backdrop: 9998;
+
+  /* Component specific */
+  --pui-toast-radius: var(--pui-border-radius);
+  --pui-toast-shadow: var(--pui-shadow-2);
+  --pui-dialog-radius: calc(var(--pui-border-radius) * 1.5);
+  --pui-dialog-shadow: var(--pui-shadow-4);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pui-foreground-base: #ffffff;
+    --pui-foreground-text: #ffffff;
+    --pui-foreground-secondary-text: rgba(255, 255, 255, 0.7);
+    --pui-foreground-hint-text: rgba(255, 255, 255, 0.5);
+    --pui-foreground-disabled-text: rgba(255, 255, 255, 0.5);
+    --pui-foreground-divider: rgba(255, 255, 255, 0.12);
+    --pui-foreground-icon: #ffffff;
+
+    --pui-background-status-bar: #000000;
+    --pui-background-app-bar: #212121;
+    --pui-background: #303030;
+    --pui-background-card: #424242;
+    --pui-background-dialog: #424242;
+    --pui-background-hover: rgba(255, 255, 255, 0.04);
+    --pui-background-selected: rgba(255, 255, 255, 0.08);
+    --pui-background-disabled: rgba(255, 255, 255, 0.12);
+
+    --pui-is-dark: 1;
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --pui-transition-fast: 0ms;
+    --pui-transition-normal: 0ms;
+    --pui-transition-slow: 0ms;
+  }
+}

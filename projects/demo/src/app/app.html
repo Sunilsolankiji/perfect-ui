@@ -15,9 +15,6 @@
           <a [routerLink]="item.path" routerLinkActive="active">
             <span class="nav-icon">{{ item.icon }}</span>
             <span class="nav-text">{{ item.label }}</span>
-            @if (item.version) {
-              <span class="nav-version">v{{ item.version }}</span>
-            }
           </a>
         </li>
       }
