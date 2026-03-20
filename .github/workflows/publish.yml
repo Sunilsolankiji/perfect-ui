@@ -3,31 +3,23 @@ name: Publish to NPM
 on:
   release:
     types: [published]
+  repository_dispatch:
+    types: [release-published]
   workflow_dispatch:
-    inputs:
-      package:
-        description: 'Package to publish'
-        required: true
-        default: 'toastr'
-        type: choice
-        options:
-          - toastr
-          - dialog
-          - otp
-          - core
-          # Add new libraries here
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: Publish @perfectui/${{ github.event.inputs.package || 'release' }}
+    name: Publish perfectui
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
@@ -36,32 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Determine package to publish
-        id: package
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "name=${{ github.event.inputs.package }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "release" ]; then
-            TAG="${{ github.event.release.tag_name }}"
-            if [[ "$TAG" == *"toastr"* ]]; then
-              echo "name=toastr" >> $GITHUB_OUTPUT
-            elif [[ "$TAG" == *"dialog"* ]]; then
-              echo "name=dialog" >> $GITHUB_OUTPUT
-            elif [[ "$TAG" == *"otp"* ]]; then
-              echo "name=otp" >> $GITHUB_OUTPUT
-            elif [[ "$TAG" == *"core"* ]]; then
-              echo "name=core" >> $GITHUB_OUTPUT
-            # Add new libraries here
-            else
-              echo "No matching package found in tag: $TAG"
-              exit 1
-            fi
-          fi
-
-      - name: Build package
-        run: npm run build:${{ steps.package.outputs.name }}
+      - name: Build perfectui library
+        run: npm run build:perfectui
 
       - name: Publish to NPM
-        run: npm run publish:${{ steps.package.outputs.name }} --ignore-scripts
+        run: npm run publish:perfectui --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

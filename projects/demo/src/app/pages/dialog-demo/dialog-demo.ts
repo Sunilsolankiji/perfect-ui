@@ -1,5 +1,5 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
-import { DialogService, DialogTheme, DialogSize } from '@perfectui/dialog';
+import { DialogService, DialogTheme, DialogSize } from '@sunilsolankiji/perfectui/dialog';
 import { UserFormDialogComponent, UserFormData } from './user-form-dialog.component';
 
 @Component({
@@ -13,9 +13,9 @@ export class DialogDemo {
   private dialog = inject(DialogService);
 
   // Package info
-  packageName = '@perfectui/dialog';
-  version = '1.1.0';
-  npmUrl = 'https://www.npmjs.com/package/@perfectui/dialog';
+  packageName = '@sunilsolankiji/perfectui/dialog';
+  version = '2.0.0';
+  npmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
   // Template references
   customTemplate = viewChild<TemplateRef<any>>('customTemplate');

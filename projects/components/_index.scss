@@ -1,0 +1,375 @@
+// ============================================================
+// PerfectUI Theme System
+// ============================================================
+// A comprehensive theming system inspired by Angular Material
+//
+// Usage:
+// @use '@sunilsolankiji/perfectui' as pui;
+//
+// @include pui.core();
+// @include pui.theme($my-theme);
+// ============================================================
+
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
+
+// ============================================================
+// COLOR PALETTES
+// ============================================================
+
+$indigo: (
+  50: #e8eaf6,
+  100: #c5cae9,
+  200: #9fa8da,
+  300: #7986cb,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+$pink: (
+  50: #fce4ec,
+  100: #f8bbd9,
+  200: #f48fb1,
+  300: #f06292,
+  400: #ec407a,
+  500: #e91e63,
+  600: #d81b60,
+  700: #c2185b,
+  800: #ad1457,
+  900: #880e4f,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+$red: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+$green: (
+  50: #e8f5e9,
+  100: #c8e6c9,
+  200: #a5d6a7,
+  300: #81c784,
+  400: #66bb6a,
+  500: #4caf50,
+  600: #43a047,
+  700: #388e3c,
+  800: #2e7d32,
+  900: #1b5e20,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+$blue: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+// ============================================================
+// THEME FUNCTIONS
+// ============================================================
+
+/// Get a color from a palette
+/// @param {Map} $palette - The color palette
+/// @param {Number} $hue - The hue (50-900)
+/// @return {Color} The color value
+@function get-color($palette, $hue: 500) {
+  @return map.get($palette, $hue);
+}
+
+/// Get contrast color for a palette hue
+/// @param {Map} $palette - The color palette
+/// @param {Number} $hue - The hue (50-900)
+/// @return {Color} The contrast color
+@function get-contrast($palette, $hue: 500) {
+  @return map.get(map.get($palette, contrast), $hue);
+}
+
+/// Define a palette configuration
+/// @param {Map} $palette - The base palette
+/// @param {Number} $default - Default hue (default: 500)
+/// @param {Number} $lighter - Lighter hue (default: 100)
+/// @param {Number} $darker - Darker hue (default: 700)
+/// @return {Map} The palette configuration
+@function define-palette($palette, $default: 500, $lighter: 100, $darker: 700) {
+  @return map.merge($palette, (
+    default: get-color($palette, $default),
+    lighter: get-color($palette, $lighter),
+    darker: get-color($palette, $darker),
+    default-contrast: get-contrast($palette, $default),
+    lighter-contrast: get-contrast($palette, $lighter),
+    darker-contrast: get-contrast($palette, $darker),
+  ));
+}
+
+/// Define a light theme
+/// @param {Map} $primary - Primary palette
+/// @param {Map} $accent - Accent palette
+/// @param {Map} $warn - Warn palette (default: $red)
+/// @return {Map} The theme configuration
+@function define-light-theme($primary, $accent, $warn: $red) {
+  @return (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+    is-dark: false,
+    foreground: (
+      base: black,
+      text: rgba(0, 0, 0, 0.87),
+      secondary-text: rgba(0, 0, 0, 0.54),
+      hint-text: rgba(0, 0, 0, 0.38),
+      disabled-text: rgba(0, 0, 0, 0.38),
+      divider: rgba(0, 0, 0, 0.12),
+      icon: rgba(0, 0, 0, 0.54),
+    ),
+    background: (
+      status-bar: #e0e0e0,
+      app-bar: #f5f5f5,
+      background: #fafafa,
+      card: white,
+      dialog: white,
+      hover: rgba(0, 0, 0, 0.04),
+      selected: rgba(0, 0, 0, 0.08),
+      disabled: rgba(0, 0, 0, 0.12),
+    ),
+  );
+}
+
+/// Define a dark theme
+/// @param {Map} $primary - Primary palette
+/// @param {Map} $accent - Accent palette
+/// @param {Map} $warn - Warn palette (default: $red)
+/// @return {Map} The theme configuration
+@function define-dark-theme($primary, $accent, $warn: $red) {
+  @return (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+    is-dark: true,
+    foreground: (
+      base: white,
+      text: white,
+      secondary-text: rgba(255, 255, 255, 0.7),
+      hint-text: rgba(255, 255, 255, 0.5),
+      disabled-text: rgba(255, 255, 255, 0.5),
+      divider: rgba(255, 255, 255, 0.12),
+      icon: white,
+    ),
+    background: (
+      status-bar: black,
+      app-bar: #212121,
+      background: #303030,
+      card: #424242,
+      dialog: #424242,
+      hover: rgba(255, 255, 255, 0.04),
+      selected: rgba(255, 255, 255, 0.08),
+      disabled: rgba(255, 255, 255, 0.12),
+    ),
+  );
+}
+
+// ============================================================
+// THEME MIXINS
+// ============================================================
+
+/// Apply core styles (required)
+@mixin core() {
+  :root {
+    // Base sizing
+    --pui-density-scale: 1;
+    --pui-border-radius: 8px;
+
+    // Typography
+    --pui-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --pui-font-size: 14px;
+    --pui-font-weight-light: 300;
+    --pui-font-weight-regular: 400;
+    --pui-font-weight-medium: 500;
+    --pui-font-weight-bold: 700;
+
+    // Transitions
+    --pui-transition-fast: 150ms ease-in-out;
+    --pui-transition-normal: 250ms ease-in-out;
+    --pui-transition-slow: 400ms ease-in-out;
+
+    // Z-index layers
+    --pui-z-toast: 9999;
+    --pui-z-dialog: 10000;
+    --pui-z-dialog-backdrop: 9998;
+
+    // Shadows
+    --pui-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --pui-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --pui-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --pui-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    --pui-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --pui-transition-fast: 0ms;
+      --pui-transition-normal: 0ms;
+      --pui-transition-slow: 0ms;
+    }
+  }
+}
+
+/// Apply palette CSS variables
+@mixin _apply-palette($name, $palette) {
+  $hues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+  @each $hue in $hues {
+    --pui-#{$name}-#{$hue}: #{get-color($palette, $hue)};
+    --pui-#{$name}-contrast-#{$hue}: #{get-contrast($palette, $hue)};
+  }
+
+  --pui-#{$name}: #{get-color($palette, 500)};
+  --pui-#{$name}-contrast: #{get-contrast($palette, 500)};
+}
+
+/// Apply a theme
+@mixin theme($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $foreground: map.get($theme, foreground);
+  $background: map.get($theme, background);
+  $is-dark: map.get($theme, is-dark);
+
+  :root {
+    // Palette colors
+    @include _apply-palette(primary, $primary);
+    @include _apply-palette(accent, $accent);
+    @include _apply-palette(warn, $warn);
+    @include _apply-palette(success, $green);
+    @include _apply-palette(info, $blue);
+
+    // Foreground colors
+    --pui-foreground-base: #{map.get($foreground, base)};
+    --pui-foreground-text: #{map.get($foreground, text)};
+    --pui-foreground-secondary-text: #{map.get($foreground, secondary-text)};
+    --pui-foreground-hint-text: #{map.get($foreground, hint-text)};
+    --pui-foreground-disabled-text: #{map.get($foreground, disabled-text)};
+    --pui-foreground-divider: #{map.get($foreground, divider)};
+    --pui-foreground-icon: #{map.get($foreground, icon)};
+
+    // Background colors
+    --pui-background-status-bar: #{map.get($background, status-bar)};
+    --pui-background-app-bar: #{map.get($background, app-bar)};
+    --pui-background: #{map.get($background, background)};
+    --pui-background-card: #{map.get($background, card)};
+    --pui-background-dialog: #{map.get($background, dialog)};
+    --pui-background-hover: #{map.get($background, hover)};
+    --pui-background-selected: #{map.get($background, selected)};
+    --pui-background-disabled: #{map.get($background, disabled)};
+
+    // Dark mode flag
+    --pui-is-dark: #{if($is-dark, 1, 0)};
+  }
+
+  @if $is-dark {
+    :root {
+      color-scheme: dark;
+    }
+  }
+}
+
+/// Apply theme based on class
+@mixin theme-class($theme, $class-name) {
+  .#{$class-name} {
+    @include theme($theme);
+  }
+}
+
+// ============================================================
+// PREBUILT THEMES
+// ============================================================
+
+$indigo-pink-light: define-light-theme(
+  define-palette($indigo),
+  define-palette($pink)
+);
+
+$indigo-pink-dark: define-dark-theme(
+  define-palette($indigo),
+  define-palette($pink)
+);

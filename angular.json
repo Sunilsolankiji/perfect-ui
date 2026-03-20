@@ -6,72 +6,32 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "@perfectui/toastr": {
+    "perfectui": {
       "projectType": "library",
-      "root": "projects/toastr",
-      "sourceRoot": "projects/toastr/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/toastr/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/toastr/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/toastr/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        }
-      }
-    },
-    "@perfectui/dialog": {
-      "projectType": "library",
-      "root": "projects/dialog",
-      "sourceRoot": "projects/dialog/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/dialog/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/dialog/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/dialog/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        }
-      }
-    },
-    "@perfectui/otp": {
-      "projectType": "library",
-      "root": "projects/otp",
-      "sourceRoot": "projects/otp/src",
+      "root": "projects/components",
+      "sourceRoot": "projects/components/src",
       "prefix": "pui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/otp/ng-package.json"
+            "project": "projects/components/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/otp/tsconfig.lib.prod.json"
+              "tsConfig": "projects/components/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/otp/tsconfig.lib.json"
+              "tsConfig": "projects/components/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/components/tsconfig.spec.json"
+          }
         }
       }
     },
@@ -160,32 +120,6 @@
             }
           },
           "defaultConfiguration": "development"
-        }
-      }
-    },
-    "core": {
-      "projectType": "library",
-      "root": "projects/core",
-      "sourceRoot": "projects/core/src",
-      "prefix": "pui",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/core/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/core/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/core/tsconfig.spec.json"
-          }
         }
       }
     }

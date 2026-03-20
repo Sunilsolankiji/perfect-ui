@@ -9,10 +9,10 @@ assignees: ''
 ## Description
 A clear and concise description of the bug.
 
-## Package
-- [ ] @perfectui/core
-- [ ] @perfectui/toastr
-- [ ] @perfectui/dialog
+## Component
+- [ ] perfectui/toastr
+- [ ] perfectui/dialog
+- [ ] perfectui/otp
 
 ## Version
 Package version: 

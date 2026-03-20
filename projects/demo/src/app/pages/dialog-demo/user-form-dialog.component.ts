@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DIALOG_DATA, DIALOG_REF, DialogRef } from '@perfectui/dialog';
+import { DIALOG_DATA, DIALOG_REF, DialogRef } from '@sunilsolankiji/perfectui/dialog';
 
 export interface UserFormData {
   name: string;

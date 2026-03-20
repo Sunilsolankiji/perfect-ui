@@ -7,9 +7,10 @@ Brief description of the changes.
 - [ ] Breaking change
 - [ ] Documentation update
 
-## Package(s) Affected
-- [ ] @perfectui/toastr
-- [ ] @perfectui/dialog
+## Component(s) Affected
+- [ ] perfectui/toastr
+- [ ] perfectui/dialog
+- [ ] perfectui/otp
 - [ ] Demo app
 - [ ] Documentation
 

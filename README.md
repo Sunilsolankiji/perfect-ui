@@ -1,63 +1,100 @@
 # PerfectUI
 
 [![CI](https://github.com/sunilsolankiji/perfect-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/sunilsolankiji/perfect-ui/actions/workflows/ci.yml)
-[![npm @perfectui/core](https://img.shields.io/npm/v/@perfectui/core?label=@perfectui/core)](https://www.npmjs.com/package/@perfectui/core)
-[![npm @perfectui/toastr](https://img.shields.io/npm/v/@perfectui/toastr?label=@perfectui/toastr)](https://www.npmjs.com/package/@perfectui/toastr)
-[![npm @perfectui/dialog](https://img.shields.io/npm/v/@perfectui/dialog?label=@perfectui/dialog)](https://www.npmjs.com/package/@perfectui/dialog)
+[![npm](https://img.shields.io/npm/v/@sunilsolankiji/perfectui?label=@sunilsolankiji/perfectui)](https://www.npmjs.com/package/@sunilsolankiji/perfectui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A collection of modern, customizable UI components for Angular 19+.
+A modern, tree-shakable UI component library for Angular 19+.
 
 🔗 **[Live Demo](https://sunilsolankiji.github.io/perfect-ui/)**
 
-## Packages
+## Features
 
-| Package | Description | Version |
-|---------|-------------|---------|
-| [@perfectui/core](./projects/core) | **All-in-one** - includes all packages | [![npm](https://img.shields.io/npm/v/@perfectui/core)](https://www.npmjs.com/package/@perfectui/core) |
-| [@perfectui/toastr](./projects/toastr) | Toast notification library | [![npm](https://img.shields.io/npm/v/@perfectui/toastr)](https://www.npmjs.com/package/@perfectui/toastr) |
-| [@perfectui/dialog](./projects/dialog) | Dialog/modal library | [![npm](https://img.shields.io/npm/v/@perfectui/dialog)](https://www.npmjs.com/package/@perfectui/dialog) |
+- 🌳 **Tree-shakable** - Import only what you use with secondary entry points
+- 🎨 **Themeable** - CSS custom properties for easy customization
+- ♿ **Accessible** - WCAG compliant with full ARIA support
+- 📱 **Responsive** - Works great on all screen sizes
+- 🚀 **Standalone** - Works with Angular's standalone components
+- 💪 **TypeScript** - Full type safety and IntelliSense support
+
+## Components
+
+| Component | Import Path | Description |
+|-----------|-------------|-------------|
+| Dialog | `@sunilsolankiji/perfectui/dialog` | Dialogs, modals, alerts, confirms, prompts |
+| Toastr | `@sunilsolankiji/perfectui/toastr` | Toast notifications |
+| OTP | `@sunilsolankiji/perfectui/otp` | One-time password input |
 
 ## Installation
 
 ```bash
-# Install everything (recommended)
-npm install @perfectui/core
-
-# Or install individual packages
-npm install @perfectui/toastr
-npm install @perfectui/dialog
+npm install @sunilsolankiji/perfectui
 ```
 
 ## Quick Start
 
-### Using @perfectui/core (All-in-One)
+### Import from secondary entry points (recommended for tree-shaking)
 
 ```typescript
-import { provideToastr, provideDialog, ToastrService, DialogService } from '@perfectui/core';
+// Dialog
+import { provideDialog, DialogService } from '@sunilsolankiji/perfectui/dialog';
 
-// In app.config.ts
-providers: [
-  provideToastr(),
-  provideDialog()
-]
+// Toastr
+import { provideToastr, ToastrService } from '@sunilsolankiji/perfectui/toastr';
 
-// In component
-toastr = inject(ToastrService);
-dialog = inject(DialogService);
-
-this.toastr.success('Hello World!', 'Success');
-const result = await this.dialog.confirm('Are you sure?', 'Confirm');
+// OTP
+import { provideOtp, OtpComponent } from '@sunilsolankiji/perfectui/otp';
 ```
 
-### Using Individual Packages
+### Configure in app.config.ts
 
 ```typescript
-// Toastr only
-import { provideToastr, ToastrService } from '@perfectui/toastr';
+import { ApplicationConfig } from '@angular/core';
+import { provideDialog } from '@sunilsolankiji/perfectui/dialog';
+import { provideToastr } from '@sunilsolankiji/perfectui/toastr';
+import { provideOtp } from '@sunilsolankiji/perfectui/otp';
 
-// Dialog only
-import { provideDialog, DialogService } from '@perfectui/dialog';
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideDialog({
+      size: 'md',
+      theme: 'default',
+    }),
+    provideToastr({
+      position: 'top-right',
+      duration: 5000,
+    }),
+    provideOtp({
+      length: 6,
+      inputType: 'numeric',
+    }),
+  ],
+};
+```
+
+### Use in components
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { DialogService } from '@sunilsolankiji/perfectui/dialog';
+import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
+
+@Component({...})
+export class MyComponent {
+  private dialog = inject(DialogService);
+  private toastr = inject(ToastrService);
+
+  showSuccess() {
+    this.toastr.success('Hello World!', 'Success');
+  }
+
+  async showConfirm() {
+    const result = await this.dialog.confirm('Are you sure?', 'Confirm');
+    if (result.confirmed) {
+      // User confirmed
+    }
+  }
+}
 ```
 
 ## Development
@@ -81,89 +118,144 @@ npm install
 # Start demo app
 npm start
 
-# Build all libraries
-npm run build:libs
+# Build the library
+npm run build:perfectui
 
 # Build demo
 npm run build:demo
 
-# Publish all packages
-npm run publish:all
+# Publish to npm
+npm run publish:perfectui
 ```
 
 ## Workspace Structure
 
 ```
 perfect-ui/
-├── shared/
-│   └── perfectui-theme.css  # CSS variables reference
 ├── projects/
-│   ├── core/                # @perfectui/core (re-exports all)
-│   ├── toastr/              # @perfectui/toastr
-│   ├── dialog/              # @perfectui/dialog
+│   ├── components/          # @sunilsolankiji/perfectui library
+│   │   ├── src/             # Main entry point
+│   │   ├── core/            # @sunilsolankiji/perfectui/core (theming)
+│   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog
+│   │   ├── toastr/          # @sunilsolankiji/perfectui/toastr
+│   │   ├── otp/             # @sunilsolankiji/perfectui/otp
+│   │   ├── themes/          # Prebuilt CSS themes
+│   │   └── _index.scss      # SCSS theming API
 │   └── demo/                # Demo application
 └── dist/                    # Built packages
 ```
 
-## Theme Colors
+## Theming
 
-All components use **CSS custom properties** (CSS variables) for theming.
-This makes it easy to customize colors in your global styles, similar to Angular Material.
+PerfectUI provides an Angular Material-inspired theming system with prebuilt themes and full customization support.
 
-### Customizing Colors
+### Quick Start - Prebuilt Themes
 
-Add to your `styles.css` or `styles.scss`:
+Import a prebuilt theme CSS in your `styles.css`:
 
 ```css
-:root {
-  /* Override default colors */
-  --pui-success-500: #22c55e;
-  --pui-error-500: #f43f5e;
-  --pui-warning-500: #eab308;
-  --pui-info-500: #0ea5e9;
-  
-  /* Customize toast appearance */
-  --pui-toast-radius: 12px;
-  --pui-toast-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
+@import '@sunilsolankiji/perfectui/themes/indigo-pink.css';
 ```
 
-### Dark Mode
+Available prebuilt themes:
+- `indigo-pink.css` (default)
+- `deep-purple-amber.css`
 
-```css
-@media (prefers-color-scheme: dark) {
-  :root {
-    --pui-neutral-50: #111827;
-    --pui-neutral-900: #f9fafb;
-    --pui-white: #1f2937;
-    --pui-slate-800: #0f172a;
+### Programmatic Theming
+
+Use the `providePerfectUI` function for dynamic theming:
+
+```typescript
+import { providePerfectUI } from '@sunilsolankiji/perfectui/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    providePerfectUI({
+      theme: 'indigo-pink',
+      darkMode: 'auto',     // 'light' | 'dark' | 'auto'
+      density: 'default',   // 'compact' | 'default' | 'comfortable'
+    }),
+  ],
+};
+```
+
+### Using ThemeService
+
+```typescript
+import { ThemeService } from '@sunilsolankiji/perfectui/core';
+
+@Component({...})
+export class MyComponent {
+  private theme = inject(ThemeService);
+
+  toggleDarkMode() {
+    this.theme.toggleDarkMode();
+  }
+
+  setTheme() {
+    this.theme.setTheme('deep-purple-amber');
   }
 }
 ```
 
-### Available CSS Variables
+### SCSS Theming (Advanced)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--pui-success-500` | `#10b981` | Success color |
-| `--pui-error-500` | `#ef4444` | Error color |
-| `--pui-warning-500` | `#f59e0b` | Warning color |
-| `--pui-info-500` | `#3b82f6` | Info color |
-| `--pui-neutral-*` | - | Neutral shades (50-900) |
-| `--pui-white` | `#ffffff` | White |
-| `--pui-black` | `#000000` | Black |
+For full control, use the SCSS API:
 
-See `shared/perfectui-theme.css` for all available variables.
+```scss
+@use '@sunilsolankiji/perfectui' as pui;
+
+// Include core styles
+@include pui.core();
+
+// Define your theme
+$my-theme: pui.define-light-theme(
+  pui.define-palette(pui.$indigo),
+  pui.define-palette(pui.$pink)
+);
+
+// Apply theme
+@include pui.theme($my-theme);
+```
+
+### CSS Variables Reference
+
+| Variable | Description |
+|----------|-------------|
+| `--pui-primary` | Primary color (500 shade) |
+| `--pui-primary-{50-900}` | Primary color shades |
+| `--pui-accent` | Accent color |
+| `--pui-warn` | Warning/error color |
+| `--pui-success` | Success color |
+| `--pui-info` | Info color |
+| `--pui-foreground-text` | Text color |
+| `--pui-background` | Background color |
+| `--pui-background-card` | Card background |
+| `--pui-border-radius` | Global border radius |
+| `--pui-shadow-{1-5}` | Shadow elevation levels |
+
+
+## Versioning
+
+This project uses [Semantic Versioning](https://semver.org/) with automated changelog generation based on [Conventional Commits](https://www.conventionalcommits.org/).
+
+- **Patch** (1.0.x) - Bug fixes, performance improvements
+- **Minor** (1.x.0) - New features (backward compatible)
+- **Major** (x.0.0) - Breaking changes
 
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details.
+Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details on:
+
+- Development setup
+- Commit message conventions
+- Pull request process
+- Release process
 
 ## Documentation
 
-- [Development Guide](./docs/DEVELOPMENT.md) - How to create new components
-- [Release Process](./docs/RELEASE.md) - How to release new versions
-- [Roadmap](./ROADMAP.md) - Planned features and components
+- [Contributing Guide](./CONTRIBUTING.md) - How to contribute
+- [Changelog](./projects/components/CHANGELOG.md) - Version history
 
 ## License
 

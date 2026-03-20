@@ -1,0 +1,39 @@
+{
+  "types": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "perf", "section": "Performance Improvements" },
+    { "type": "refactor", "section": "Code Refactoring" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "style", "section": "Styles" },
+    { "type": "test", "section": "Tests" },
+    { "type": "build", "section": "Build System" },
+    { "type": "ci", "section": "CI/CD" },
+    { "type": "chore", "hidden": true },
+    { "type": "revert", "section": "Reverts" }
+  ],
+  "packageFiles": [
+    {
+      "filename": "projects/components/package.json",
+      "type": "json"
+    }
+  ],
+  "bumpFiles": [
+    {
+      "filename": "projects/components/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "projects/components/src/public-api.ts",
+      "updater": "scripts/version-updater.js"
+    }
+  ],
+  "tagPrefix": "v",
+  "commitUrlFormat": "https://github.com/sunilsolankiji/perfect-ui/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/sunilsolankiji/perfect-ui/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "https://github.com/sunilsolankiji/perfect-ui/issues/{{id}}",
+  "userUrlFormat": "https://github.com/{{user}}",
+  "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
+  "infile": "projects/components/CHANGELOG.md",
+  "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n"
+}

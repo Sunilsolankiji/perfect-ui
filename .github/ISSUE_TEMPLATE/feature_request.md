@@ -6,11 +6,11 @@ labels: enhancement
 assignees: ''
 ---
 
-## Package
-- [ ] @perfectui/core
-- [ ] @perfectui/toastr
-- [ ] @perfectui/dialog
-- [ ] New package
+## Component
+- [ ] perfectui/toastr
+- [ ] perfectui/dialog
+- [ ] perfectui/otp
+- [ ] New component
 
 ## Description
 A clear and concise description of the feature you'd like.

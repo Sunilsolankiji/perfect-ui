@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ToastrService, ToastTheme } from '@perfectui/toastr';
+import { ToastrService, ToastTheme } from '@sunilsolankiji/perfectui/toastr';
 
 @Component({
   selector: 'app-toastr-demo',
@@ -13,9 +13,9 @@ export class ToastrDemo {
   selectedTheme: ToastTheme = 'default';
 
   // Package info
-  packageName = '@perfectui/toastr';
-  version = '1.3.0';
-  npmUrl = 'https://www.npmjs.com/package/@perfectui/toastr';
+  packageName = '@sunilsolankiji/perfectui/toastr';
+  version = '2.0.0';
+  npmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
   showSuccess() {
     this.toastr.success('This is a success message!', 'Success', { theme: this.selectedTheme });
