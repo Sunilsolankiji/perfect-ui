@@ -10,7 +10,7 @@
     "build:otp": "ng build @perfectui/otp --configuration production",
     "build:core": "ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
     "build:libs": "ng build @perfectui/otp --configuration production && ng build @perfectui/toastr --configuration production && ng build @perfectui/dialog --configuration production && ng build core --configuration production",
-    "build:demo": "npm run build:libs && ng build demo --configuration production",
+    "build:demo": "npm run build:libs && ng build demo --configuration production --base-href /perfect-ui/",
     "build:all": "npm run build:libs && npm run build:demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
