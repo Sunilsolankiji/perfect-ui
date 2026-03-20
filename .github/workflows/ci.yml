@@ -27,25 +27,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Toastr Library
-        run: npm run build:toastr
-
-      - name: Build Dialog Library
-        run: npm run build:dialog
-
-      - name: Build OTP Library
-        run: npm run build:otp
-
-      - name: Build Core Library
-        run: npm run build:core
-
-      - name: Build Demo Application
-        run: npx ng build demo --configuration production
+      - name: Build All Libraries and Demo
+        run: npm run build:all
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v6
         with:
           name: dist-node-${{ matrix.node-version }}
           path: dist/
           retention-days: 7
-
