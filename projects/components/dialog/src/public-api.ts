@@ -1,12 +1,12 @@
 /**
- * perfectui/dialog
+ * @sunilsolankiji/perfectui/dialog
  *
  * Dialog and modal components for Angular 19+
  *
  * @example
  * ```typescript
  * // In app.config.ts
- * import { provideDialog } from 'perfectui/dialog';
+ * import { provideDialog } from '@sunilsolankiji/perfectui/dialog';
  *
  * export const appConfig: ApplicationConfig = {
  *   providers: [
@@ -19,7 +19,7 @@
  * };
  *
  * // In component
- * import { DialogService, DIALOG_DATA, DIALOG_REF } from 'perfectui/dialog';
+ * import { DialogService, DIALOG_DATA, DIALOG_REF } from '@sunilsolankiji/perfectui/dialog';
  *
  * @Component({...})
  * export class MyComponent {

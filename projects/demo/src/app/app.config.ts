@@ -1,8 +1,8 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { provideToastr } from '@perfectui/toastr';
-import { provideDialog } from '@perfectui/dialog';
-import { provideOtp } from '@perfectui/otp';
+import { provideToastr } from '@sunilsolankiji/perfectui/toastr';
+import { provideDialog } from '@sunilsolankiji/perfectui/dialog';
+import { provideOtp } from '@sunilsolankiji/perfectui/otp';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

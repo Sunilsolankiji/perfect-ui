@@ -1,8 +1,8 @@
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from '@perfectui/toastr';
-import { DialogService } from '@perfectui/dialog';
+import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
+import { DialogService } from '@sunilsolankiji/perfectui/dialog';
 
 interface ColorConfig {
   name: string;

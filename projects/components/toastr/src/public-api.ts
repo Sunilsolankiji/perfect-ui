@@ -1,12 +1,12 @@
 /**
- * perfectui/toastr
+ * @sunilsolankiji/perfectui/toastr
  *
  * Toast notification components for Angular 19+
  *
  * @example
  * ```typescript
  * // In app.config.ts
- * import { provideToastr } from 'perfectui/toastr';
+ * import { provideToastr } from '@sunilsolankiji/perfectui/toastr';
  *
  * export const appConfig: ApplicationConfig = {
  *   providers: [
@@ -20,7 +20,7 @@
  * };
  *
  * // In component
- * import { ToastrService } from 'perfectui/toastr';
+ * import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
  *
  * @Component({...})
  * export class MyComponent {

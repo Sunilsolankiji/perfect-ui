@@ -6,13 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠ BREAKING CHANGES
 
-* Package renamed from `@perfectui/*` to `perfectui` with secondary entry points
-* Import paths changed: `@perfectui/dialog` → `perfectui/dialog`
+* Package renamed from `@perfectui/*` to `@sunilsolankiji/perfectui` with secondary entry points
+* Import paths changed: `@perfectui/dialog` → `@sunilsolankiji/perfectui/dialog`
 
 ### Features
 
 * new unified package structure with secondary entry points for tree-shaking ([#100](https://github.com/sunilsolankiji/perfect-ui/issues/100))
-* import directly from `perfectui/dialog`, `perfectui/toastr`, `perfectui/otp`
+* import directly from `@sunilsolankiji/perfectui/dialog`, `@sunilsolankiji/perfectui/toastr`, `@sunilsolankiji/perfectui/otp`
 * full Angular 21 support
 
 ### Code Refactoring
@@ -32,9 +32,9 @@ import { provideToastr } from '@perfectui/toastr';
 import { provideOtp } from '@perfectui/otp';
 
 // After
-import { provideDialog } from 'perfectui/dialog';
-import { provideToastr } from 'perfectui/toastr';
-import { provideOtp } from 'perfectui/otp';
+import { provideDialog } from '@sunilsolankiji/perfectui/dialog';
+import { provideToastr } from '@sunilsolankiji/perfectui/toastr';
+import { provideOtp } from '@sunilsolankiji/perfectui/otp';
 ```
 
 ## [1.0.0] - Previous versions

@@ -3,17 +3,17 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@perfectui/toastr": [
-        "dist/toastr"
+      "@sunilsolankiji/perfectui": [
+        "dist/components"
       ],
-      "@perfectui/dialog": [
-        "dist/dialog"
+      "@sunilsolankiji/perfectui/dialog": [
+        "dist/components/dialog"
       ],
-      "@perfectui/otp": [
-        "dist/otp"
+      "@sunilsolankiji/perfectui/toastr": [
+        "dist/components/toastr"
       ],
-      "@perfectui/core": [
-        "dist/core"
+      "@sunilsolankiji/perfectui/otp": [
+        "dist/components/otp"
       ]
     },
     "strict": true,
@@ -40,10 +40,7 @@
       "path": "./projects/demo/tsconfig.app.json"
     },
     {
-      "path": "./projects/core/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/core/tsconfig.spec.json"
+      "path": "./projects/components/tsconfig.lib.json"
     }
   ]
 }

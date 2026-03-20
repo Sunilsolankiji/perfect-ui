@@ -22,6 +22,10 @@
     {
       "filename": "projects/components/package.json",
       "type": "json"
+    },
+    {
+      "filename": "projects/components/src/public-api.ts",
+      "updater": "scripts/version-updater.js"
     }
   ],
   "tagPrefix": "v",

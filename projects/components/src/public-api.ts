@@ -1,24 +1,23 @@
 /**
- * perfectui
+ * @sunilsolankiji/perfectui
  *
  * A modern, tree-shakable UI component library for Angular 19+
  *
- * This is the main entry point that re-exports all components.
- * For better tree-shaking, import from secondary entry points:
+ * Import from secondary entry points for optimal tree-shaking:
  *
  * @example
  * ```typescript
- * // Better tree-shaking (recommended)
- * import { provideDialog, DialogService } from 'perfectui/dialog';
- * import { provideToastr, ToastrService } from 'perfectui/toastr';
- * import { provideOtp, OtpComponent } from 'perfectui/otp';
- *
- * // Or import everything (less tree-shaking)
- * import { provideDialog, provideToastr, provideOtp } from 'perfectui';
+ * import { provideDialog, DialogService } from '@sunilsolankiji/perfectui/dialog';
+ * import { provideToastr, ToastrService } from '@sunilsolankiji/perfectui/toastr';
+ * import { provideOtp, OtpComponent } from '@sunilsolankiji/perfectui/otp';
  * ```
  */
 
-// Re-export all secondary entry points
-export * from 'perfectui/dialog';
-export * from 'perfectui/toastr';
-export * from 'perfectui/otp';
+/** Library version */
+export const VERSION = '2.0.0';
+
+// Import directly from secondary entry points for tree-shaking:
+// - @sunilsolankiji/perfectui/dialog
+// - @sunilsolankiji/perfectui/toastr
+// - @sunilsolankiji/perfectui/otp
+

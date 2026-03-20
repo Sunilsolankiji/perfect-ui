@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
-import { OtpComponent, OtpCompleteEvent, OtpChangeEvent, OtpService } from '@perfectui/otp';
+import { OtpComponent, OtpCompleteEvent, OtpChangeEvent, OtpService } from '@sunilsolankiji/perfectui/otp';
 
 @Component({
   selector: 'app-otp-demo',

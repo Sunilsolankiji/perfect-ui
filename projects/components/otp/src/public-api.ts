@@ -1,12 +1,12 @@
 /**
- * perfectui/otp
+ * @sunilsolankiji/perfectui/otp
  *
  * OTP (One-Time Password) input component for Angular 19+
  *
  * @example
  * ```typescript
  * // In app.config.ts
- * import { provideOtp } from 'perfectui/otp';
+ * import { provideOtp } from '@sunilsolankiji/perfectui/otp';
  *
  * export const appConfig: ApplicationConfig = {
  *   providers: [
@@ -20,7 +20,7 @@
  * };
  *
  * // In component template
- * import { OtpComponent } from 'perfectui/otp';
+ * import { OtpComponent } from '@sunilsolankiji/perfectui/otp';
  *
  * @Component({
  *   imports: [OtpComponent],

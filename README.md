@@ -1,7 +1,7 @@
 # PerfectUI
 
 [![CI](https://github.com/sunilsolankiji/perfect-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/sunilsolankiji/perfect-ui/actions/workflows/ci.yml)
-[![npm perfectui](https://img.shields.io/npm/v/perfectui?label=perfectui)](https://www.npmjs.com/package/perfectui)
+[![npm](https://img.shields.io/npm/v/@sunilsolankiji/perfectui?label=@sunilsolankiji/perfectui)](https://www.npmjs.com/package/@sunilsolankiji/perfectui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A modern, tree-shakable UI component library for Angular 19+.
@@ -21,14 +21,14 @@ A modern, tree-shakable UI component library for Angular 19+.
 
 | Component | Import Path | Description |
 |-----------|-------------|-------------|
-| Dialog | `perfectui/dialog` | Dialogs, modals, alerts, confirms, prompts |
-| Toastr | `perfectui/toastr` | Toast notifications |
-| OTP | `perfectui/otp` | One-time password input |
+| Dialog | `@sunilsolankiji/perfectui/dialog` | Dialogs, modals, alerts, confirms, prompts |
+| Toastr | `@sunilsolankiji/perfectui/toastr` | Toast notifications |
+| OTP | `@sunilsolankiji/perfectui/otp` | One-time password input |
 
 ## Installation
 
 ```bash
-npm install perfectui
+npm install @sunilsolankiji/perfectui
 ```
 
 ## Quick Start
@@ -37,22 +37,22 @@ npm install perfectui
 
 ```typescript
 // Dialog
-import { provideDialog, DialogService } from 'perfectui/dialog';
+import { provideDialog, DialogService } from '@sunilsolankiji/perfectui/dialog';
 
 // Toastr
-import { provideToastr, ToastrService } from 'perfectui/toastr';
+import { provideToastr, ToastrService } from '@sunilsolankiji/perfectui/toastr';
 
 // OTP
-import { provideOtp, OtpComponent } from 'perfectui/otp';
+import { provideOtp, OtpComponent } from '@sunilsolankiji/perfectui/otp';
 ```
 
 ### Configure in app.config.ts
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
-import { provideDialog } from 'perfectui/dialog';
-import { provideToastr } from 'perfectui/toastr';
-import { provideOtp } from 'perfectui/otp';
+import { provideDialog } from '@sunilsolankiji/perfectui/dialog';
+import { provideToastr } from '@sunilsolankiji/perfectui/toastr';
+import { provideOtp } from '@sunilsolankiji/perfectui/otp';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -76,8 +76,8 @@ export const appConfig: ApplicationConfig = {
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { DialogService } from 'perfectui/dialog';
-import { ToastrService } from 'perfectui/toastr';
+import { DialogService } from '@sunilsolankiji/perfectui/dialog';
+import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
 
 @Component({...})
 export class MyComponent {
@@ -133,11 +133,11 @@ npm run publish:perfectui
 ```
 perfect-ui/
 ├── projects/
-│   ├── components/          # perfectui library
+│   ├── components/          # @sunilsolankiji/perfectui library
 │   │   ├── src/             # Main entry point
-│   │   ├── dialog/          # perfectui/dialog
-│   │   ├── toastr/          # perfectui/toastr
-│   │   └── otp/             # perfectui/otp
+│   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog
+│   │   ├── toastr/          # @sunilsolankiji/perfectui/toastr
+│   │   └── otp/             # @sunilsolankiji/perfectui/otp
 │   └── demo/                # Demo application
 ├── dist/                    # Built packages
 └── shared/

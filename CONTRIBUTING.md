@@ -36,15 +36,15 @@ Thank you for your interest in contributing to PerfectUI! 🎉
 ```
 perfect-ui/
 ├── projects/
-│   ├── components/          # perfectui library
+│   ├── components/          # @sunilsolankiji/perfectui library
 │   │   ├── src/             # Main entry point (re-exports all)
-│   │   ├── dialog/          # perfectui/dialog (secondary entry point)
+│   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog (secondary entry point)
 │   │   │   ├── ng-package.json
 │   │   │   └── src/
-│   │   ├── toastr/          # perfectui/toastr (secondary entry point)
+│   │   ├── toastr/          # @sunilsolankiji/perfectui/toastr (secondary entry point)
 │   │   │   ├── ng-package.json
 │   │   │   └── src/
-│   │   └── otp/             # perfectui/otp (secondary entry point)
+│   │   └── otp/             # @sunilsolankiji/perfectui/otp (secondary entry point)
 │   │       ├── ng-package.json
 │   │       └── src/
 │   └── demo/                # Demo application
@@ -115,7 +115,7 @@ projects/components/new-component/
 Update `projects/components/src/public-api.ts`:
 
 ```typescript
-export * from 'perfectui/new-component';
+export * from '@sunilsolankiji/perfectui/new-component';
 ```
 
 ### 4. Build and Test
