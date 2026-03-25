@@ -22,14 +22,14 @@ $ngPackage = @"
 {
   "`$schema": "../../../../node_modules/ng-packagr/ng-package.schema.json",
   "lib": {
-    "entryFile": "src/index.ts"
+    "entryFile": "src/public-api.ts"
   }
 }
 "@
 $ngPackage | Out-File -FilePath "$ComponentPath/ng-package.json" -Encoding UTF8
 Write-Host "Created ng-package.json" -ForegroundColor Cyan
 
-# 3. Create index.ts (public API)
+# 3. Create public-api.ts (public API)
 $indexTs = @"
 // Public API for perfectui/$ComponentName
 
@@ -38,8 +38,8 @@ $indexTs = @"
 // export { ${ComponentNamePascal}Service } from './lib/$ComponentName.service';
 // export { ${ComponentNamePascal}Component } from './lib/$ComponentName.component';
 "@
-$indexTs | Out-File -FilePath "$ComponentPath/src/index.ts" -Encoding UTF8
-Write-Host "Created index.ts" -ForegroundColor Cyan
+$indexTs | Out-File -FilePath "$ComponentPath/src/public-api.ts" -Encoding UTF8
+Write-Host "Created public-api.ts" -ForegroundColor Cyan
 
 # 4. Create basic component file
 $componentTs = @"
@@ -108,7 +108,7 @@ Write-Host "Component perfectui/$ComponentName created!" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "1. Implement component logic in $ComponentPath/src/lib/"
-Write-Host "2. Update exports in $ComponentPath/src/index.ts"
+Write-Host "2. Update exports in $ComponentPath/src/public-api.ts"
 Write-Host "3. Build library: npm run build:perfectui"
 Write-Host "4. Create demo page in projects/demo/src/app/pages/$ComponentName-demo/"
 Write-Host ""

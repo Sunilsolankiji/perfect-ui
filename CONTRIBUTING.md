@@ -91,7 +91,7 @@ Create a new folder in `projects/components/`:
 projects/components/new-component/
 ├── ng-package.json
 └── src/
-    ├── index.ts
+    ├── public-api.ts
     ├── new-component.models.ts
     ├── new-component.config.ts
     ├── new-component.provider.ts
@@ -105,7 +105,7 @@ projects/components/new-component/
 {
   "$schema": "../../../../node_modules/ng-packagr/ng-package.schema.json",
   "lib": {
-    "entryFile": "src/index.ts"
+    "entryFile": "src/public-api.ts"
   }
 }
 ```

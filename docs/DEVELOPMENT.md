@@ -28,7 +28,7 @@ Create the folder structure:
 projects/components/component-name/
 ├── ng-package.json
 └── src/
-    ├── index.ts              # Public API exports
+    ├── public-api.ts              # Public API exports
     ├── component-name.models.ts
     ├── component-name.config.ts
     ├── component-name.provider.ts
@@ -42,12 +42,12 @@ projects/components/component-name/
 {
   "$schema": "../../../../node_modules/ng-packagr/ng-package.schema.json",
   "lib": {
-    "entryFile": "src/index.ts"
+    "entryFile": "src/public-api.ts"
   }
 }
 ```
 
-### 3. Create the Public API (index.ts)
+### 3. Create the Public API (public-api.ts)
 
 ```typescript
 /**
