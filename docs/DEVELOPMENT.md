@@ -19,7 +19,7 @@ perfectui/
 ### 1. Create the Secondary Entry Point Structure
 
 ```bash
-mkdir -p projects/components/component-name/src
+mkdir -p projects/perfectui/component-name/src
 ```
 
 Create the folder structure:

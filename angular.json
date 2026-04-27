@@ -8,21 +8,21 @@
   "projects": {
     "perfectui": {
       "projectType": "library",
-      "root": "projects/components",
-      "sourceRoot": "projects/components/src",
+      "root": "projects/perfectui",
+      "sourceRoot": "projects/perfectui/src",
       "prefix": "pui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/components/ng-package.json"
+            "project": "projects/perfectui/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/components/tsconfig.lib.prod.json"
+              "tsConfig": "projects/perfectui/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/components/tsconfig.lib.json"
+              "tsConfig": "projects/perfectui/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -30,7 +30,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/components/tsconfig.spec.json"
+            "tsConfig": "projects/perfectui/tsconfig.spec.json"
           }
         }
       }

@@ -22,10 +22,3 @@
 
 /** Library version */
 export const VERSION = '2.0.0';
-
-// Import directly from secondary entry points for tree-shaking:
-// - @sunilsolankiji/perfectui/core (theming)
-// - @sunilsolankiji/perfectui/dialog
-// - @sunilsolankiji/perfectui/toastr
-// - @sunilsolankiji/perfectui/otp
-

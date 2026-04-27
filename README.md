@@ -255,7 +255,7 @@ Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.m
 ## Documentation
 
 - [Contributing Guide](./CONTRIBUTING.md) - How to contribute
-- [Changelog](./projects/components/CHANGELOG.md) - Version history
+- [Changelog](projects/perfectui/CHANGELOG.md) - Version history
 
 ## License
 

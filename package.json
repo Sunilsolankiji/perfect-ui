@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run build:perfectui && ng serve demo",
+    "start": "ng serve demo",
     "build": "ng build",
     "build:perfectui": "ng build perfectui --configuration production",
     "build:demo": "npm run build:perfectui && ng build demo --base-href /perfect-ui/ --configuration production",

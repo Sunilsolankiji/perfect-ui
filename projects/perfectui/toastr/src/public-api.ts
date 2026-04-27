@@ -1,7 +1,7 @@
 /**
  * @sunilsolankiji/perfectui/toastr
  *
- * Toast notification components for Angular 19+
+ * Toast notification perfectui for Angular 19+
  *
  * @example
  * ```typescript
