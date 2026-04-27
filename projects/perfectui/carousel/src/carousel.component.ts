@@ -3,7 +3,7 @@
 @Component({
   selector: 'pui-carousel',
   standalone: true,
-  template: `
+  template: ``
 })
 export class CarouselComponent {
 }
