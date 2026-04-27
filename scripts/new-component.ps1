@@ -9,7 +9,7 @@ param(
 
 $ComponentName = $Name.ToLower()
 $ComponentNamePascal = (Get-Culture).TextInfo.ToTitleCase($ComponentName)
-$ComponentPath = "projects/components/$ComponentName"
+$ComponentPath = "projects/perfectui/$ComponentName"
 
 Write-Host "Creating new component: perfectui/$ComponentName" -ForegroundColor Green
 

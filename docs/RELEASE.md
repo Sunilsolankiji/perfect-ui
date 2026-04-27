@@ -90,7 +90,7 @@ npm run publish:perfectui
 Or manually:
 
 ```bash
-cd dist/components
+cd dist/perfectui
 npm publish --access public
 ```
 

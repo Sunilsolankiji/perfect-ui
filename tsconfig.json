@@ -4,19 +4,10 @@
     "baseUrl": "./",
     "paths": {
       "@sunilsolankiji/perfectui": [
-        "dist/components"
+        "dist/perfectui"
       ],
-      "@sunilsolankiji/perfectui/core": [
-        "dist/components/core"
-      ],
-      "@sunilsolankiji/perfectui/dialog": [
-        "dist/components/dialog"
-      ],
-      "@sunilsolankiji/perfectui/toastr": [
-        "dist/components/toastr"
-      ],
-      "@sunilsolankiji/perfectui/otp": [
-        "dist/components/otp"
+      "@sunilsolankiji/perfectui/*": [
+        "dist/perfectui/*"
       ]
     },
     "strict": true,
@@ -43,7 +34,7 @@
       "path": "./projects/demo/tsconfig.app.json"
     },
     {
-      "path": "./projects/components/tsconfig.lib.json"
+      "path": "./projects/perfectui/tsconfig.lib.json"
     }
   ]
 }

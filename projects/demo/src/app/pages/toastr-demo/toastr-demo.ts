@@ -49,7 +49,7 @@ export class ToastrDemo {
     const themes: ToastTheme[] = ['default', 'dark', 'light', 'minimal', 'outline', 'gradient'];
     themes.forEach((theme, index) => {
       setTimeout(() => {
-        this.toastr.success(`This is ${theme} theme`, `${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`, {
+        this.toastr.success(`This is ${ theme } theme`, `${ theme.charAt(0).toUpperCase() + theme.slice(1) } Theme`, {
           theme,
           duration: 5000,
         });

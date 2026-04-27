@@ -1,7 +1,7 @@
 /**
  * @sunilsolankiji/perfectui/dialog
  *
- * Dialog and modal components for Angular 19+
+ * Dialog and modal perfectui for Angular 19+
  *
  * @example
  * ```typescript
