@@ -36,20 +36,17 @@ Thank you for your interest in contributing to PerfectUI! 🎉
 ```
 perfect-ui/
 ├── projects/
-│   ├── components/          # @sunilsolankiji/perfectui library
-│   │   ├── src/             # Main entry point (re-exports all)
-│   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog (secondary entry point)
-│   │   │   ├── ng-package.json
-│   │   │   └── src/
-│   │   ├── toastr/          # @sunilsolankiji/perfectui/toastr (secondary entry point)
-│   │   │   ├── ng-package.json
-│   │   │   └── src/
-│   │   └── otp/             # @sunilsolankiji/perfectui/otp (secondary entry point)
-│   │       ├── ng-package.json
-│   │       └── src/
-│   └── demo/                # Demo application
-├── dist/                    # Built packages
-└── .github/workflows/       # CI/CD workflows
+│   ├── perfectui/                  # @sunilsolankiji/perfectui library
+│   │   ├── src/                    # Main entry point (only exports VERSION)
+│   │   ├── core/                   # @sunilsolankiji/perfectui/core (theming)
+│   │   ├── dialog/                 # @sunilsolankiji/perfectui/dialog
+│   │   ├── toastr/                 # @sunilsolankiji/perfectui/toastr
+│   │   ├── otp/                    # @sunilsolankiji/perfectui/otp
+│   │   ├── select/                 # @sunilsolankiji/perfectui/select
+│   │   └── themes/                 # Prebuilt CSS themes (shipped as assets)
+│   └── demo/                       # Demo application
+├── dist/perfectui/                 # Built package (publish target)
+└── .github/workflows/              # CI/CD workflows
 ```
 
 ## Development Workflow
@@ -77,26 +74,30 @@ The demo will be available at `http://localhost:4200`
 
 ### Testing Changes
 
-1. Make changes to a component in `projects/components/dialog/`, `projects/components/toastr/`, or `projects/components/otp/`
-2. Rebuild the library: `npm run build:perfectui`
-3. The demo app will use the updated library from `dist/`
+1. Make changes to a component in `projects/perfectui/<name>/` (e.g. `dialog/`, `toastr/`, `otp/`, `select/`)
+2. Rebuild the library: `npm run build:perfectui` (or run `npm run watch` in another terminal)
+3. The demo app consumes the library from `dist/perfectui/` via the `tsconfig.json` path alias
 
 ## Adding a New Component
 
+> **Only generate the files you actually need.** A purely template-driven component (e.g. `select`) needs only the component, styles, models, and `public-api.ts` — no config, provider, or service. Add `*.config.ts` + `*.provider.ts` only when the component exposes app-wide defaults via `provideX()`. Add `*.service.ts` only for imperative APIs (e.g. overlays like `dialog`, `toastr`).
+
 ### 1. Create Secondary Entry Point
 
-Create a new folder in `projects/components/`:
+Create a new folder in `projects/perfectui/`:
 
 ```
-projects/components/new-component/
+projects/perfectui/new-component/
 ├── ng-package.json
 └── src/
     ├── public-api.ts
-    ├── new-component.models.ts
-    ├── new-component.config.ts
-    ├── new-component.provider.ts
-    ├── new-component.service.ts
-    └── new-component.component.ts
+    ├── new-component.models.ts        # Public types (export type)
+    ├── new-component.css               # Styles (separate file)
+    └── new-component.ts                # Component class — no .component suffix
+    # Add only when needed:
+    # ├── new-component.config.ts       # global defaults + InjectionToken
+    # ├── new-component.provider.ts     # provideNewComponent()
+    # └── new-component.service.ts      # imperative API
 ```
 
 ### 2. Create ng-package.json
@@ -110,13 +111,9 @@ projects/components/new-component/
 }
 ```
 
-### 3. Export from Main Entry Point
+### 3. (Optional) Re-export from the main entry
 
-Update `projects/components/src/public-api.ts`:
-
-```typescript
-export * from '@sunilsolankiji/perfectui/new-component';
-```
+The root entry (`projects/perfectui/src/public-api.ts`) currently only ships `VERSION`; consumers import from subpaths like `@sunilsolankiji/perfectui/new-component`. Add a re-export there only if you want the symbol available from the root.
 
 ### 4. Build and Test
 
@@ -124,6 +121,8 @@ export * from '@sunilsolankiji/perfectui/new-component';
 npm run build:perfectui
 npm start
 ```
+
+> Tip: `scripts/new-component.ps1 -Name "<name>"` scaffolds the **full** set (component + config + provider + service). Delete the files your component doesn't need before committing.
 
 ## Submitting Changes
 
@@ -172,9 +171,13 @@ We use [Conventional Commits](https://www.conventionalcommits.org/) for automati
 - `dialog` - Dialog component
 - `toastr` - Toastr component
 - `otp` - OTP component
-- `core` - Core functionality
+- `select` - Select component
+- `core` - Theming / core functionality
 - `demo` - Demo application
 - `deps` - Dependencies
+- `release` - Release tooling
+
+(Enforced by `commitlint.config.js` — subject must be lower-case, no trailing period, ≤100 chars.)
 
 #### Examples
 
