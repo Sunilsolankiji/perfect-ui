@@ -25,7 +25,7 @@ mkdir -p projects/perfectui/component-name/src
 Create the folder structure:
 
 ```
-projects/components/component-name/
+projects/perfectui/component-name/
 ├── ng-package.json
 └── src/
     ├── public-api.ts              # Public API exports
@@ -33,7 +33,8 @@ projects/components/component-name/
     ├── component-name.config.ts
     ├── component-name.provider.ts
     ├── component-name.service.ts
-    └── component-name.component.ts
+    ├── component-name.css         # Styles (separate file)
+    └── component-name.ts          # Component class (no .component suffix)
 ```
 
 ### 2. Create ng-package.json
@@ -70,10 +71,10 @@ export { DEFAULT_COMPONENT_CONFIG, COMPONENT_CONFIG } from './component-name.con
 export { provideComponent } from './component-name.provider';
 
 // Service
-export { ComponentService } from './component-name.service';
+export { PuiComponentNameService } from './component-name.service';
 
 // Component
-export { ComponentNameComponent } from './component-name.component';
+export { PuiComponentName } from './component-name';
 ```
 
 ### 4. Update Main Entry Point
@@ -147,7 +148,7 @@ import { Injectable, inject } from '@angular/core';
 import { COMPONENT_CONFIG, DEFAULT_COMPONENT_CONFIG } from './component-name.config';
 
 @Injectable({ providedIn: 'root' })
-export class ComponentService {
+export class PuiComponentNameService {
   private readonly userConfig = inject(COMPONENT_CONFIG, { optional: true });
   private config = { ...DEFAULT_COMPONENT_CONFIG, ...this.userConfig };
 
@@ -158,7 +159,7 @@ export class ComponentService {
 ### Component Pattern
 
 ```typescript
-// component-name.component.ts
+// component-name.ts (no .component suffix)
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -168,17 +169,23 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `...`,
-  styles: [`...`]
+  styleUrl: './component-name.css'
 })
-export class ComponentNameComponent {
+export class PuiComponentName {
   // Use signal-based inputs (Angular 19+)
   readonly variant = input<ComponentVariant>('default');
   readonly size = input<ComponentSize>('md');
-  
+
   // Use signal-based outputs
   readonly clicked = output<void>();
 }
 ```
+
+### Naming Convention
+
+- **File names:** `component-name.ts`, `component-name.service.ts`, `component-name.css` (no `.component` suffix)
+- **Component class:** `PuiComponentName` (Pui prefix, no `Component` suffix)
+- **Service class:** `PuiComponentNameService` (Pui prefix, keep `Service` suffix)
 
 ---
 
@@ -257,16 +264,16 @@ onKeyDown(event: KeyboardEvent) {
 ### Unit Test Example
 
 ```typescript
-describe('ComponentNameComponent', () => {
-  let component: ComponentNameComponent;
-  let fixture: ComponentFixture<ComponentNameComponent>;
+describe('PuiComponentName', () => {
+  let component: PuiComponentName;
+  let fixture: ComponentFixture<PuiComponentName>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComponentNameComponent]
+      imports: [PuiComponentName]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ComponentNameComponent);
+    fixture = TestBed.createComponent(PuiComponentName);
     component = fixture.componentInstance;
   });
 
@@ -289,4 +296,3 @@ npm start
 ```
 
 Check the build output in `dist/components/` to verify secondary entry points are generated correctly.
-

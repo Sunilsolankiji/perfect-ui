@@ -1,25 +1,10 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  ThemeService,
-  INDIGO_PINK_THEME,
-  DEEP_PURPLE_AMBER_THEME,
-  PINK_BLUE_GREY_THEME,
-  PURPLE_GREEN_THEME,
-  CYAN_ORANGE_THEME,
-} from '@sunilsolankiji/perfectui/core';
-import type { PerfectUITheme, PerfectUIDensity } from '@sunilsolankiji/perfectui/core';
-import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
-import { DialogService } from '@sunilsolankiji/perfectui/dialog';
-
-interface ThemeOption {
-  id: string;
-  name: string;
-  theme: PerfectUITheme;
-  primaryColor: string;
-  accentColor: string;
-}
+import { PuiThemeService } from '@sunilsolankiji/perfectui/core';
+import type { PerfectUIDensity } from '@sunilsolankiji/perfectui/core';
+import { PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
+import { PuiDialogService } from '@sunilsolankiji/perfectui/dialog';
 
 interface DensityOption {
   id: PerfectUIDensity;
@@ -35,48 +20,9 @@ interface DensityOption {
   styleUrl: './theme-config.css'
 })
 export class ThemeConfigComponent {
-  private themeService = inject(ThemeService);
-  private toastr = inject(ToastrService);
-  private dialog = inject(DialogService);
-
-  /** Available prebuilt themes */
-  readonly themes: ThemeOption[] = [
-    {
-      id: 'indigo-pink',
-      name: 'Indigo & Pink',
-      theme: INDIGO_PINK_THEME,
-      primaryColor: '#3f51b5',
-      accentColor: '#e91e63',
-    },
-    {
-      id: 'deep-purple-amber',
-      name: 'Deep Purple & Amber',
-      theme: DEEP_PURPLE_AMBER_THEME,
-      primaryColor: '#673ab7',
-      accentColor: '#ffc107',
-    },
-    {
-      id: 'pink-blue-grey',
-      name: 'Pink & Blue Grey',
-      theme: PINK_BLUE_GREY_THEME,
-      primaryColor: '#e91e63',
-      accentColor: '#607d8b',
-    },
-    {
-      id: 'purple-green',
-      name: 'Purple & Green',
-      theme: PURPLE_GREEN_THEME,
-      primaryColor: '#9c27b0',
-      accentColor: '#4caf50',
-    },
-    {
-      id: 'cyan-orange',
-      name: 'Cyan & Orange',
-      theme: CYAN_ORANGE_THEME,
-      primaryColor: '#00bcd4',
-      accentColor: '#ff9800',
-    },
-  ];
+  private themeService = inject(PuiThemeService);
+  private toastr = inject(PuiToastrService);
+  private dialog = inject(PuiDialogService);
 
   /** Available density options */
   readonly densities: DensityOption[] = [
@@ -93,41 +39,6 @@ export class ThemeConfigComponent {
 
   /** Current density */
   readonly currentDensity = this.themeService.density;
-
-  /** Find the current theme ID */
-  readonly currentThemeId = computed(() => {
-    const theme = this.currentTheme();
-    if (!theme) return 'indigo-pink';
-    const found = this.themes.find(t => t.theme.name === theme.name);
-    return found?.id ?? 'indigo-pink';
-  });
-
-  /**
-   * Change the active theme
-   */
-  setTheme(themeId: string): void {
-    const option = this.themes.find(t => t.id === themeId);
-    if (option) {
-      this.themeService.setTheme(option.theme);
-      this.toastr.success(`Theme changed to ${option.name}`, 'Theme Updated');
-    }
-  }
-
-  /**
-   * Toggle dark mode
-   */
-  toggleDarkMode(): void {
-    this.themeService.toggleDarkMode();
-    const mode = this.isDarkMode() ? 'Dark' : 'Light';
-    this.toastr.info(`Switched to ${mode} mode`, 'Mode Changed');
-  }
-
-  /**
-   * Set the dark mode explicitly
-   */
-  setDarkMode(enabled: boolean): void {
-    this.themeService.setDarkMode(enabled ? 'dark' : 'light');
-  }
 
   /**
    * Change density

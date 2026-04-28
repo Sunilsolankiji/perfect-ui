@@ -8,6 +8,29 @@
       <p>Angular Component Library</p>
     </div>
 
+    <!-- Global Theme Selector -->
+    <div class="theme-selector">
+      <div class="theme-label">🎨 Theme</div>
+      <div class="theme-dropdown-container">
+        <select
+          class="theme-dropdown"
+          [ngModel]="currentThemeId"
+          (ngModelChange)="onThemeChange($event)"
+        >
+          @for (theme of themes; track theme.id) {
+            <option [value]="theme.id">{{ theme.name }}</option>
+          }
+        </select>
+        <div class="theme-preview">
+          <span class="color-dot" [style.background-color]="getCurrentTheme().primaryColor"></span>
+          <span class="color-dot" [style.background-color]="getCurrentTheme().accentColor"></span>
+        </div>
+      </div>
+      <button class="dark-mode-toggle" (click)="toggleDarkMode()" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        {{ isDarkMode() ? '☀️' : '🌙' }}
+      </button>
+    </div>
+
     <div class="nav-label">Components</div>
     <ul class="nav-list">
       @for (item of navItems; track item.path) {

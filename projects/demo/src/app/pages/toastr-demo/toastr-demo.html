@@ -9,29 +9,9 @@
     </a>
   </div>
 
-  <div class="section">
-    <h2>🎨 Theme Selection</h2>
-    <div class="button-group theme-group">
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'default'" (click)="setTheme('default')">
-        Default
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'dark'" (click)="setTheme('dark')">
-        Dark
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'light'" (click)="setTheme('light')">
-        Light
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'minimal'" (click)="setTheme('minimal')">
-        Minimal
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'outline'" (click)="setTheme('outline')">
-        Outline
-      </button>
-      <button class="btn btn-theme" [class.active]="selectedTheme === 'gradient'" (click)="setTheme('gradient')">
-        Gradient
-      </button>
-    </div>
-    <p class="theme-hint">Selected: <strong>{{ selectedTheme }}</strong></p>
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <span>Change the global theme using the dropdown in the sidebar to see how toasts adapt to different color palettes!</span>
   </div>
 
   <div class="section">
@@ -56,10 +36,10 @@
     <h2>⚡ Actions</h2>
     <div class="button-group">
       <button class="btn btn-custom" (click)="showCustom()">
-        ⏱️ Custom (10s)
+        ⏱️ Custom Duration (10s)
       </button>
-      <button class="btn btn-all-themes" (click)="showAllThemes()">
-        🌈 Show All Themes
+      <button class="btn btn-all-themes" (click)="showMultiple()">
+        🌈 Show Multiple Toasts
       </button>
       <button class="btn btn-clear" (click)="clearAll()">
         🗑️ Clear All
@@ -70,8 +50,7 @@
   <div class="features">
     <h2>✨ Features</h2>
     <ul>
-      <li>🎨 <strong>6 Built-in Themes</strong> - Default, Dark, Light, Minimal, Outline, Gradient</li>
-      <li>🎯 <strong>Custom Themes</strong> - Create your own with CSS variables</li>
+      <li>🎨 <strong>Global Theme Support</strong> - Automatically uses PerfectUI's global theme colors</li>
       <li>📍 <strong>Multiple Positions</strong> - Top/Bottom, Left/Center/Right</li>
       <li>⏱️ <strong>Configurable Duration</strong> - Auto-dismiss or persistent</li>
       <li>📊 <strong>Progress Bar</strong> - Visual countdown with pause on hover</li>

@@ -7,7 +7,7 @@ import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
 @Injectable({
   providedIn: 'root',
 })
-export class OtpService {
+export class PuiOtpService {
   private readonly userConfig = inject(OTP_CONFIG, { optional: true });
   private config: Required<Omit<OtpConfig, 'inputStyle'>> & Pick<OtpConfig, 'inputStyle'>;
 

@@ -1,5 +1,5 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
-import { DialogService, DialogTheme, DialogSize } from '@sunilsolankiji/perfectui/dialog';
+import { PuiDialogService, DialogSize } from '@sunilsolankiji/perfectui/dialog';
 import { UserFormDialogComponent, UserFormData } from './user-form-dialog.component';
 
 @Component({
@@ -10,17 +10,15 @@ import { UserFormDialogComponent, UserFormData } from './user-form-dialog.compon
   styleUrl: './dialog-demo.css'
 })
 export class DialogDemo {
-  private dialog = inject(DialogService);
+  private dialog = inject(PuiDialogService);
 
   // Package info
   packageName = '@sunilsolankiji/perfectui/dialog';
   version = '2.0.0';
-  npmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
   // Template references
   customTemplate = viewChild<TemplateRef<any>>('customTemplate');
 
-  selectedTheme: DialogTheme = 'default';
   selectedSize: DialogSize = 'md';
   lastResult: string = '';
 
@@ -28,7 +26,7 @@ export class DialogDemo {
     await this.dialog.alert(
       'This is an alert message. Click OK to dismiss.',
       'Alert',
-      { theme: this.selectedTheme, size: this.selectedSize }
+      { size: this.selectedSize }
     );
     this.lastResult = 'Alert closed';
   }
@@ -37,7 +35,7 @@ export class DialogDemo {
     const result = await this.dialog.confirm(
       'Are you sure you want to proceed with this action?',
       'Confirmation Required',
-      { theme: this.selectedTheme, size: this.selectedSize }
+      { size: this.selectedSize }
     );
     this.lastResult = result.confirmed ? 'Confirmed ✅' : 'Cancelled ❌';
   }
@@ -47,7 +45,6 @@ export class DialogDemo {
       'Please enter your name:',
       'Input Required',
       {
-        theme: this.selectedTheme,
         size: this.selectedSize,
         inputPlaceholder: 'Your name...',
         inputValue: ''
@@ -64,7 +61,7 @@ export class DialogDemo {
     const result = await this.dialog.danger(
       'This action cannot be undone. Are you absolutely sure you want to delete this item?',
       'Delete Item',
-      { theme: this.selectedTheme, size: this.selectedSize }
+      { size: this.selectedSize }
     );
     this.lastResult = result.confirmed ? 'Item deleted 🗑️' : 'Deletion cancelled';
   }
@@ -74,7 +71,6 @@ export class DialogDemo {
       'Choose your preferred option:',
       'Custom Buttons',
       {
-        theme: this.selectedTheme,
         size: this.selectedSize,
         buttons: [
           { text: 'Option A', variant: 'secondary', returnValue: 'A' },
@@ -96,7 +92,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 
 The dialog will automatically scroll if the content exceeds the available height.`,
       'Long Content',
-      { theme: this.selectedTheme, size: this.selectedSize }
+      { size: this.selectedSize }
     );
     this.lastResult = 'Long content dialog closed';
   }
@@ -106,7 +102,6 @@ The dialog will automatically scroll if the content exceeds the available height
       'Please provide your feedback:',
       'Feedback Form',
       {
-        theme: this.selectedTheme,
         size: 'lg',
         inputType: 'textarea',
         inputPlaceholder: 'Write your feedback here...'
@@ -124,7 +119,6 @@ The dialog will automatically scroll if the content exceeds the available height
       'Enter your password to continue:',
       'Authentication',
       {
-        theme: this.selectedTheme,
         size: this.selectedSize,
         inputType: 'password',
         inputPlaceholder: '••••••••'
@@ -141,14 +135,14 @@ The dialog will automatically scroll if the content exceeds the available height
     const result1 = await this.dialog.confirm(
       'This is the first dialog. Click Confirm to open another dialog on top.',
       'Dialog 1',
-      { theme: this.selectedTheme, size: 'sm' }
+      { size: 'sm' }
     );
 
     if (result1.confirmed) {
       const result2 = await this.dialog.confirm(
         'This is the second dialog stacked on top!',
         'Dialog 2',
-        { theme: this.selectedTheme, size: 'sm' }
+        { size: 'sm' }
       );
       this.lastResult = result2.confirmed ? 'Both dialogs confirmed' : 'Second dialog cancelled';
     } else {
@@ -161,7 +155,6 @@ The dialog will automatically scroll if the content exceeds the available height
     if (template) {
       const result = await this.dialog.openTemplate(template, {
         title: 'Custom Template Dialog',
-        theme: this.selectedTheme,
         size: this.selectedSize,
         buttons: [
           { text: 'Cancel', variant: 'secondary', returnValue: false },
@@ -191,10 +184,6 @@ The dialog will automatically scroll if the content exceeds the available height
     } else {
       this.lastResult = 'Custom dialog cancelled';
     }
-  }
-
-  setTheme(theme: DialogTheme) {
-    this.selectedTheme = theme;
   }
 
   setSize(size: DialogSize) {

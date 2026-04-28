@@ -1,12 +1,12 @@
 import { Component, HostListener, ChangeDetectorRef, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Dialog, DialogResult } from './dialog.models';
-import { DialogComponent } from './dialog.component';
+import { PuiDialog } from './dialog';
 
 @Component({
   selector: 'pui-dialog-container',
   standalone: true,
-  imports: [CommonModule, DialogComponent],
+  imports: [CommonModule, PuiDialog],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (dialog of dialogs; track dialog.id) {
@@ -26,74 +26,9 @@ import { DialogComponent } from './dialog.component';
       </div>
     }
   `,
-  styles: [`
-    .pui-dialog-backdrop {
-      position: fixed;
-      inset: 0;
-      background: var(--pui-dialog-backdrop-bg, rgba(0, 0, 0, 0.5));
-      z-index: var(--pui-dialog-z-index, 9999);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pui-dialog-backdrop--entering {
-      animation: backdropEnter var(--pui-dialog-animation-duration, 200ms) ease-out forwards;
-    }
-
-    .pui-dialog-backdrop--leaving {
-      animation: backdropLeave var(--pui-dialog-animation-duration, 200ms) ease-in forwards;
-    }
-
-    @keyframes backdropEnter {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes backdropLeave {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-      }
-    }
-
-    .pui-dialog-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .pui-dialog-wrapper--top {
-      align-items: flex-start;
-      padding-top: 60px;
-    }
-
-    .pui-dialog-wrapper--bottom {
-      align-items: flex-end;
-      padding-bottom: 60px;
-    }
-
-    /* Theme classes on backdrop for CSS context */
-    .pui-dialog-theme--default {}
-    .pui-dialog-theme--dark {
-      --pui-dialog-backdrop-bg: rgba(0, 0, 0, 0.7);
-    }
-    .pui-dialog-theme--minimal {
-      --pui-dialog-backdrop-bg: rgba(0, 0, 0, 0.3);
-    }
-  `]
+  styleUrl: './dialog-container.css'
 })
-export class DialogContainerComponent {
+export class PuiDialogContainer {
   private readonly cdr = inject(ChangeDetectorRef);
 
   dialogs: Dialog[] = [];

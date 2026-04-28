@@ -3,16 +3,22 @@ import { isPlatformBrowser } from '@angular/common';
 import { PERFECTUI_CONFIG, DEFAULT_PERFECTUI_CONFIG, CSS_VAR_PREFIX, DENSITY_SCALE } from './theme.config';
 import { PREBUILT_THEMES } from './prebuilt-themes';
 import type {
-  PerfectUIConfig,
   PerfectUITheme,
   PerfectUIDarkMode,
-  PerfectUIPalette,
   PerfectUIColorShades,
   PerfectUIDensity,
 } from './theme.models';
 
+const STORAGE_KEY = 'pui-theme-preferences';
+
+interface ThemePreferences {
+  themeName: string;
+  darkMode: 'light' | 'dark' | 'auto';
+  density: PerfectUIDensity;
+}
+
 @Injectable({ providedIn: 'root' })
-export class ThemeService {
+export class PuiThemeService {
   private config = inject(PERFECTUI_CONFIG, { optional: true }) ?? DEFAULT_PERFECTUI_CONFIG;
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
@@ -26,6 +32,9 @@ export class ThemeService {
   /** Current density */
   readonly density = signal<PerfectUIDensity>('default');
 
+  /** Current dark mode setting (for persistence) */
+  private darkModeSetting: 'light' | 'dark' | 'auto' = 'auto';
+
   private mediaQuery: MediaQueryList | null = null;
 
   constructor() {
@@ -35,6 +44,7 @@ export class ThemeService {
     effect(() => {
       if (this.isBrowser) {
         this.applyDarkMode(this.isDarkMode());
+        this.savePreferences();
       }
     });
 
@@ -43,6 +53,7 @@ export class ThemeService {
       const theme = this.currentTheme();
       if (theme && this.isBrowser) {
         this.applyTheme(theme);
+        this.savePreferences();
       }
     });
 
@@ -50,24 +61,76 @@ export class ThemeService {
     effect(() => {
       if (this.isBrowser) {
         this.applyDensity(this.density());
+        this.savePreferences();
       }
     });
   }
 
   private initialize(): void {
-    // Set initial theme
-    const themeConfig = this.config.theme ?? 'indigo-pink';
-    const theme = typeof themeConfig === 'string'
-      ? PREBUILT_THEMES[themeConfig] ?? PREBUILT_THEMES['indigo-pink']
-      : themeConfig;
-    this.currentTheme.set(theme);
+    // Try to load saved preferences first
+    const saved = this.loadPreferences();
 
-    // Set initial density
-    this.density.set(this.config.density ?? 'default');
+    if (saved) {
+      // Restore saved theme
+      const theme = PREBUILT_THEMES[saved.themeName] ?? PREBUILT_THEMES['indigo-pink'];
+      this.currentTheme.set(theme);
 
-    // Set initial dark mode
-    if (this.isBrowser) {
-      this.initializeDarkMode(this.config.darkMode ?? 'auto');
+      // Restore saved density
+      this.density.set(saved.density);
+
+      // Restore saved dark mode
+      this.darkModeSetting = saved.darkMode;
+      if (this.isBrowser) {
+        this.initializeDarkMode(saved.darkMode);
+      }
+    } else {
+      // Use config defaults
+      const themeConfig = this.config.theme ?? 'indigo-pink';
+      const theme = typeof themeConfig === 'string'
+        ? PREBUILT_THEMES[themeConfig] ?? PREBUILT_THEMES['indigo-pink']
+        : themeConfig;
+      this.currentTheme.set(theme);
+
+      // Set initial density
+      this.density.set(this.config.density ?? 'default');
+
+      // Set initial dark mode
+      this.darkModeSetting = this.config.darkMode ?? 'auto';
+      if (this.isBrowser) {
+        this.initializeDarkMode(this.config.darkMode ?? 'auto');
+      }
+    }
+  }
+
+  private loadPreferences(): ThemePreferences | null {
+    if (!this.isBrowser) return null;
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.warn('Failed to load theme preferences', e);
+    }
+    return null;
+  }
+
+  private savePreferences(): void {
+    if (!this.isBrowser) return;
+
+    const theme = this.currentTheme();
+    if (!theme) return;
+
+    try {
+      const prefs: ThemePreferences = {
+        themeName: theme.name,
+        darkMode: this.darkModeSetting,
+        density: this.density()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    } catch (e) {
+      console.warn('Failed to save theme preferences', e);
     }
   }
 
@@ -78,7 +141,7 @@ export class ThemeService {
 
       // Listen for system preference changes
       this.mediaQuery.addEventListener('change', (e) => {
-        if (this.config.darkMode === 'auto') {
+        if (this.darkModeSetting === 'auto') {
           this.isDarkMode.set(e.matches);
         }
       });
@@ -101,9 +164,17 @@ export class ThemeService {
   }
 
   /**
+   * Get available theme names
+   */
+  getAvailableThemes(): string[] {
+    return Object.keys(PREBUILT_THEMES);
+  }
+
+  /**
    * Set dark mode
    */
   setDarkMode(mode: PerfectUIDarkMode): void {
+    this.darkModeSetting = mode;
     if (mode === 'auto' && this.isBrowser) {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       this.isDarkMode.set(prefersDark);
@@ -116,7 +187,9 @@ export class ThemeService {
    * Toggle dark mode
    */
   toggleDarkMode(): void {
-    this.isDarkMode.update((dark) => !dark);
+    const newDark = !this.isDarkMode();
+    this.darkModeSetting = newDark ? 'dark' : 'light';
+    this.isDarkMode.set(newDark);
   }
 
   /**

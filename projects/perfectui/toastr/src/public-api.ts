@@ -20,11 +20,11 @@
  * };
  *
  * // In component
- * import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
+ * import { PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
  *
  * @Component({...})
  * export class MyComponent {
- *   private toastr = inject(ToastrService);
+ *   private toastr = inject(PuiToastrService);
  *
  *   showSuccess() {
  *     this.toastr.success('Operation completed!', 'Success');
@@ -57,8 +57,8 @@ export { DEFAULT_TOASTR_CONFIG, TOASTR_CONFIG } from './toastr.config';
 export { provideToastr } from './toastr.provider';
 
 // Service
-export { ToastrService } from './toastr.service';
+export { PuiToastrService } from './toastr.service';
 
 // Components (exported for advanced use cases)
-export { ToastrComponent } from './toastr.component';
-export { ToastrContainerComponent } from './toastr-container.component';
+export { PuiToastr } from './toastr';
+export { PuiToastrContainer } from './toastr-container';

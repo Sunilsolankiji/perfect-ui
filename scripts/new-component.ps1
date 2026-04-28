@@ -15,7 +15,7 @@ Write-Host "Creating new component: perfectui/$ComponentName" -ForegroundColor G
 
 # 1. Create component directory structure
 Write-Host "Creating directory structure..." -ForegroundColor Yellow
-New-Item -ItemType Directory -Path "$ComponentPath/src/lib" -Force | Out-Null
+New-Item -ItemType Directory -Path "$ComponentPath/src" -Force | Out-Null
 
 # 2. Create ng-package.json for secondary entry point
 $ngPackage = @"
@@ -33,28 +33,33 @@ Write-Host "Created ng-package.json" -ForegroundColor Cyan
 $indexTs = @"
 // Public API for perfectui/$ComponentName
 
-// export type { ${ComponentNamePascal}Config } from './lib/$ComponentName.config';
-// export { provide${ComponentNamePascal} } from './lib/$ComponentName.provider';
-// export { ${ComponentNamePascal}Service } from './lib/$ComponentName.service';
-// export { ${ComponentNamePascal}Component } from './lib/$ComponentName.component';
+// export type { ${ComponentNamePascal}Config } from './$ComponentName.config';
+// export { provide${ComponentNamePascal} } from './$ComponentName.provider';
+// export { Pui${ComponentNamePascal}Service } from './$ComponentName.service';
+// export { Pui${ComponentNamePascal} } from './$ComponentName';
 "@
 $indexTs | Out-File -FilePath "$ComponentPath/src/public-api.ts" -Encoding UTF8
 Write-Host "Created public-api.ts" -ForegroundColor Cyan
 
-# 4. Create basic component file
+# 4. Create basic component file (no .component suffix in file name)
 $componentTs = @"
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'pui-$ComponentName',
   standalone: true,
-  template: ``
+  template: ``,
+  styleUrl: './$ComponentName.css'
 })
-export class ${ComponentNamePascal}Component {
+export class Pui${ComponentNamePascal} {
 }
 "@
-$componentTs | Out-File -FilePath "$ComponentPath/src/lib/$ComponentName.component.ts" -Encoding UTF8
-Write-Host "Created $ComponentName.component.ts" -ForegroundColor Cyan
+$componentTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.ts" -Encoding UTF8
+Write-Host "Created $ComponentName.ts" -ForegroundColor Cyan
+
+# 4b. Create empty CSS file
+"" | Out-File -FilePath "$ComponentPath/src/$ComponentName.css" -Encoding UTF8
+Write-Host "Created $ComponentName.css" -ForegroundColor Cyan
 
 # 5. Create config file
 $configTs = @"
@@ -70,7 +75,7 @@ export const default${ComponentNamePascal}Config: ${ComponentNamePascal}Config =
   // Default values
 };
 "@
-$configTs | Out-File -FilePath "$ComponentPath/src/lib/$ComponentName.config.ts" -Encoding UTF8
+$configTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.config.ts" -Encoding UTF8
 Write-Host "Created $ComponentName.config.ts" -ForegroundColor Cyan
 
 # 6. Create provider file
@@ -87,7 +92,7 @@ export function provide${ComponentNamePascal}(config: Partial<${ComponentNamePas
   ]);
 }
 "@
-$providerTs | Out-File -FilePath "$ComponentPath/src/lib/$ComponentName.provider.ts" -Encoding UTF8
+$providerTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.provider.ts" -Encoding UTF8
 Write-Host "Created $ComponentName.provider.ts" -ForegroundColor Cyan
 
 # 7. Create service file
@@ -96,24 +101,27 @@ import { Injectable, inject } from '@angular/core';
 import { ${ComponentName.ToUpper()}_CONFIG, ${ComponentNamePascal}Config, default${ComponentNamePascal}Config } from './$ComponentName.config';
 
 @Injectable({ providedIn: 'root' })
-export class ${ComponentNamePascal}Service {
+export class Pui${ComponentNamePascal}Service {
   private config: ${ComponentNamePascal}Config = inject(${ComponentName.ToUpper()}_CONFIG, { optional: true }) ?? default${ComponentNamePascal}Config;
 }
 "@
-$serviceTs | Out-File -FilePath "$ComponentPath/src/lib/$ComponentName.service.ts" -Encoding UTF8
+$serviceTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.service.ts" -Encoding UTF8
 Write-Host "Created $ComponentName.service.ts" -ForegroundColor Cyan
 
 Write-Host ""
 Write-Host "Component perfectui/$ComponentName created!" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
-Write-Host "1. Implement component logic in $ComponentPath/src/lib/"
+Write-Host "1. Implement component logic in $ComponentPath/src/"
 Write-Host "2. Update exports in $ComponentPath/src/public-api.ts"
 Write-Host "3. Build library: npm run build:perfectui"
 Write-Host "4. Create demo page in projects/demo/src/app/pages/$ComponentName-demo/"
 Write-Host ""
 Write-Host "Import in your app:" -ForegroundColor Cyan
-Write-Host "  import { provide${ComponentNamePascal} } from 'perfectui/$ComponentName';"
-Write-Host "8. Update workflows (ci.yml, publish.yml, deploy-demo.yml)"
-Write-Host "9. Create demo page in projects/demo/src/app/pages/"
-
+Write-Host "  import { provide${ComponentNamePascal}, Pui${ComponentNamePascal} } from 'perfectui/$ComponentName';"
+Write-Host "  import { Pui${ComponentNamePascal}Service } from 'perfectui/$ComponentName';"
+Write-Host ""
+Write-Host "Class naming convention:" -ForegroundColor Yellow
+Write-Host "  - Component: Pui${ComponentNamePascal} (in $ComponentName.ts)"
+Write-Host "  - Service:   Pui${ComponentNamePascal}Service (in $ComponentName.service.ts)"
+Write-Host ""
