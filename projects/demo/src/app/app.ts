@@ -7,9 +7,6 @@ import { PuiThemeService } from '@sunilsolankiji/perfectui/core';
 interface NavItem {
   path: string;
   label: string;
-  icon: string;
-  version: string;
-  npmUrl: string;
 }
 
 interface ExternalLink {
@@ -51,10 +48,11 @@ export class App implements OnInit {
   ];
 
   navItems: NavItem[] = [
-    { path: '/toastr', label: 'Toastr', icon: '🔔', version: '2.0.0', npmUrl: 'https://www.npmjs.com/package/@sunilsolankiji/perfectui' },
-    { path: '/dialog', label: 'Dialog', icon: '💬', version: '2.0.0', npmUrl: 'https://www.npmjs.com/package/@sunilsolankiji/perfectui' },
-    { path: '/otp', label: 'OTP', icon: '🔢', version: '2.0.0', npmUrl: 'https://www.npmjs.com/package/@sunilsolankiji/perfectui' },
-    { path: '/theme', label: 'Theme', icon: '🎨', version: '', npmUrl: '' },
+    { path: '/toastr', label: 'Toastr' },
+    { path: '/dialog', label: 'Dialog' },
+    { path: '/otp', label: 'OTP' },
+    { path: '/select', label: 'Select' },
+    { path: '/theme', label: 'Theme' },
   ];
 
   externalLinks: ExternalLink[] = [

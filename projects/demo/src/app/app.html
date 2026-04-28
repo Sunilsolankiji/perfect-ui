@@ -36,7 +36,6 @@
       @for (item of navItems; track item.path) {
         <li>
           <a [routerLink]="item.path" routerLinkActive="active">
-            <span class="nav-icon">{{ item.icon }}</span>
             <span class="nav-text">{{ item.label }}</span>
           </a>
         </li>
