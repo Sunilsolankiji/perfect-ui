@@ -2,11 +2,12 @@ import { Injectable, inject } from '@angular/core';
 import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
 
 /**
- * Service for programmatic OTP operations and configuration
+ * Service for programmatic OTP operations and configuration.
+ *
+ * Not provided in `root` — register it via `provideOtp()` in your
+ * `app.config.ts` (or the providers of a lazy route) before injecting.
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PuiOtpService {
   private readonly userConfig = inject(OTP_CONFIG, { optional: true });
   private config: Required<Omit<OtpConfig, 'inputStyle'>> & Pick<OtpConfig, 'inputStyle'>;

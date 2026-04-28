@@ -131,33 +131,41 @@ export const COMPONENT_CONFIG = new InjectionToken<ComponentConfig>('COMPONENT_C
 
 ### Provider Pattern
 
-> Add only when a `*.config.ts` exists. The provider's only job is to merge user config over `DEFAULT_X_CONFIG` and bind it to the `X_CONFIG` token.
+> Add only when a `*.config.ts` exists. The provider's job is to merge user config over `DEFAULT_X_CONFIG`, bind it to the `X_CONFIG` token, and (when a service exists) register the service in the **same** provider — services are **not** registered in the root injector. Use `makeEnvironmentProviders` and return `EnvironmentProviders`.
 
 ```typescript
 // component-name.provider.ts
-import { Provider } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { ComponentConfig, COMPONENT_CONFIG, DEFAULT_COMPONENT_CONFIG } from './component-name.config';
+import { PuiComponentNameService } from './component-name.service'; // omit if no service
 
-export function provideComponent(config?: Partial<ComponentConfig>): Provider[] {
-  return [
+export function provideComponent(config?: Partial<ComponentConfig>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    PuiComponentNameService, // omit if no service exists
     {
       provide: COMPONENT_CONFIG,
       useValue: { ...DEFAULT_COMPONENT_CONFIG, ...config },
     },
-  ];
+  ]);
 }
 ```
 
 ### Service Pattern
 
 > Add only when the component has an **imperative API** (e.g. `dialog.open()`, `toastr.success()`) or shared state across instances. A purely declarative `<pui-x>` component does **not** need a service.
+>
+> **Do not use `providedIn: 'root'`.** Use bare `@Injectable()` and register the service from `provideX()` instead. Consumers explicitly opt in by calling `provideX()` in `app.config.ts`, which keeps the service lazy, tree-shakable, and matches Angular's recommended library DI pattern.
 
 ```typescript
 // component-name.service.ts
 import { Injectable, inject } from '@angular/core';
 import { COMPONENT_CONFIG, DEFAULT_COMPONENT_CONFIG } from './component-name.config';
 
-@Injectable({ providedIn: 'root' })
+/**
+ * Not provided in `root` — registered by `provideComponent()`.
+ * Consumers must call that in `app.config.ts` before injecting.
+ */
+@Injectable()
 export class PuiComponentNameService {
   private readonly userConfig = inject(COMPONENT_CONFIG, { optional: true });
   private config = { ...DEFAULT_COMPONENT_CONFIG, ...this.userConfig };

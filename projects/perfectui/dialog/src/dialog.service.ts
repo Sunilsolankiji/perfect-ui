@@ -5,11 +5,12 @@ import { DialogConfig, DEFAULT_DIALOG_CONFIG, DIALOG_CONFIG, DIALOG_DATA, DIALOG
 import { PuiDialogContainer } from './dialog-container';
 
 /**
- * Service for displaying dialogs and modals
+ * Service for displaying dialogs and modals.
+ *
+ * Not provided in `root` — register it via `provideDialog()` in your
+ * `app.config.ts` (or the providers of a lazy route) before injecting.
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PuiDialogService {
   private readonly document = inject(DOCUMENT);
   private readonly appRef = inject(ApplicationRef);

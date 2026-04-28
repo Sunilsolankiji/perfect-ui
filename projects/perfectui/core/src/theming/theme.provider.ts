@@ -9,7 +9,12 @@ import { PuiThemeService } from './theme.service';
 import type { PerfectUIConfig } from './theme.models';
 
 /**
- * Provides PerfectUI theming configuration
+ * Provides PerfectUI theming configuration.
+ *
+ * Registers `PuiThemeService` and applies the configured theme, dark mode
+ * and density before the app renders. `PuiThemeService` is **not**
+ * registered in the root injector — calling `providePerfectUI()` is
+ * required before injecting it.
  *
  * @example
  * ```typescript
@@ -37,6 +42,7 @@ export function providePerfectUI(config: PerfectUIConfig = {}): EnvironmentProvi
   };
 
   return makeEnvironmentProviders([
+    PuiThemeService,
     {
       provide: PERFECTUI_CONFIG,
       useValue: mergedConfig,

@@ -30,8 +30,8 @@ Add only when the component has the corresponding need:
 | File | Add when… |
 |---|---|
 | `<name>.config.ts` | The component has app-wide defaults configurable from `app.config.ts` (defines `XConfig`, `DEFAULT_X_CONFIG`, `X_CONFIG` `InjectionToken`) |
-| `<name>.provider.ts` | A config exists — exports `provideX(config?)` returning `Provider[]` / `EnvironmentProviders` merging defaults |
-| `<name>.service.ts` | The component has an **imperative API** (e.g. overlays opened from code: `dialog`, `toastr`) or shared state. `@Injectable({ providedIn: 'root' })`, reads config via `inject(X_CONFIG, { optional: true })` |
+| `<name>.provider.ts` | A config exists — exports `provideX(config?)` returning `EnvironmentProviders` (via `makeEnvironmentProviders`) that **registers the service** (when one exists) and binds merged defaults to `X_CONFIG` |
+| `<name>.service.ts` | The component has an **imperative API** (e.g. overlays opened from code: `dialog`, `toastr`) or shared state. Use plain `@Injectable()` — **never `providedIn: 'root'`**. The service is registered only via `provideX()`, so consumers explicitly opt in from `app.config.ts`. Read config via `inject(X_CONFIG, { optional: true })` |
 
 Decision guide:
 - Pure **template-driven** component configured via `input()`/`model()` and consumed with `<pui-x>` → component + models only. See `projects/perfectui/select/` (no config, provider, or service — its `public-api.ts` documents this explicitly).
@@ -44,6 +44,7 @@ Naming is enforced: file `dialog.ts` → class `PuiDialog`; file `dialog.service
 
 - **Standalone components only**, `ChangeDetectionStrategy.OnPush`.
 - **Signal-based APIs**: use `input()`, `output()`, `model()`, `signal()`, `computed()`, `effect()` (see `otp/src/otp.ts` for a full example with `ControlValueAccessor`).
+- **DI for services**: services use bare `@Injectable()` (no `providedIn: 'root'`) and are registered by their `provideX()` function via `makeEnvironmentProviders([PuiXService, { provide: X_CONFIG, useValue: ... }])`. Consumers must call `provideX()` in `app.config.ts` (or a route's providers) before injecting — this keeps services lazy and tree-shakable, and matches Angular's recommended library DI pattern. See `dialog/src/dialog.provider.ts` and `toastr/src/toastr.provider.ts`.
 - Strict mode is on (`strictTemplates`, `noPropertyAccessFromIndexSignature`, etc. — see `tsconfig.json`).
 - Theming hooks: style with CSS variables defaulted inline, e.g. `background: var(--pui-component-bg, #fff);`.
 - Accessibility is non-negotiable: ARIA roles, `aria-*` attributes, keyboard handling — see `otp.ts` and `dialog-container.ts`.

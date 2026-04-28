@@ -6,11 +6,12 @@ import { ToastrConfig, DEFAULT_TOASTR_CONFIG, TOASTR_CONFIG } from './toastr.con
 import { PuiToastrContainer } from './toastr-container';
 
 /**
- * Service for displaying toast notifications
+ * Service for displaying toast notifications.
+ *
+ * Not provided in `root` — register it via `provideToastr()` in your
+ * `app.config.ts` (or the providers of a lazy route) before injecting.
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PuiToastrService {
   private readonly document = inject(DOCUMENT);
   private readonly appRef = inject(ApplicationRef);

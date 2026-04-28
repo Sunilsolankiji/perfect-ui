@@ -4,13 +4,14 @@
 #   .\scripts\new-component.ps1 -Name "tooltip" -Config -Provider
 #   .\scripts\new-component.ps1 -Name "dialog"  -Config -Provider -Service
 #
-# By default this generates a *minimal*, template-driven component:
+# Defaults to a *minimal*, template-driven component:
 #   <name>.ts, <name>.css, <name>.models.ts, public-api.ts, ng-package.json
 #
 # Add -Config / -Provider / -Service only when the component truly needs them:
 #   -Config    : app-wide defaults exposed via an InjectionToken
 #   -Provider  : provideX() that merges defaults (requires -Config)
-#   -Service   : imperative API (e.g. overlays like dialog/toastr)
+#   -Service   : imperative API; the service is registered by provideX(),
+#                NOT in 'root' -- consumers must call provideX() in app.config.ts.
 
 param(
     [Parameter(Mandatory=$true)]
@@ -20,30 +21,27 @@ param(
     [switch]$Service
 )
 
-# A provider only makes sense paired with a config.
 if ($Provider -and -not $Config) {
     Write-Host "Note: -Provider implies -Config. Enabling -Config." -ForegroundColor Yellow
     $Config = $true
 }
-# A service that reads global config implies config + provider exist.
 if ($Service -and -not $Config) {
     Write-Host "Note: -Service implies -Config + -Provider. Enabling them." -ForegroundColor Yellow
     $Config = $true
     $Provider = $true
 }
 
-$ComponentName = $Name.ToLower()
+$ComponentName       = $Name.ToLower()
 $ComponentNamePascal = (Get-Culture).TextInfo.ToTitleCase($ComponentName)
-$ComponentPath = "projects/perfectui/$ComponentName"
-$Upper = $ComponentName.ToUpper()
+$ComponentPath       = "projects/perfectui/$ComponentName"
+$Upper               = $ComponentName.ToUpper()
 
 Write-Host "Creating new component: perfectui/$ComponentName" -ForegroundColor Green
 
-# 1. Directory
 Write-Host "Creating directory structure..." -ForegroundColor Yellow
 New-Item -ItemType Directory -Path "$ComponentPath/src" -Force | Out-Null
 
-# 2. ng-package.json
+# --- ng-package.json ---
 $ngPackage = @"
 {
   "`$schema": "../../../../node_modules/ng-packagr/ng-package.schema.json",
@@ -55,7 +53,7 @@ $ngPackage = @"
 $ngPackage | Out-File -FilePath "$ComponentPath/ng-package.json" -Encoding UTF8
 Write-Host "Created ng-package.json" -ForegroundColor Cyan
 
-# 3. public-api.ts (assembled based on selected pieces)
+# --- public-api.ts (built dynamically) ---
 $publicApiLines = @(
     "/**",
     " * @sunilsolankiji/perfectui/$ComponentName",
@@ -95,17 +93,17 @@ $publicApiLines += @(
 $publicApiLines -join "`n" | Out-File -FilePath "$ComponentPath/src/public-api.ts" -Encoding UTF8
 Write-Host "Created public-api.ts" -ForegroundColor Cyan
 
-# 4. models (always)
+# --- models (always) ---
 $modelsTs = @"
 // Public types for perfectui/$ComponentName.
-// Use ``export type`` so consumers tree-shake correctly.
+// Use 'export type' so consumers tree-shake correctly.
 
 export type ${ComponentNamePascal}Size = 'sm' | 'md' | 'lg';
 "@
 $modelsTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.models.ts" -Encoding UTF8
 Write-Host "Created $ComponentName.models.ts" -ForegroundColor Cyan
 
-# 5. component (always) -- no .component suffix
+# --- component (always; no .component suffix) ---
 $componentTs = @"
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { ${ComponentNamePascal}Size } from './$ComponentName.models';
@@ -127,7 +125,7 @@ Write-Host "Created $ComponentName.ts" -ForegroundColor Cyan
 "" | Out-File -FilePath "$ComponentPath/src/$ComponentName.css" -Encoding UTF8
 Write-Host "Created $ComponentName.css" -ForegroundColor Cyan
 
-# 6. config (optional)
+# --- config (optional) ---
 if ($Config) {
     $configTs = @"
 import { InjectionToken } from '@angular/core';
@@ -147,32 +145,65 @@ export const ${Upper}_CONFIG = new InjectionToken<${ComponentNamePascal}Config>(
     Write-Host "Created $ComponentName.config.ts" -ForegroundColor Cyan
 }
 
-# 7. provider (optional)
+# --- provider (optional) -- registers the service when -Service is used ---
 if ($Provider) {
-    $providerTs = @"
-import { Provider } from '@angular/core';
+    if ($Service) {
+        $providerImports = @"
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { ${Upper}_CONFIG, DEFAULT_${Upper}_CONFIG, ${ComponentNamePascal}Config } from './$ComponentName.config';
-
-export function provide${ComponentNamePascal}(config: Partial<${ComponentNamePascal}Config> = {}): Provider[] {
-  return [
+import { Pui${ComponentNamePascal}Service } from './$ComponentName.service';
+"@
+        $providerEntries = @"
+    Pui${ComponentNamePascal}Service,
     {
       provide: ${Upper}_CONFIG,
       useValue: { ...DEFAULT_${Upper}_CONFIG, ...config },
     },
-  ];
+"@
+        $providerSummary = "configuration and registers Pui${ComponentNamePascal}Service"
+    } else {
+        $providerImports = @"
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
+import { ${Upper}_CONFIG, DEFAULT_${Upper}_CONFIG, ${ComponentNamePascal}Config } from './$ComponentName.config';
+"@
+        $providerEntries = @"
+    {
+      provide: ${Upper}_CONFIG,
+      useValue: { ...DEFAULT_${Upper}_CONFIG, ...config },
+    },
+"@
+        $providerSummary = "configuration"
+    }
+
+    $providerTs = @"
+$providerImports
+
+/**
+ * Provides ${ComponentNamePascal} $providerSummary.
+ *
+ * Call this in app.config.ts (or a lazy route's providers).
+ */
+export function provide${ComponentNamePascal}(config: Partial<${ComponentNamePascal}Config> = {}): EnvironmentProviders {
+  return makeEnvironmentProviders([
+$providerEntries
+  ]);
 }
 "@
     $providerTs | Out-File -FilePath "$ComponentPath/src/$ComponentName.provider.ts" -Encoding UTF8
     Write-Host "Created $ComponentName.provider.ts" -ForegroundColor Cyan
 }
 
-# 8. service (optional)
+# --- service (optional) ---
 if ($Service) {
     $serviceTs = @"
 import { Injectable, inject } from '@angular/core';
 import { ${Upper}_CONFIG, DEFAULT_${Upper}_CONFIG, ${ComponentNamePascal}Config } from './$ComponentName.config';
 
-@Injectable({ providedIn: 'root' })
+/**
+ * Not provided in 'root' -- registered by provide${ComponentNamePascal}().
+ * Consumers must call that in app.config.ts before injecting.
+ */
+@Injectable()
 export class Pui${ComponentNamePascal}Service {
   private readonly userConfig = inject(${Upper}_CONFIG, { optional: true });
   private readonly config: Required<${ComponentNamePascal}Config> = { ...DEFAULT_${Upper}_CONFIG, ...this.userConfig };

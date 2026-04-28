@@ -17,7 +17,7 @@ interface ThemePreferences {
   density: PerfectUIDensity;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class PuiThemeService {
   private config = inject(PERFECTUI_CONFIG, { optional: true }) ?? DEFAULT_PERFECTUI_CONFIG;
   private platformId = inject(PLATFORM_ID);
