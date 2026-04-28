@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1](https://github.com/sunilsolankiji/perfect-ui/compare/v3.0.0...v2.0.1) (2026-04-28)
+
 ## [3.0.0](https://github.com/sunilsolankiji/perfect-ui/compare/v1.2.0...v3.0.0) (2026-04-28)
 
 
