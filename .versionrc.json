@@ -16,6 +16,10 @@
     {
       "filename": "projects/perfectui/package.json",
       "type": "json"
+    },
+    {
+      "filename": "projects/package.json",
+      "type": "json"
     }
   ],
   "bumpFiles": [
