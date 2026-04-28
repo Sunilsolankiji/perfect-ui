@@ -8,12 +8,12 @@
  * @example
  * ```typescript
  * // Theming (optional)
- * import { providePerfectUI, ThemeService } from '@sunilsolankiji/perfectui/core';
+ * import { providePerfectUI, PuiThemeService } from '@sunilsolankiji/perfectui/core';
  *
  * // Components
- * import { provideDialog, DialogService } from '@sunilsolankiji/perfectui/dialog';
- * import { provideToastr, ToastrService } from '@sunilsolankiji/perfectui/toastr';
- * import { provideOtp, OtpComponent } from '@sunilsolankiji/perfectui/otp';
+ * import { provideDialog, PuiDialogService } from '@sunilsolankiji/perfectui/dialog';
+ * import { provideToastr, PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
+ * import { provideOtp, PuiOtp } from '@sunilsolankiji/perfectui/otp';
  * ```
  *
  * Or import a prebuilt theme CSS:
@@ -21,4 +21,4 @@
  */
 
 /** Library version */
-export const VERSION = '2.0.0';
+export const VERSION = '3.0.0';

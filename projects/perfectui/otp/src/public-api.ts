@@ -20,10 +20,10 @@
  * };
  *
  * // In component template
- * import { OtpComponent } from '@sunilsolankiji/perfectui/otp';
+ * import { PuiOtp } from '@sunilsolankiji/perfectui/otp';
  *
  * @Component({
- *   imports: [OtpComponent],
+ *   imports: [PuiOtp],
  *   template: `
  *     <pui-otp
  *       [(ngModel)]="otpValue"
@@ -61,7 +61,7 @@ export { DEFAULT_OTP_CONFIG, OTP_CONFIG } from './otp.config';
 export { provideOtp } from './otp.provider';
 
 // Service
-export { OtpService } from './otp.service';
+export { PuiOtpService } from './otp.service';
 
 // Component
-export { OtpComponent } from './otp.component';
+export { PuiOtp } from './otp';

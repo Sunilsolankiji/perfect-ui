@@ -12,31 +12,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     // PerfectUI theming - handles theme, dark mode, and density
     providePerfectUI({
-      theme: 'indigo-pink',
+      theme: 'deep-purple-amber',
       darkMode: 'auto',
       density: 'default',
     }),
-    provideToastr({
-      position: 'top-right',
-      duration: 5000,
-      maxToasts: 5,
-      showProgressBar: true,
-      showCloseButton: true,
-    }),
-    provideDialog({
-      size: 'md',
-      theme: 'default',
-      closeOnBackdropClick: true,
-      closeOnEscape: true,
-      showCloseButton: true,
-    }),
-    provideOtp({
-      length: 6,
-      inputType: 'numeric',
-      theme: 'default',
-      size: 'medium',
-      autoFocus: true,
-    }),
+    // Component services are registered explicitly via their provideX()
+    // functions (services are NOT providedIn: 'root'). Demo pages inject
+    // PuiToastrService / PuiDialogService / PuiOtpService, so opt in here.
+    provideToastr(),
+    provideDialog(),
+    provideOtp(),
   ]
 };
 

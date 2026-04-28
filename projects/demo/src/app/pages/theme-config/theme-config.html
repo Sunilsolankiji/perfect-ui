@@ -1,54 +1,11 @@
 <div class="demo-container">
   <h1>🎨 Theme Configurator</h1>
-  <p class="subtitle">Switch between prebuilt themes and customize appearance</p>
+  <p class="subtitle">Customize the appearance of all PerfectUI components</p>
 
-  <!-- Theme Selection -->
-  <section class="config-section">
-    <h2>Choose Theme</h2>
-    <p class="section-description">Select a prebuilt theme palette</p>
-
-    <div class="theme-grid">
-      @for (theme of themes; track theme.id) {
-        <button
-          class="theme-card"
-          [class.active]="currentThemeId() === theme.id"
-          (click)="setTheme(theme.id)"
-        >
-          <div class="theme-colors">
-            <span class="color-dot primary" [style.background-color]="theme.primaryColor"></span>
-            <span class="color-dot accent" [style.background-color]="theme.accentColor"></span>
-          </div>
-          <span class="theme-name">{{ theme.name }}</span>
-          @if (currentThemeId() === theme.id) {
-            <span class="active-badge">✓ Active</span>
-          }
-        </button>
-      }
-    </div>
-  </section>
-
-  <!-- Dark Mode Toggle -->
-  <section class="config-section">
-    <h2>Appearance Mode</h2>
-    <p class="section-description">Toggle between light and dark mode</p>
-
-    <div class="mode-toggle">
-      <button
-        class="mode-btn"
-        [class.active]="!isDarkMode()"
-        (click)="setDarkMode(false)"
-      >
-        ☀️ Light
-      </button>
-      <button
-        class="mode-btn"
-        [class.active]="isDarkMode()"
-        (click)="setDarkMode(true)"
-      >
-        🌙 Dark
-      </button>
-    </div>
-  </section>
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <span>Use the theme dropdown in the sidebar to switch between prebuilt color palettes. All components will update instantly!</span>
+  </div>
 
   <!-- Density Selection -->
   <section class="config-section">

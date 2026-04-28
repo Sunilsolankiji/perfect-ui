@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ToastrService, ToastTheme } from '@sunilsolankiji/perfectui/toastr';
+import { PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
 
 @Component({
   selector: 'app-toastr-demo',
@@ -9,52 +9,40 @@ import { ToastrService, ToastTheme } from '@sunilsolankiji/perfectui/toastr';
   styleUrl: './toastr-demo.css'
 })
 export class ToastrDemo {
-  private toastr = inject(ToastrService);
-  selectedTheme: ToastTheme = 'default';
+  private toastr = inject(PuiToastrService);
 
   // Package info
   packageName = '@sunilsolankiji/perfectui/toastr';
   version = '2.0.0';
-  npmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
 
   showSuccess() {
-    this.toastr.success('This is a success message!', 'Success', { theme: this.selectedTheme });
+    this.toastr.success('This is a success message!', 'Success');
   }
 
   showError() {
-    this.toastr.error('Something went wrong!', 'Error', { theme: this.selectedTheme });
+    this.toastr.error('Something went wrong!', 'Error');
   }
 
   showWarning() {
-    this.toastr.warning('This is a warning message!', 'Warning', { theme: this.selectedTheme });
+    this.toastr.warning('This is a warning message!', 'Warning');
   }
 
   showInfo() {
-    this.toastr.info('Here is some information for you.', 'Info', { theme: this.selectedTheme });
+    this.toastr.info('Here is some information for you.', 'Info');
   }
 
   showCustom() {
     this.toastr.success('This toast lasts 10 seconds!', 'Custom Duration', {
       duration: 10000,
       showProgressBar: true,
-      theme: this.selectedTheme,
     });
   }
 
-  setTheme(theme: ToastTheme) {
-    this.selectedTheme = theme;
-  }
-
-  showAllThemes() {
-    const themes: ToastTheme[] = ['default', 'dark', 'light', 'minimal', 'outline', 'gradient'];
-    themes.forEach((theme, index) => {
-      setTimeout(() => {
-        this.toastr.success(`This is ${ theme } theme`, `${ theme.charAt(0).toUpperCase() + theme.slice(1) } Theme`, {
-          theme,
-          duration: 5000,
-        });
-      }, index * 300);
-    });
+  showMultiple() {
+    this.toastr.success('First notification', 'Success');
+    setTimeout(() => this.toastr.info('Second notification', 'Info'), 300);
+    setTimeout(() => this.toastr.warning('Third notification', 'Warning'), 600);
+    setTimeout(() => this.toastr.error('Fourth notification', 'Error'), 900);
   }
 
   clearAll() {

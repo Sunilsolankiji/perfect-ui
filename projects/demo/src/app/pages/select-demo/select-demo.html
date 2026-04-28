@@ -1,0 +1,272 @@
+<div class="demo-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>📋 PerfectUI Select</h1>
+      <p class="subtitle">A modern, virtualized Select / Multi-select with search, grouping & smart positioning</p>
+    </div>
+    <a rel="noopener noreferrer" class="package-badge">
+      <span class="package-name">{{ packageName }}</span>
+    </a>
+  </div>
+
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <span>The select inherits the global PerfectUI theme &mdash; switch themes from the sidebar to see it adapt instantly.</span>
+  </div>
+
+  <!-- Style variant -->
+  <div class="section">
+    <h2>🎨 Style Variants</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'default'"   (click)="setTheme('default')">Default</button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'outline'"   (click)="setTheme('outline')">Outline</button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'underline'" (click)="setTheme('underline')">Underline</button>
+      <button class="btn btn-theme" [class.active]="selectedTheme === 'filled'"    (click)="setTheme('filled')">Filled</button>
+    </div>
+    <p class="theme-hint">Selected: <strong>{{ selectedTheme }}</strong></p>
+  </div>
+
+  <!-- Size -->
+  <div class="section">
+    <h2>📐 Size</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedSize === 'small'"  (click)="setSize('small')">Small</button>
+      <button class="btn btn-theme" [class.active]="selectedSize === 'medium'" (click)="setSize('medium')">Medium</button>
+      <button class="btn btn-theme" [class.active]="selectedSize === 'large'"  (click)="setSize('large')">Large</button>
+    </div>
+    <p class="theme-hint">Selected: <strong>{{ selectedSize }}</strong></p>
+  </div>
+
+  <!-- Status -->
+  <div class="section">
+    <h2>✅ Status</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedStatus === 'default'" (click)="setStatus('default')">Default</button>
+      <button class="btn btn-theme" [class.active]="selectedStatus === 'success'" (click)="setStatus('success')">Success</button>
+      <button class="btn btn-theme" [class.active]="selectedStatus === 'error'"   (click)="setStatus('error')">Error</button>
+    </div>
+  </div>
+
+  <!-- Placement -->
+  <div class="section">
+    <h2>📍 Placement (Anchor positioning)</h2>
+    <div class="button-group theme-group">
+      <button class="btn btn-theme" [class.active]="selectedPlacement === 'auto'"   (click)="setPlacement('auto')">Auto</button>
+      <button class="btn btn-theme" [class.active]="selectedPlacement === 'bottom'" (click)="setPlacement('bottom')">Bottom</button>
+      <button class="btn btn-theme" [class.active]="selectedPlacement === 'top'"    (click)="setPlacement('top')">Top</button>
+    </div>
+    <p class="theme-hint">
+      Uses <code>getBoundingClientRect()</code> + a fixed-positioned panel &mdash; no CSS Anchor Positioning API required.
+    </p>
+  </div>
+
+  <!-- 1. Single select -->
+  <div class="section">
+    <h2>1️⃣ Single Select</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [status]="selectedStatus"
+        [placement]="selectedPlacement"
+        [clearable]="true"
+        placeholder="Pick a country..."
+        [(value)]="singleValue"
+        (changed)="onChange($event)"
+      />
+      <div class="select-value">
+        Value: <code>{{ singleValue() || '(none)' }}</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Multi select with tags -->
+  <div class="section">
+    <h2>2️⃣ Multi-Select (Tags + overflow chip)</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [status]="selectedStatus"
+        [placement]="selectedPlacement"
+        [multiple]="true"
+        [clearable]="true"
+        [maxSelections]="5"
+        [maxVisibleTags]="3"
+        placeholder="Pick up to 5 countries..."
+        [(value)]="multiValue"
+        (changed)="onChange($event)"
+      />
+      <div class="select-value">
+        Value: <code>{{ multiValue().length ? multiValue().join(', ') : '(none)' }}</code>
+      </div>
+    </div>
+    <p class="theme-hint">
+      Up to <strong>3 tags</strong> are rendered inline; remaining
+      selections collapse into a <code>+N more</code> chip via the
+      <code>[maxVisibleTags]</code> input.
+    </p>
+  </div>
+
+  <!-- 3. Multi with explicit checkboxes (single-mode + checkbox) -->
+  <div class="section">
+    <h2>3️⃣ Checkboxes inside options</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [placement]="selectedPlacement"
+        [multiple]="true"
+        [checkbox]="true"
+        [clearable]="true"
+        placeholder="Tick what you like..."
+        [(value)]="checkboxValue"
+      />
+      <div class="select-value">
+        Value: <code>{{ checkboxValue().length ? checkboxValue().join(', ') : '(none)' }}</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3b. Select all (multiselect with select-all row) -->
+  <div class="section">
+    <h2>✅ Select All (multi-select)</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [placement]="selectedPlacement"
+        [multiple]="true"
+        [checkbox]="true"
+        [searchable]="true"
+        [clearable]="true"
+        [selectAll]="true"
+        selectAllLabel="Select all countries"
+        placeholder="Pick many countries..."
+        [(value)]="selectAllValue"
+      />
+      <div class="select-value">
+        Value: <code>{{ selectAllValue().length ? selectAllValue().join(', ') : '(none)' }}</code>
+      </div>
+    </div>
+    <p class="theme-hint">
+      The <strong>tri-state</strong> select-all checkbox shows
+      <em>none / indeterminate / all</em>. Type in the search to see
+      that "Select all" only toggles the visible matches.
+    </p>
+  </div>
+
+  <!-- 4. Search + grouped options -->
+  <div class="section">
+    <h2>4️⃣ Searchable + Grouped</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="groupedFood"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [placement]="selectedPlacement"
+        [searchable]="true"
+        [clearable]="true"
+        placeholder="Search a food..."
+        searchPlaceholder="Type to filter..."
+        [(value)]="groupedValue"
+      />
+      <div class="select-value">
+        Value: <code>{{ groupedValue() || '(none)' }}</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Virtual scrolling -->
+  <div class="section">
+    <h2>5️⃣ Virtual scrolling — 10,000 options</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="largeDataset"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [placement]="selectedPlacement"
+        [searchable]="true"
+        [clearable]="true"
+        [visibleRows]="8"
+        placeholder="Pick from 10k items..."
+        [(value)]="largeValue"
+      />
+      <div class="select-value">
+        Value: <code>{{ largeValue() ?? '(none)' }}</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Reactive forms -->
+  <div class="section">
+    <h2>6️⃣ Reactive Forms</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [placement]="selectedPlacement"
+        [clearable]="true"
+        placeholder="Required..."
+        [formControl]="favoriteCountry"
+      />
+      <div class="select-value">
+        Value: <code>{{ favoriteCountry.value || '(none)' }}</code>
+        <span [class]="favoriteCountry.valid ? 'success-badge' : 'error-badge'">
+          {{ favoriteCountry.valid ? '✓ Valid' : '✗ Required' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Disabled -->
+  <div class="section">
+    <h2>7️⃣ Disabled</h2>
+    <div class="select-demo-box">
+      <pui-select
+        [options]="countries"
+        [theme]="selectedTheme"
+        [size]="selectedSize"
+        [disabled]="true"
+        placeholder="You can't touch this"
+      />
+    </div>
+  </div>
+
+  <!-- Last change -->
+  @if (lastChange) {
+    <div class="result-box">
+      <h3>Last (changed) event payload:</h3>
+      <p>{{ lastChange }}</p>
+    </div>
+  }
+
+  <div class="section">
+    <button class="btn btn-clear" (click)="resetAll()">🔄 Reset all values</button>
+  </div>
+
+  <div class="features">
+    <h2>✨ Features</h2>
+    <ul>
+      <li>🎨 <strong>Global Theme</strong> &mdash; styled entirely with PerfectUI CSS variables</li>
+      <li>🧱 <strong>4 Variants</strong> &mdash; default, outline, underline, filled</li>
+      <li>📐 <strong>3 Sizes</strong> &mdash; small, medium, large</li>
+      <li>🔁 <strong>Single &amp; Multi-Select</strong> with optional <code>maxSelections</code></li>
+      <li>🏷️ <strong>Tag overflow</strong> &mdash; <code>maxVisibleTags</code> caps inline tags with a <code>+N more</code> chip</li>
+      <li>☑️ <strong>Checkboxes in Options</strong> &mdash; auto-on for multi, opt-in for single</li>
+      <li>✅ <strong>Select All</strong> &mdash; tri-state checkbox; respects search filter &amp; <code>maxSelections</code></li>
+      <li>🚀 <strong>Virtual Scrolling</strong> &mdash; render thousands of options at 60fps</li>
+      <li>🔍 <strong>Searchable</strong> with grouping support</li>
+      <li>📍 <strong>Anchor Positioning</strong> with cross-browser fallback (no CSS anchor() needed)</li>
+      <li>♿ <strong>Accessible</strong> &mdash; ARIA combobox + listbox roles, full keyboard nav</li>
+      <li>📝 <strong>Forms</strong> &mdash; ngModel &amp; ReactiveForms via ControlValueAccessor</li>
+      <li>⚙️ <strong>Input-signal config</strong> &mdash; no global provider required</li>
+    </ul>
+  </div>
+</div>
+

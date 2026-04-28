@@ -2,15 +2,16 @@ import { Injectable, inject, ApplicationRef, createComponent, EnvironmentInjecto
 import { DOCUMENT } from '@angular/common';
 import { Dialog, DialogType, DialogOptions, DialogResult, DialogRef, DialogButton } from './dialog.models';
 import { DialogConfig, DEFAULT_DIALOG_CONFIG, DIALOG_CONFIG, DIALOG_DATA, DIALOG_REF } from './dialog.config';
-import { DialogContainerComponent } from './dialog-container.component';
+import { PuiDialogContainer } from './dialog-container';
 
 /**
- * Service for displaying dialogs and modals
+ * Service for displaying dialogs and modals.
+ *
+ * Not provided in `root` — register it via `provideDialog()` in your
+ * `app.config.ts` (or the providers of a lazy route) before injecting.
  */
-@Injectable({
-  providedIn: 'root'
-})
-export class DialogService {
+@Injectable()
+export class PuiDialogService {
   private readonly document = inject(DOCUMENT);
   private readonly appRef = inject(ApplicationRef);
   private readonly injector = inject(EnvironmentInjector);
@@ -18,7 +19,7 @@ export class DialogService {
 
   private config: Required<DialogConfig>;
   private dialogId = 0;
-  private containerRef: ComponentRef<DialogContainerComponent> | null = null;
+  private containerRef: ComponentRef<PuiDialogContainer> | null = null;
 
   constructor() {
     this.config = { ...DEFAULT_DIALOG_CONFIG, ...this.userConfig };
@@ -232,7 +233,7 @@ export class DialogService {
     containerElement.id = 'pui-dialog-container';
     this.document.body.appendChild(containerElement);
 
-    this.containerRef = createComponent(DialogContainerComponent, {
+    this.containerRef = createComponent(PuiDialogContainer, {
       environmentInjector: this.injector,
       hostElement: containerElement,
     });

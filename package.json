@@ -1,6 +1,6 @@
 {
   "name": "perfect-ui-workspace",
-  "version": "0.0.0",
+  "version": "3.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo",
@@ -11,7 +11,7 @@
     "watch": "ng build perfectui --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint || true",
-    "publish:perfectui": "npm run build:perfectui && cd dist/components && npm publish --access public",
+    "publish:perfectui": "npm run build:perfectui && cd dist/perfectui && npm publish --access public",
     "release": "standard-version",
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",

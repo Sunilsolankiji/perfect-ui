@@ -1,15 +1,21 @@
-import { Provider } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
+import { PuiOtpService } from './otp.service';
 
 /**
  * Provides the OTP component with optional configuration.
  *
+ * Registers `PuiOtpService` in the current injector. The `<pui-otp>`
+ * component itself is standalone and can be used **without** calling
+ * `provideOtp()` — call this only when you want to set global defaults
+ * or inject `PuiOtpService` for programmatic helpers (`generateOtp`,
+ * `validateOtp`, etc.).
+ *
  * @example
  * ```typescript
- * // In your app.config.ts
- * import { provideOtp } from 'perfectui/otp';
+ * import { provideOtp } from '@sunilsolankiji/perfectui/otp';
  *
- * export const appConfig = {
+ * export const appConfig: ApplicationConfig = {
  *   providers: [
  *     provideOtp({
  *       length: 6,
@@ -21,33 +27,13 @@ import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
  *   ],
  * };
  * ```
- *
- * @example
- * ```typescript
- * // With masked input for security
- * provideOtp({
- *   length: 4,
- *   masked: true,
- *   maskChar: '*',
- *   autoSubmit: true,
- * })
- * ```
- *
- * @example
- * ```typescript
- * // With separator for credit card style
- * provideOtp({
- *   length: 16,
- *   separatorAfter: 4,
- *   separatorChar: '-',
- * })
- * ```
  */
-export function provideOtp(config?: Partial<OtpConfig>): Provider[] {
-  return [
+export function provideOtp(config?: Partial<OtpConfig>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    PuiOtpService,
     {
       provide: OTP_CONFIG,
       useValue: { ...DEFAULT_OTP_CONFIG, ...config },
     },
-  ];
+  ]);
 }

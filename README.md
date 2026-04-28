@@ -37,13 +37,13 @@ npm install @sunilsolankiji/perfectui
 
 ```typescript
 // Dialog
-import { provideDialog, DialogService } from '@sunilsolankiji/perfectui/dialog';
+import { provideDialog, PuiDialogService } from '@sunilsolankiji/perfectui/dialog';
 
 // Toastr
-import { provideToastr, ToastrService } from '@sunilsolankiji/perfectui/toastr';
+import { provideToastr, PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
 
 // OTP
-import { provideOtp, OtpComponent } from '@sunilsolankiji/perfectui/otp';
+import { provideOtp, PuiOtp } from '@sunilsolankiji/perfectui/otp';
 ```
 
 ### Configure in app.config.ts
@@ -76,13 +76,13 @@ export const appConfig: ApplicationConfig = {
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { DialogService } from '@sunilsolankiji/perfectui/dialog';
-import { ToastrService } from '@sunilsolankiji/perfectui/toastr';
+import { PuiDialogService } from '@sunilsolankiji/perfectui/dialog';
+import { PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
 
 @Component({...})
 export class MyComponent {
-  private dialog = inject(DialogService);
-  private toastr = inject(ToastrService);
+  private dialog = inject(PuiDialogService);
+  private toastr = inject(PuiToastrService);
 
   showSuccess() {
     this.toastr.success('Hello World!', 'Success');
@@ -133,7 +133,7 @@ npm run publish:perfectui
 ```
 perfect-ui/
 ├── projects/
-│   ├── components/          # @sunilsolankiji/perfectui library
+│   ├── perfectui/          # @sunilsolankiji/perfectui library
 │   │   ├── src/             # Main entry point
 │   │   ├── core/            # @sunilsolankiji/perfectui/core (theming)
 │   │   ├── dialog/          # @sunilsolankiji/perfectui/dialog
@@ -179,14 +179,14 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### Using ThemeService
+### Using PuiThemeService
 
 ```typescript
-import { ThemeService } from '@sunilsolankiji/perfectui/core';
+import { PuiThemeService } from '@sunilsolankiji/perfectui/core';
 
 @Component({...})
 export class MyComponent {
-  private theme = inject(ThemeService);
+  private theme = inject(PuiThemeService);
 
   toggleDarkMode() {
     this.theme.toggleDarkMode();
