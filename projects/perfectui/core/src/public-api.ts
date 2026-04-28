@@ -35,7 +35,7 @@ export { PERFECTUI_CONFIG, DEFAULT_PERFECTUI_CONFIG } from './theming/theme.conf
 export { providePerfectUI } from './theming/theme.provider';
 
 // Service
-export { ThemeService } from './theming/theme.service';
+export { PuiThemeService } from './theming/theme.service';
 
 // Prebuilt themes
 export {

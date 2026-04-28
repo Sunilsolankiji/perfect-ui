@@ -9,8 +9,13 @@
     </a>
   </div>
 
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <span>Change the global theme using the dropdown in the sidebar. OTP inputs also have their own style variants below!</span>
+  </div>
+
   <div class="section">
-    <h2>🎨 Theme Selection</h2>
+    <h2>🎨 Style Variants</h2>
     <div class="button-group theme-group">
       <button class="btn btn-theme" [class.active]="selectedTheme === 'default'" (click)="setTheme('default')">
         Default
@@ -123,7 +128,8 @@
   <div class="features">
     <h2>✨ Features</h2>
     <ul>
-      <li>🎨 <strong>4 Built-in Themes</strong> - Default, Outline, Underline, Filled</li>
+      <li>🎨 <strong>Global Theme Support</strong> - Automatically uses PerfectUI's global theme colors</li>
+      <li>🎨 <strong>4 Style Variants</strong> - Default, Outline, Underline, Filled</li>
       <li>📐 <strong>3 Sizes</strong> - Small, Medium, Large</li>
       <li>⌨️ <strong>Input Types</strong> - Numeric, Alphanumeric, Alphabetic</li>
       <li>🔒 <strong>Masked Mode</strong> - Hide characters for security</li>

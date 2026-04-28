@@ -14,17 +14,21 @@
   ],
   "packageFiles": [
     {
-      "filename": "projects/components/package.json",
+      "filename": "projects/perfectui/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "projects/package.json",
       "type": "json"
     }
   ],
   "bumpFiles": [
     {
-      "filename": "projects/components/package.json",
+      "filename": "projects/perfectui/package.json",
       "type": "json"
     },
     {
-      "filename": "projects/components/src/public-api.ts",
+      "filename": "projects/perfectui/src/public-api.ts",
       "updater": "scripts/version-updater.js"
     }
   ],
@@ -34,6 +38,6 @@
   "issueUrlFormat": "https://github.com/sunilsolankiji/perfect-ui/issues/{{id}}",
   "userUrlFormat": "https://github.com/{{user}}",
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
-  "infile": "projects/components/CHANGELOG.md",
+  "infile": "projects/perfectui/CHANGELOG.md",
   "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n"
 }

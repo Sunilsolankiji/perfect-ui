@@ -23,7 +23,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { OtpInputType, OtpTheme, OtpSize, OtpStatus, OtpCompleteEvent, OtpChangeEvent, OtpInputStyle } from './otp.models';
-import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
+import { OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
 
 @Component({
   selector: 'pui-otp',
@@ -33,7 +33,7 @@ import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => OtpComponent),
+      useExisting: forwardRef(() => PuiOtp),
       multi: true,
     },
   ],
@@ -44,7 +44,7 @@ import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
       [attr.aria-label]="ariaLabel()"
       role="group"
     >
-      @for (input of inputsArray(); track $index) {
+      @for (_ of inputsArray(); track $index) {
         @if (shouldShowSeparator($index)) {
           <span class="pui-otp-separator">{{ separatorChar() }}</span>
         }
@@ -74,199 +74,9 @@ import { OtpConfig, OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
       }
     </div>
   `,
-  styles: [`
-    /*
-     * PerfectUI OTP - CSS Custom Properties Theme
-     *
-     * Override these in your global styles.css:
-     *
-     * :root {
-     *   --pui-otp-primary: #3b82f6;
-     *   --pui-otp-error: #ef4444;
-     *   --pui-otp-success: #22c55e;
-     * }
-     */
-
-    :host {
-      display: inline-block;
-    }
-
-    .pui-otp {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--pui-otp-gap, 8px);
-    }
-
-    .pui-otp-separator {
-      font-size: var(--pui-otp-separator-size, 1.25rem);
-      color: var(--pui-otp-separator-color, #9ca3af);
-      user-select: none;
-    }
-
-    .pui-otp-input {
-      text-align: center;
-      font-family: var(--pui-otp-font-family, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace);
-      font-weight: var(--pui-otp-font-weight, 600);
-      caret-color: var(--pui-otp-caret-color, var(--pui-otp-primary, #3b82f6));
-      transition: all 0.2s ease;
-      outline: none;
-      -moz-appearance: textfield;
-    }
-
-    .pui-otp-input::-webkit-outer-spin-button,
-    .pui-otp-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    .pui-otp-input::placeholder {
-      color: var(--pui-otp-placeholder-color, #d1d5db);
-    }
-
-    .pui-otp-input:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    .pui-otp-input:read-only {
-      cursor: default;
-    }
-
-    /* ========== SIZE VARIANTS ========== */
-    .pui-otp-small .pui-otp-input {
-      width: var(--pui-otp-small-width, 36px);
-      height: var(--pui-otp-small-height, 40px);
-      font-size: var(--pui-otp-small-font-size, 1rem);
-    }
-
-    .pui-otp-medium .pui-otp-input {
-      width: var(--pui-otp-medium-width, 44px);
-      height: var(--pui-otp-medium-height, 52px);
-      font-size: var(--pui-otp-medium-font-size, 1.25rem);
-    }
-
-    .pui-otp-large .pui-otp-input {
-      width: var(--pui-otp-large-width, 56px);
-      height: var(--pui-otp-large-height, 64px);
-      font-size: var(--pui-otp-large-font-size, 1.5rem);
-    }
-
-    /* ========== DEFAULT THEME ========== */
-    .pui-otp-theme-default .pui-otp-input {
-      border: 2px solid var(--pui-otp-border-color, #e5e7eb);
-      border-radius: var(--pui-otp-border-radius, 8px);
-      background: var(--pui-otp-bg, #ffffff);
-      color: var(--pui-otp-text-color, #111827);
-    }
-
-    .pui-otp-theme-default .pui-otp-input:focus {
-      border-color: var(--pui-otp-focus-border-color, var(--pui-otp-primary, #3b82f6));
-      box-shadow: 0 0 0 3px var(--pui-otp-focus-ring-color, rgba(59, 130, 246, 0.15));
-    }
-
-    .pui-otp-theme-default .pui-otp-input-filled {
-      border-color: var(--pui-otp-filled-border-color, var(--pui-otp-primary, #3b82f6));
-      background: var(--pui-otp-filled-bg, rgba(59, 130, 246, 0.05));
-    }
-
-    /* ========== OUTLINE THEME ========== */
-    .pui-otp-theme-outline .pui-otp-input {
-      border: 2px solid var(--pui-otp-border-color, #d1d5db);
-      border-radius: var(--pui-otp-border-radius, 8px);
-      background: transparent;
-      color: var(--pui-otp-text-color, #111827);
-    }
-
-    .pui-otp-theme-outline .pui-otp-input:focus {
-      border-color: var(--pui-otp-focus-border-color, var(--pui-otp-primary, #3b82f6));
-      box-shadow: 0 0 0 3px var(--pui-otp-focus-ring-color, rgba(59, 130, 246, 0.15));
-    }
-
-    .pui-otp-theme-outline .pui-otp-input-filled {
-      border-color: var(--pui-otp-filled-border-color, var(--pui-otp-primary, #3b82f6));
-    }
-
-    /* ========== UNDERLINE THEME ========== */
-    .pui-otp-theme-underline .pui-otp-input {
-      border: none;
-      border-bottom: 2px solid var(--pui-otp-border-color, #d1d5db);
-      border-radius: 0;
-      background: transparent;
-      color: var(--pui-otp-text-color, #111827);
-    }
-
-    .pui-otp-theme-underline .pui-otp-input:focus {
-      border-bottom-color: var(--pui-otp-focus-border-color, var(--pui-otp-primary, #3b82f6));
-      box-shadow: none;
-    }
-
-    .pui-otp-theme-underline .pui-otp-input-filled {
-      border-bottom-color: var(--pui-otp-filled-border-color, var(--pui-otp-primary, #3b82f6));
-    }
-
-    /* ========== FILLED THEME ========== */
-    .pui-otp-theme-filled .pui-otp-input {
-      border: 2px solid transparent;
-      border-radius: var(--pui-otp-border-radius, 8px);
-      background: var(--pui-otp-filled-bg-color, #f3f4f6);
-      color: var(--pui-otp-text-color, #111827);
-    }
-
-    .pui-otp-theme-filled .pui-otp-input:focus {
-      border-color: var(--pui-otp-focus-border-color, var(--pui-otp-primary, #3b82f6));
-      background: var(--pui-otp-bg, #ffffff);
-      box-shadow: 0 0 0 3px var(--pui-otp-focus-ring-color, rgba(59, 130, 246, 0.15));
-    }
-
-    .pui-otp-theme-filled .pui-otp-input-filled {
-      background: var(--pui-otp-bg, #ffffff);
-      border-color: var(--pui-otp-filled-border-color, var(--pui-otp-primary, #3b82f6));
-    }
-
-    /* ========== STATUS STYLES ========== */
-    .pui-otp-status-error .pui-otp-input {
-      border-color: var(--pui-otp-error, #ef4444) !important;
-      animation: pui-otp-shake 0.4s ease;
-    }
-
-    .pui-otp-status-error .pui-otp-input:focus {
-      box-shadow: 0 0 0 3px var(--pui-otp-error-ring, rgba(239, 68, 68, 0.15)) !important;
-    }
-
-    .pui-otp-status-success .pui-otp-input {
-      border-color: var(--pui-otp-success, #22c55e) !important;
-    }
-
-    .pui-otp-status-success .pui-otp-input:focus {
-      box-shadow: 0 0 0 3px var(--pui-otp-success-ring, rgba(34, 197, 94, 0.15)) !important;
-    }
-
-    /* ========== DISABLED STATE ========== */
-    .pui-otp-disabled .pui-otp-input {
-      opacity: 0.5;
-      cursor: not-allowed;
-      background: var(--pui-otp-disabled-bg, #f9fafb);
-    }
-
-    /* ========== ANIMATIONS ========== */
-    @keyframes pui-otp-shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-4px); }
-      40%, 80% { transform: translateX(4px); }
-    }
-
-    @keyframes pui-otp-pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .pui-otp-input-filled {
-      animation: pui-otp-pop 0.15s ease;
-    }
-  `],
+  styleUrl: './otp.css',
 })
-export class OtpComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
+export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('otpInput') private inputElements!: QueryList<ElementRef<HTMLInputElement>>;
 
   // Configuration inputs
@@ -696,7 +506,7 @@ export class OtpComponent implements ControlValueAccessor, OnInit, AfterViewInit
     }
   }
 
-  onBlur(index: number): void {
+  onBlur(_: number): void {
     this.focusedIndex.set(-1);
     this.onTouched();
   }
@@ -741,3 +551,5 @@ export class OtpComponent implements ControlValueAccessor, OnInit, AfterViewInit
     }
   }
 }
+
+

@@ -3,19 +3,56 @@
 }
 
 /*
- * Customize PerfectUI theme by adding CSS variables here:
- *
- * :root {
- *   --pui-success-500: #22c55e;
- *   --pui-error-500: #f43f5e;
- * }
+ * PerfectUI Theme Integration
+ * All buttons and UI elements use CSS variables from the theme system
  */
+
+:root {
+  /* Default fallback colors (will be overridden by ThemeService) */
+  --pui-primary-500: #673ab7;
+  --pui-primary-600: #5e35b1;
+  --pui-primary-700: #512da8;
+  --pui-primary-contrast-500: #ffffff;
+
+  --pui-accent-500: #ffc107;
+  --pui-accent-600: #ffb300;
+  --pui-accent-contrast-500: #000000;
+
+  --pui-success-500: #4caf50;
+  --pui-success-600: #43a047;
+  --pui-success-contrast-500: #ffffff;
+
+  --pui-warn-500: #f44336;
+  --pui-warn-600: #e53935;
+  --pui-warn-contrast-500: #ffffff;
+
+  --pui-info-500: #2196f3;
+  --pui-info-600: #1e88e5;
+  --pui-info-contrast-500: #ffffff;
+
+  /* Demo specific colors */
+  --demo-bg-primary: linear-gradient(135deg, var(--pui-primary-500) 0%, var(--pui-primary-700) 50%, #1a0a30 100%);
+  --demo-sidebar-bg: linear-gradient(180deg, var(--pui-primary-700) 0%, #1a0a30 100%);
+  --demo-text-primary: rgba(255, 255, 255, 0.95);
+  --demo-text-secondary: rgba(255, 255, 255, 0.75);
+  --demo-border-color: rgba(255, 255, 255, 0.15);
+  --demo-card-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode adjustments */
+html.pui-dark {
+  --demo-bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  --demo-sidebar-bg: linear-gradient(180deg, #1a1a2e 0%, #0f0f23 100%);
+  --demo-card-bg: rgba(255, 255, 255, 0.05);
+}
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: var(--pui-font-family, 'Segoe UI', system-ui, -apple-system, sans-serif);
+  background: var(--demo-bg-primary);
   min-height: 100vh;
+  color: var(--demo-text-primary);
+  transition: background 0.3s ease;
 }
 
 /* Demo Container */
@@ -24,7 +61,7 @@ body {
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
-  color: white;
+  color: var(--demo-text-primary);
 }
 
 .demo-container h1 {
@@ -50,7 +87,7 @@ body {
 .btn {
   padding: 14px 28px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--pui-border-radius, 8px);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -67,14 +104,25 @@ body {
   transform: translateY(0);
 }
 
+/* Buttons using theme colors */
+.btn-primary {
+  background: linear-gradient(135deg, var(--pui-primary-500) 0%, var(--pui-primary-600) 100%);
+  color: var(--pui-primary-contrast-500);
+}
+
+.btn-accent, .btn-secondary {
+  background: linear-gradient(135deg, var(--pui-accent-500) 0%, var(--pui-accent-600) 100%);
+  color: var(--pui-accent-contrast-500);
+}
+
 .btn-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--pui-success-500) 0%, var(--pui-success-600) 100%);
+  color: var(--pui-success-contrast-500);
 }
 
 .btn-error {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--pui-warn-500) 0%, var(--pui-warn-600) 100%);
+  color: var(--pui-warn-contrast-500);
 }
 
 .btn-warning {
@@ -83,13 +131,13 @@ body {
 }
 
 .btn-info {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--pui-info-500) 0%, var(--pui-info-600) 100%);
+  color: var(--pui-info-contrast-500);
 }
 
 .btn-custom {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--pui-primary-500) 0%, var(--pui-accent-500) 100%);
+  color: var(--pui-primary-contrast-500);
 }
 
 .btn-clear {
@@ -116,13 +164,13 @@ body {
 }
 
 .btn-theme.active {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: white;
+  background: var(--pui-primary-500);
+  border-color: var(--pui-primary-500);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .btn-all-themes {
-  background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+  background: linear-gradient(135deg, var(--pui-accent-500) 0%, var(--pui-primary-500) 100%);
   color: white;
 }
 
@@ -137,9 +185,10 @@ body {
 }
 
 .theme-group {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--demo-card-bg);
   padding: 15px;
-  border-radius: 12px;
+  border-radius: var(--pui-border-radius, 12px);
+  border: 1px solid var(--demo-border-color);
 }
 
 .theme-hint {
@@ -152,13 +201,34 @@ body {
   text-transform: capitalize;
 }
 
+/* Info Box (Global) */
+.info-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--demo-card-bg);
+  border: 1px solid var(--demo-border-color);
+  border-radius: var(--pui-border-radius, 12px);
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  color: var(--demo-text-primary);
+  font-size: 0.95rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
 .features {
   margin-top: 50px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--demo-card-bg);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: var(--pui-border-radius, 16px);
   padding: 30px;
   text-align: left;
+  border: 1px solid var(--demo-border-color);
 }
 
 .features h2 {
@@ -181,12 +251,13 @@ body {
 
 /* Result box for dialog demo */
 .result-box {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--demo-card-bg);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
+  border-radius: var(--pui-border-radius, 12px);
   padding: 20px;
   margin-top: 30px;
   text-align: center;
+  border: 1px solid var(--demo-border-color);
 }
 
 .result-box h3 {

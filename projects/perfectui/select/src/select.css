@@ -1,0 +1,460 @@
+/*
+ * PerfectUI Select
+ *
+ * Styles use ViewEncapsulation.None — all class names are
+ * prefixed with `pui-select-` to avoid collisions. The panel
+ * is portalled to <body>, so its styles must be global.
+ *
+ * Theming consumes the global PerfectUI CSS variables:
+ *   --pui-primary-500, --pui-foreground-text, --pui-warn-500,
+ *   --pui-success-500, --pui-background-card, --pui-shadow-3,
+ *   --pui-border-radius, --pui-z-dialog, etc.
+ */
+
+/* ===================== TRIGGER ===================== */
+
+pui-select {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.pui-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--pui-font-family, inherit);
+  color: var(--pui-foreground-text, #111827);
+  background: var(--pui-select-bg, #ffffff);
+  border: 1px solid var(--pui-select-border-color, #d1d5db);
+  border-radius: var(--pui-border-radius, 8px);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-sizing: border-box;
+}
+
+.pui-select:focus,
+.pui-select-open {
+  border-color: var(--pui-primary-500, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(var(--pui-primary-500-rgb, 59, 130, 246), 0.15);
+}
+
+.pui-select-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: var(--pui-background-disabled, #f3f4f6);
+}
+
+/* Sizes */
+.pui-select-small  { min-height: 32px; padding: 2px 8px;  font-size: 0.875rem; }
+.pui-select-medium { min-height: 40px; padding: 4px 10px; font-size: 1rem; }
+.pui-select-large  { min-height: 48px; padding: 6px 12px; font-size: 1.125rem; }
+
+/* Themes */
+.pui-select-theme-outline {
+  background: transparent;
+  border-width: 2px;
+}
+
+.pui-select-theme-underline {
+  border: none;
+  border-bottom: 2px solid var(--pui-select-border-color, #d1d5db);
+  border-radius: 0;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.pui-select-theme-underline.pui-select-open,
+.pui-select-theme-underline:focus {
+  border-bottom-color: var(--pui-primary-500, #3b82f6);
+  box-shadow: none;
+}
+
+.pui-select-theme-filled {
+  background: var(--pui-select-filled-bg, #f3f4f6);
+  border-color: transparent;
+}
+
+/* Status */
+.pui-select-status-error   { border-color: var(--pui-warn-500, #ef4444) !important; }
+.pui-select-status-success { border-color: var(--pui-success-500, #22c55e) !important; }
+
+/* Value area */
+.pui-select-value {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.pui-select-single {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.pui-select-placeholder {
+  color: var(--pui-foreground-hint-text, #9ca3af);
+}
+
+.pui-select-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 100%;
+}
+.pui-select-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--pui-primary-50, rgba(59, 130, 246, 0.12));
+  color: var(--pui-primary-700, var(--pui-primary-500, #3b82f6));
+  border-radius: 4px;
+  padding: 2px 4px 2px 8px;
+  font-size: 0.875rem;
+  max-width: 100%;
+}
+.pui-select-tag-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+.pui-select-tag-remove {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 4px;
+  border-radius: 3px;
+}
+.pui-select-tag-remove:hover { background: rgba(0, 0, 0, 0.08); }
+
+/* Overflow chip ("+N more") — looks like a tag but has no remove button */
+.pui-select-tag-more {
+  background: var(--pui-foreground-divider, rgba(0, 0, 0, 0.08));
+  color: var(--pui-foreground-secondary-text, #6b7280);
+  padding: 2px 8px;
+  font-weight: 500;
+  cursor: default;
+}
+
+/* Actions */
+.pui-select-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  color: var(--pui-foreground-secondary-text, #6b7280);
+}
+.pui-select-clear {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.pui-select-clear:hover { background: rgba(0, 0, 0, 0.06); }
+.pui-select-arrow {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.pui-select-arrow-open { transform: rotate(180deg); }
+
+/* ===================== PORTAL HOST ===================== */
+
+.pui-select-portal {
+  /* The wrapper sits in <body> and contributes nothing visually. */
+  position: static;
+}
+
+/* ===================== PANEL ===================== */
+
+.pui-select-panel {
+  /* base */
+  position: fixed;
+  z-index: var(--pui-z-dialog, 10000);
+  background: var(--pui-background-card, #ffffff);
+  color: var(--pui-foreground-text, #111827);
+  border: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  border-radius: var(--pui-border-radius, 8px);
+  box-shadow: var(--pui-shadow-3, 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--pui-font-family, inherit);
+  box-sizing: border-box;
+  animation: pui-select-fade 0.12s ease-out;
+}
+
+/* The panel is programmatically focused for keyboard nav when no
+   search input is present — we don't want the default focus ring
+   since the active row already shows where the user "is". */
+.pui-select-panel:focus,
+.pui-select-panel:focus-visible {
+  outline: none;
+}
+
+@keyframes pui-select-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================================
+ * MODERN: CSS Anchor Positioning
+ *
+ *   - Trigger sets `anchor-name: --pui-select-anchor-N` (inline style).
+ *   - Panel sets `position-anchor: --pui-select-anchor-N` (inline style).
+ *   - We anchor `top`/`left`/`width` to the trigger via anchor() and
+ *     anchor-size().
+ *   - `position-try-fallbacks: flip-block` lets the browser flip to
+ *     above the trigger automatically when there isn't enough space
+ *     below.
+ *
+ * Spec: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning
+ * ===================================================================== */
+
+.pui-select-panel-anchored {
+  /* Default: place below the trigger, aligned to its left edge. */
+  top:  calc(anchor(bottom) + 4px);
+  left: anchor(left);
+  max-height: var(--pui-select-panel-max-h, 300px);
+
+  /* Define a named try-fallback that flips above the trigger. */
+  position-try-fallbacks: --pui-select-flip-top;
+}
+
+@position-try --pui-select-flip-top {
+  top: auto;
+  bottom: calc(anchor(top) + 4px);
+  left: anchor(left);
+}
+
+/* Width: match the trigger by default */
+.pui-select-panel-anchored.pui-select-panel-match-width {
+  width: anchor-size(width);
+}
+
+/* Or grow as needed but at least the trigger width */
+.pui-select-panel-anchored.pui-select-panel-min-width {
+  min-width: anchor-size(width);
+  width: max-content;
+}
+
+/* User-forced placement honours the input */
+.pui-select-panel-anchored.pui-select-panel-place-top {
+  top: auto;
+  bottom: calc(anchor(top) + 4px);
+  position-try-fallbacks: none;
+}
+.pui-select-panel-anchored.pui-select-panel-place-bottom {
+  position-try-fallbacks: none;
+}
+
+/* =====================================================================
+ * FALLBACK: JS-positioned panel
+ * Uses `top`/`left`/`width` set inline by the component.
+ * ===================================================================== */
+
+.pui-select-panel-fallback.pui-select-panel-top {
+  animation: pui-select-fade-up 0.12s ease-out;
+}
+@keyframes pui-select-fade-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== PANEL CONTENT ===================== */
+
+.pui-select-search {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.08));
+  flex-shrink: 0;
+}
+.pui-select-search-input {
+  width: 100%;
+  border: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  border-radius: var(--pui-border-radius, 6px);
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  outline: none;
+  background: var(--pui-background, transparent);
+  color: inherit;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.pui-select-search-input:focus {
+  border-color: var(--pui-primary-500, #3b82f6);
+  box-shadow: 0 0 0 2px rgba(var(--pui-primary-500-rgb, 59, 130, 246), 0.15);
+}
+
+/* ---- Select all row ---- */
+.pui-select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.08));
+  background: var(--pui-background-app-bar, #f9fafb);
+  color: var(--pui-foreground-text, #111827);
+  flex-shrink: 0;
+  transition: background 0.1s ease;
+}
+.pui-select-all:hover {
+  background: var(--pui-background-hover, rgba(0, 0, 0, 0.04));
+}
+.pui-select-all-checked,
+.pui-select-all-indeterminate {
+  color: var(--pui-primary-700, var(--pui-primary-500, #3b82f6));
+}
+.pui-select-all-checked .pui-select-checkbox,
+.pui-select-all-indeterminate .pui-select-checkbox {
+  background: var(--pui-primary-500, #3b82f6);
+  border-color: var(--pui-primary-500, #3b82f6);
+}
+.pui-select-all-label {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* Virtual-scroll viewport */
+.pui-select-viewport {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+.pui-select-spacer {
+  position: relative;
+  width: 100%;
+}
+.pui-select-rows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+/* Group header */
+.pui-select-group-header {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pui-foreground-secondary-text, #6b7280);
+  background: var(--pui-background-app-bar, #f9fafb);
+  box-sizing: border-box;
+}
+
+/* Option */
+.pui-select-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.1s ease;
+}
+.pui-select-option:hover,
+.pui-select-option-active {
+  background: var(--pui-background-hover, rgba(0, 0, 0, 0.04));
+}
+.pui-select-option-selected {
+  color: var(--pui-primary-700, var(--pui-primary-500, #3b82f6));
+  font-weight: 500;
+}
+.pui-select-option-selected:not(.pui-select-option-active) {
+  background: var(--pui-primary-50, rgba(59, 130, 246, 0.08));
+}
+.pui-select-option-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pui-select-option-disabled:hover { background: transparent; }
+
+.pui-select-option-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+}
+
+.pui-select-option-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.pui-select-option-label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.pui-select-option-desc {
+  font-size: 0.75rem;
+  color: var(--pui-foreground-secondary-text, #6b7280);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* Checkbox */
+.pui-select-checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--pui-foreground-divider, #9ca3af);
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pui-background-card, #ffffff);
+  transition: background 0.1s ease, border-color 0.1s ease;
+  color: var(--pui-primary-contrast-500, #ffffff);
+}
+.pui-select-option-selected .pui-select-checkbox {
+  background: var(--pui-primary-500, #3b82f6);
+  border-color: var(--pui-primary-500, #3b82f6);
+}
+
+/* Empty state */
+.pui-select-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--pui-foreground-secondary-text, #6b7280);
+  font-size: 0.875rem;
+}
+
+/* Panel size variants */
+.pui-select-panel-small  .pui-select-option { font-size: 0.875rem; padding: 0 10px; }
+.pui-select-panel-large  .pui-select-option { font-size: 1.0625rem; padding: 0 14px; }
+
+/* Scrollbar polish */
+.pui-select-viewport::-webkit-scrollbar { width: 8px; }
+.pui-select-viewport::-webkit-scrollbar-thumb {
+  background: var(--pui-foreground-divider, rgba(0, 0, 0, 0.2));
+  border-radius: 4px;
+}
+.pui-select-viewport::-webkit-scrollbar-track { background: transparent; }
+

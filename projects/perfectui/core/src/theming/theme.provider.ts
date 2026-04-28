@@ -1,10 +1,20 @@
-import { EnvironmentProviders, makeEnvironmentProviders, inject, APP_INITIALIZER } from '@angular/core';
+import {
+  EnvironmentProviders,
+  makeEnvironmentProviders,
+  inject,
+  provideAppInitializer,
+} from '@angular/core';
 import { PERFECTUI_CONFIG, DEFAULT_PERFECTUI_CONFIG } from './theme.config';
-import { ThemeService } from './theme.service';
+import { PuiThemeService } from './theme.service';
 import type { PerfectUIConfig } from './theme.models';
 
 /**
- * Provides PerfectUI theming configuration
+ * Provides PerfectUI theming configuration.
+ *
+ * Registers `PuiThemeService` and applies the configured theme, dark mode
+ * and density before the app renders. `PuiThemeService` is **not**
+ * registered in the root injector — calling `providePerfectUI()` is
+ * required before injecting it.
  *
  * @example
  * ```typescript
@@ -32,17 +42,15 @@ export function providePerfectUI(config: PerfectUIConfig = {}): EnvironmentProvi
   };
 
   return makeEnvironmentProviders([
+    PuiThemeService,
     {
       provide: PERFECTUI_CONFIG,
       useValue: mergedConfig,
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => {
-        const themeService = inject(ThemeService);
-        return () => Promise.resolve();
-      },
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      // Eagerly instantiate the theme service so the configured theme,
+      // dark mode and density are applied before the app renders.
+      inject(PuiThemeService);
+    }),
   ]);
 }

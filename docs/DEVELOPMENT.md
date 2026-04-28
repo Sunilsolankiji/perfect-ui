@@ -16,25 +16,35 @@ perfectui/
 
 ## Creating a New Component
 
+> **Only generate the files a component actually needs.** Don't add `*.config.ts`, `*.provider.ts`, or `*.service.ts` "just in case" — they ship dead code in consumer bundles. The scaffolding script (`scripts/new-component.ps1`) emits the full set; delete what you don't need before committing.
+
+### Decide the shape first
+
+| Component shape | Files to create |
+|---|---|
+| Pure template-driven (configured via `input()`/`model()` only, e.g. `select`) | `<name>.ts`, `<name>.css` (and/or `<name>.html`), `<name>.models.ts`, `public-api.ts` |
+| Has app-wide defaults but no imperative API (e.g. an `otp`-style input) | Above **+** `<name>.config.ts`, `<name>.provider.ts` |
+| Imperative overlay/notification API (e.g. `dialog`, `toastr`) | Above **+** `<name>.service.ts` (and usually `<name>-container.ts` for the host) |
+
 ### 1. Create the Secondary Entry Point Structure
 
 ```bash
 mkdir -p projects/perfectui/component-name/src
 ```
 
-Create the folder structure:
+Minimal folder structure (template-driven component):
 
 ```
-projects/components/component-name/
+projects/perfectui/component-name/
 ├── ng-package.json
 └── src/
     ├── public-api.ts              # Public API exports
-    ├── component-name.models.ts
-    ├── component-name.config.ts
-    ├── component-name.provider.ts
-    ├── component-name.service.ts
-    └── component-name.component.ts
+    ├── component-name.models.ts   # Public types only (export type)
+    ├── component-name.css         # Styles (separate file)
+    └── component-name.ts          # Component class (no .component suffix)
 ```
+
+Add `component-name.config.ts` + `component-name.provider.ts` only if the component needs a `provideX()` for global defaults; add `component-name.service.ts` only if it exposes an imperative API.
 
 ### 2. Create ng-package.json
 
@@ -49,40 +59,35 @@ projects/components/component-name/
 
 ### 3. Create the Public API (public-api.ts)
 
+Only re-export what exists. Template-driven minimum:
+
 ```typescript
 /**
- * perfectui/component-name
- *
- * Description of the component
+ * @sunilsolankiji/perfectui/component-name
  */
 
 // Models and types (use export type for types)
 export type {
-  ComponentType,
-  ComponentOptions,
+  ComponentVariant,
+  ComponentSize,
 } from './component-name.models';
 
-// Configuration
-export type { ComponentConfig } from './component-name.config';
-export { DEFAULT_COMPONENT_CONFIG, COMPONENT_CONFIG } from './component-name.config';
-
-// Provider
-export { provideComponent } from './component-name.provider';
-
-// Service
-export { ComponentService } from './component-name.service';
-
 // Component
-export { ComponentNameComponent } from './component-name.component';
+export { PuiComponentName } from './component-name';
 ```
 
-### 4. Update Main Entry Point
-
-Add to `projects/components/src/public-api.ts`:
+If config/provider/service exist, add them too:
 
 ```typescript
-export * from 'perfectui/component-name';
+export type { ComponentConfig } from './component-name.config';
+export { DEFAULT_COMPONENT_CONFIG, COMPONENT_CONFIG } from './component-name.config';
+export { provideComponent } from './component-name.provider';
+export { PuiComponentNameService } from './component-name.service';
 ```
+
+### 4. (Optional) Re-export from the root entry point
+
+`projects/perfectui/src/public-api.ts` currently only ships `VERSION` — consumers import from subpaths. Add a re-export there only if you specifically want the symbol available from the root package.
 
 ---
 
@@ -105,6 +110,8 @@ export interface ComponentOptions {
 
 ### Config Pattern
 
+> **Skip this file** when the component is fully configurable via `input()` / `model()` and does not expose a `provideX()` API. See `projects/perfectui/select/` for a component with no config.
+
 ```typescript
 // component-name.config.ts
 import { InjectionToken } from '@angular/core';
@@ -124,30 +131,42 @@ export const COMPONENT_CONFIG = new InjectionToken<ComponentConfig>('COMPONENT_C
 
 ### Provider Pattern
 
+> Add only when a `*.config.ts` exists. The provider's job is to merge user config over `DEFAULT_X_CONFIG`, bind it to the `X_CONFIG` token, and (when a service exists) register the service in the **same** provider — services are **not** registered in the root injector. Use `makeEnvironmentProviders` and return `EnvironmentProviders`.
+
 ```typescript
 // component-name.provider.ts
-import { Provider } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { ComponentConfig, COMPONENT_CONFIG, DEFAULT_COMPONENT_CONFIG } from './component-name.config';
+import { PuiComponentNameService } from './component-name.service'; // omit if no service
 
-export function provideComponent(config?: Partial<ComponentConfig>): Provider[] {
-  return [
+export function provideComponent(config?: Partial<ComponentConfig>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    PuiComponentNameService, // omit if no service exists
     {
       provide: COMPONENT_CONFIG,
       useValue: { ...DEFAULT_COMPONENT_CONFIG, ...config },
     },
-  ];
+  ]);
 }
 ```
 
 ### Service Pattern
+
+> Add only when the component has an **imperative API** (e.g. `dialog.open()`, `toastr.success()`) or shared state across instances. A purely declarative `<pui-x>` component does **not** need a service.
+>
+> **Do not use `providedIn: 'root'`.** Use bare `@Injectable()` and register the service from `provideX()` instead. Consumers explicitly opt in by calling `provideX()` in `app.config.ts`, which keeps the service lazy, tree-shakable, and matches Angular's recommended library DI pattern.
 
 ```typescript
 // component-name.service.ts
 import { Injectable, inject } from '@angular/core';
 import { COMPONENT_CONFIG, DEFAULT_COMPONENT_CONFIG } from './component-name.config';
 
-@Injectable({ providedIn: 'root' })
-export class ComponentService {
+/**
+ * Not provided in `root` — registered by `provideComponent()`.
+ * Consumers must call that in `app.config.ts` before injecting.
+ */
+@Injectable()
+export class PuiComponentNameService {
   private readonly userConfig = inject(COMPONENT_CONFIG, { optional: true });
   private config = { ...DEFAULT_COMPONENT_CONFIG, ...this.userConfig };
 
@@ -158,7 +177,7 @@ export class ComponentService {
 ### Component Pattern
 
 ```typescript
-// component-name.component.ts
+// component-name.ts (no .component suffix)
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -168,17 +187,23 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `...`,
-  styles: [`...`]
+  styleUrl: './component-name.css'
 })
-export class ComponentNameComponent {
+export class PuiComponentName {
   // Use signal-based inputs (Angular 19+)
   readonly variant = input<ComponentVariant>('default');
   readonly size = input<ComponentSize>('md');
-  
+
   // Use signal-based outputs
   readonly clicked = output<void>();
 }
 ```
+
+### Naming Convention
+
+- **File names:** `component-name.ts`, `component-name.service.ts`, `component-name.css` (no `.component` suffix)
+- **Component class:** `PuiComponentName` (Pui prefix, no `Component` suffix)
+- **Service class:** `PuiComponentNameService` (Pui prefix, keep `Service` suffix)
 
 ---
 
@@ -257,16 +282,16 @@ onKeyDown(event: KeyboardEvent) {
 ### Unit Test Example
 
 ```typescript
-describe('ComponentNameComponent', () => {
-  let component: ComponentNameComponent;
-  let fixture: ComponentFixture<ComponentNameComponent>;
+describe('PuiComponentName', () => {
+  let component: PuiComponentName;
+  let fixture: ComponentFixture<PuiComponentName>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComponentNameComponent]
+      imports: [PuiComponentName]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ComponentNameComponent);
+    fixture = TestBed.createComponent(PuiComponentName);
     component = fixture.componentInstance;
   });
 
@@ -289,4 +314,3 @@ npm start
 ```
 
 Check the build output in `dist/components/` to verify secondary entry points are generated correctly.
-

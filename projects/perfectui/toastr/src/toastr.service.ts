@@ -3,15 +3,16 @@ import { DOCUMENT } from '@angular/common';
 import { Subject, Observable } from 'rxjs';
 import { Toast, ToastType, ToastOptions, ToastEvent } from './toastr.models';
 import { ToastrConfig, DEFAULT_TOASTR_CONFIG, TOASTR_CONFIG } from './toastr.config';
-import { ToastrContainerComponent } from './toastr-container.component';
+import { PuiToastrContainer } from './toastr-container';
 
 /**
- * Service for displaying toast notifications
+ * Service for displaying toast notifications.
+ *
+ * Not provided in `root` — register it via `provideToastr()` in your
+ * `app.config.ts` (or the providers of a lazy route) before injecting.
  */
-@Injectable({
-  providedIn: 'root'
-})
-export class ToastrService {
+@Injectable()
+export class PuiToastrService {
   private readonly document = inject(DOCUMENT);
   private readonly appRef = inject(ApplicationRef);
   private readonly injector = inject(EnvironmentInjector);
@@ -20,7 +21,7 @@ export class ToastrService {
   private config: Required<Omit<ToastrConfig, 'customThemeColors'>> & Pick<ToastrConfig, 'customThemeColors'>;
   private toasts: Toast[] = [];
   private toastId = 0;
-  private containerRef: ComponentRef<ToastrContainerComponent> | null = null;
+  private containerRef: ComponentRef<PuiToastrContainer> | null = null;
 
   private readonly toastsSubject = new Subject<Toast[]>();
   private readonly eventsSubject = new Subject<ToastEvent>();
@@ -209,7 +210,7 @@ export class ToastrService {
     this.document.body.appendChild(containerElement);
 
     // Create component
-    this.containerRef = createComponent(ToastrContainerComponent, {
+    this.containerRef = createComponent(PuiToastrContainer, {
       environmentInjector: this.injector,
       hostElement: containerElement,
     });

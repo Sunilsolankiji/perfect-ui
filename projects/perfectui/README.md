@@ -25,13 +25,13 @@ npm install perfectui
 
 ```typescript
 // Dialog
-import { provideDialog, DialogService } from 'perfectui/dialog';
+import { provideDialog, PuiDialogService } from 'perfectui/dialog';
 
 // Toastr
-import { provideToastr, ToastrService } from 'perfectui/toastr';
+import { provideToastr, PuiToastrService } from 'perfectui/toastr';
 
 // OTP
-import { provideOtp, OtpComponent } from 'perfectui/otp';
+import { provideOtp, PuiOtp } from 'perfectui/otp';
 ```
 
 ### Configure in app.config.ts
@@ -67,11 +67,11 @@ export const appConfig: ApplicationConfig = {
 A flexible dialog/modal system with built-in alert, confirm, and prompt dialogs.
 
 ```typescript
-import { DialogService } from 'perfectui/dialog';
+import { PuiDialogService } from 'perfectui/dialog';
 
 @Component({...})
 export class MyComponent {
-  private dialog = inject(DialogService);
+  private dialog = inject(PuiDialogService);
 
   async showAlert() {
     await this.dialog.alert('Hello World!', 'Title');
@@ -106,11 +106,11 @@ export class MyComponent {
 Toast notification system with multiple themes and positions.
 
 ```typescript
-import { ToastrService } from 'perfectui/toastr';
+import { PuiToastrService } from 'perfectui/toastr';
 
 @Component({...})
 export class MyComponent {
-  private toastr = inject(ToastrService);
+  private toastr = inject(PuiToastrService);
 
   showSuccess() {
     this.toastr.success('Operation completed!', 'Success');
@@ -135,10 +135,10 @@ export class MyComponent {
 A customizable OTP (One-Time Password) input component.
 
 ```typescript
-import { OtpComponent } from 'perfectui/otp';
+import { PuiOtp } from 'perfectui/otp';
 
 @Component({
-  imports: [OtpComponent],
+  imports: [PuiOtp],
   template: `
     <pui-otp
       [(ngModel)]="otpValue"

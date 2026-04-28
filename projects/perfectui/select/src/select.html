@@ -1,0 +1,211 @@
+<div
+  #trigger
+  class="pui-select"
+  [class]="containerClasses()"
+  [style.anchor-name]="anchorName()"
+  [attr.aria-haspopup]="'listbox'"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="isOpen() ? panelId() : null"
+  [attr.aria-activedescendant]="isOpen() && !searchable() ? activeOptionId() : null"
+  [attr.aria-disabled]="isDisabled()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.tabindex]="isDisabled() ? -1 : 0"
+  role="combobox"
+  (click)="toggle()"
+  (keydown)="onTriggerKeyDown($event)"
+>
+  <div class="pui-select-value">
+    @if (hasSelection()) {
+      @if (multiple()) {
+        <div class="pui-select-tags">
+          @for (opt of visibleTags(); track opt.value) {
+            <span class="pui-select-tag">
+              <span class="pui-select-tag-label">{{ opt.label }}</span>
+              <button
+                type="button"
+                class="pui-select-tag-remove"
+                aria-label="Remove"
+                (click)="removeTag($event, opt)"
+              >×</button>
+            </span>
+          }
+          @if (hiddenTagCount() > 0) {
+            <span
+              class="pui-select-tag pui-select-tag-more"
+              [attr.aria-label]="hiddenTagCount() + ' more selected'"
+              [attr.title]="moreLabelText()"
+            >
+              <span class="pui-select-tag-label">{{ moreLabelText() }}</span>
+            </span>
+          }
+        </div>
+      } @else {
+        <span class="pui-select-single">{{ singleSelectedLabel() }}</span>
+      }
+    } @else {
+      <span class="pui-select-placeholder">{{ placeholder() }}</span>
+    }
+  </div>
+
+  <div class="pui-select-actions">
+    @if (clearable() && hasSelection() && !isDisabled()) {
+      <button
+        type="button"
+        class="pui-select-clear"
+        aria-label="Clear selection"
+        (click)="onClear($event)"
+      >×
+      </button>
+    }
+    <span class="pui-select-arrow" [class.pui-select-arrow-open]="isOpen()" aria-hidden="true">
+      <svg viewBox="0 0 12 8" width="12" height="8" focusable="false">
+        <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+</div>
+
+<!--
+  The panel template is portalled to <body> by the component. This
+  removes it from any ancestor that has `transform`, `filter`,
+  `perspective`, `contain` or `overflow:hidden` — all of which would
+  otherwise break a fixed-positioned overlay.
+
+  Positioning strategy:
+    1. Modern browsers: use the CSS Anchor Positioning API
+       (anchor-name / position-anchor / anchor() / anchor-size())
+       with `position-try-fallbacks: flip-block` for top-flip.
+    2. Fallback: JavaScript reposition via getBoundingClientRect.
+-->
+<ng-template #panelTpl>
+  <div
+    #panel
+    class="pui-select-panel"
+    [class]="panelClasses()"
+    [class.pui-select-panel-anchored]="supportsAnchor()"
+    [class.pui-select-panel-fallback]="!supportsAnchor()"
+    [style.position-anchor]="anchorName()"
+    [style.--pui-select-anchor]="anchorName()"
+    [style.--pui-select-panel-max-h.px]="panelMaxHeight()"
+    [style.top.px]="supportsAnchor() ? null : panelTop()"
+    [style.left.px]="supportsAnchor() ? null : panelLeft()"
+    [style.width.px]="supportsAnchor() ? null : panelWidth()"
+    [style.maxHeight.px]="panelMaxHeight()"
+    [attr.id]="panelId()"
+    role="listbox"
+    [attr.aria-multiselectable]="multiple()"
+    [attr.aria-activedescendant]="activeOptionId()"
+    [attr.tabindex]="searchable() ? null : -1"
+    (mousedown)="onPanelMouseDown($event)"
+    (keydown)="onPanelKeyDown($event)"
+  >
+    @if (searchable()) {
+      <div class="pui-select-search">
+        <input
+          #searchInput
+          type="text"
+          class="pui-select-search-input"
+          [placeholder]="searchPlaceholder()"
+          [value]="searchQuery()"
+          [attr.aria-controls]="panelId()"
+          [attr.aria-activedescendant]="activeOptionId()"
+          (input)="onSearchInput($event)"
+          (keydown)="onSearchKeyDown($event)"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search options"
+        />
+      </div>
+    }
+
+    @if (showSelectAll()) {
+      <div
+        class="pui-select-all"
+        [class.pui-select-all-checked]="selectAllState() === 'all'"
+        [class.pui-select-all-indeterminate]="selectAllState() === 'indeterminate'"
+        role="option"
+        [attr.aria-selected]="selectAllState() === 'all'"
+        (click)="onSelectAllClick($event)"
+      >
+        <span class="pui-select-checkbox" aria-hidden="true">
+          @if (selectAllState() === 'all') {
+            <svg viewBox="0 0 12 12" width="12" height="12">
+              <path d="M2 6l3 3 5-6" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          } @else if (selectAllState() === 'indeterminate') {
+            <svg viewBox="0 0 12 12" width="12" height="12">
+              <path d="M2.5 6h7" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          }
+        </span>
+        <span class="pui-select-all-label">{{ selectAllLabel() }}</span>
+      </div>
+    }
+
+    <div
+      #viewport
+      class="pui-select-viewport"
+      [style.height.px]="viewportHeight()"
+      (scroll)="onViewportScroll($event)"
+    >
+      @if (renderedRows().length === 0) {
+        <div class="pui-select-empty">{{ emptyText() }}</div>
+      } @else {
+        <div class="pui-select-spacer" [style.height.px]="totalHeight()">
+          <div
+            class="pui-select-rows"
+            [style.transform]="'translateY(' + offsetY() + 'px)'"
+          >
+            @for (row of renderedRows(); track row.index) {
+              @if (row.type === 'group' && row.group) {
+                <div
+                  class="pui-select-group-header"
+                  [style.height.px]="groupHeaderHeight()"
+                  role="presentation"
+                >{{ row.group.label }}
+                </div>
+              } @else if (row.option) {
+                <div
+                  class="pui-select-option"
+                  [attr.id]="optionId(row.index)"
+                  [class.pui-select-option-selected]="isSelected(row.option.value)"
+                  [class.pui-select-option-active]="row.index === activeIndex()"
+                  [class.pui-select-option-disabled]="row.option.disabled"
+                  [style.height.px]="rowHeight()"
+                  role="option"
+                  [attr.aria-selected]="isSelected(row.option.value)"
+                  [attr.aria-disabled]="row.option.disabled || null"
+                  (mouseenter)="onOptionHover(row.index)"
+                  (click)="onOptionClick($event, row.option)"
+                >
+                  @if (showCheckbox()) {
+                    <span class="pui-select-checkbox" aria-hidden="true">
+                      @if (isSelected(row.option.value)) {
+                        <svg viewBox="0 0 12 12" width="12" height="12">
+                          <path d="M2 6l3 3 5-6" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      }
+                    </span>
+                  }
+                  @if (row.option.icon) {
+                    <span class="pui-select-option-icon" aria-hidden="true">{{ row.option.icon }}</span>
+                  }
+                  <span class="pui-select-option-body">
+                    <span class="pui-select-option-label">{{ row.option.label }}</span>
+                    @if (row.option.description) {
+                      <span class="pui-select-option-desc">{{ row.option.description }}</span>
+                    }
+                  </span>
+                </div>
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>

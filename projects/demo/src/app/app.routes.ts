@@ -19,6 +19,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/otp-demo/otp-demo').then(m => m.OtpDemoComponent)
   },
   {
+    path: 'select',
+    loadComponent: () => import('./pages/select-demo/select-demo').then(m => m.SelectDemoComponent)
+  },
+  {
     path: 'theme',
     loadComponent: () => import('./pages/theme-config/theme-config').then(m => m.ThemeConfigComponent)
   },

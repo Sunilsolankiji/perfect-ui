@@ -19,11 +19,11 @@
  * };
  *
  * // In component
- * import { DialogService, DIALOG_DATA, DIALOG_REF } from '@sunilsolankiji/perfectui/dialog';
+ * import { PuiDialogService, DIALOG_DATA, DIALOG_REF } from '@sunilsolankiji/perfectui/dialog';
  *
  * @Component({...})
  * export class MyComponent {
- *   private dialog = inject(DialogService);
+ *   private dialog = inject(PuiDialogService);
  *
  *   openAlert() {
  *     this.dialog.alert('Hello!', 'Title');
@@ -67,8 +67,8 @@ export { DEFAULT_DIALOG_CONFIG, DIALOG_CONFIG, DIALOG_DATA, DIALOG_REF } from '.
 export { provideDialog } from './dialog.provider';
 
 // Service
-export { DialogService } from './dialog.service';
+export { PuiDialogService } from './dialog.service';
 
 // Components (exported for advanced use cases)
-export { DialogComponent } from './dialog.component';
-export { DialogContainerComponent } from './dialog-container.component';
+export { PuiDialog } from './dialog';
+export { PuiDialogContainer } from './dialog-container';
