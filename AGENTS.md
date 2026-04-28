@@ -60,7 +60,7 @@ npm run build:demo           # builds library first, then demo with --base-href 
 npm test                     # Vitest via @angular/build:unit-test (jsdom)
 ```
 
-**Gotcha**: `npm run publish:perfectui` does `cd dist/components && npm publish`, but the library actually builds to `dist/perfectui` (see `projects/perfectui/ng-package.json` `dest`). Verify the path before publishing.
+**Publishing**: `npm run publish:perfectui` rebuilds the library and runs `npm publish --access public` from `dist/perfectui` (matches `projects/perfectui/ng-package.json` `dest`). See `docs/RELEASE.md` for the full release flow (`standard-version` driven by Conventional Commits).
 
 ## Commits & releases
 
