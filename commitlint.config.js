@@ -25,6 +25,8 @@ module.exports = {
         'dialog',   // Dialog component
         'toastr',   // Toastr component
         'otp',      // OTP component
+        'select',   // Select component
+        'tabs',     // Tabs component
         'core',     // Core functionality
         'demo',     // Demo app
         'deps',     // Dependencies
