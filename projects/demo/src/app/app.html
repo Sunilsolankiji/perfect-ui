@@ -10,7 +10,13 @@
 
     <!-- Global Theme Selector -->
     <div class="theme-selector">
-      <div class="theme-label">🎨 Theme</div>
+      <div class="theme-selector-header">
+        <span class="theme-label">🎨 Theme</span>
+        <div class="theme-preview">
+          <span class="color-dot" [style.background-color]="getCurrentTheme().primaryColor"></span>
+          <span class="color-dot" [style.background-color]="getCurrentTheme().accentColor"></span>
+        </div>
+      </div>
       <div class="theme-dropdown-container">
         <select
           class="theme-dropdown"
@@ -21,18 +27,14 @@
             <option [value]="theme.id">{{ theme.name }}</option>
           }
         </select>
-        <div class="theme-preview">
-          <span class="color-dot" [style.background-color]="getCurrentTheme().primaryColor"></span>
-          <span class="color-dot" [style.background-color]="getCurrentTheme().accentColor"></span>
-        </div>
+        <button class="dark-mode-toggle" (click)="toggleDarkMode()" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+          {{ isDarkMode() ? '☀️' : '🌙' }}
+        </button>
       </div>
-      <button class="dark-mode-toggle" (click)="toggleDarkMode()" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-        {{ isDarkMode() ? '☀️' : '🌙' }}
-      </button>
     </div>
 
     <div class="nav-label">Components</div>
-    <ul class="nav-list">
+    <ul class="nav-list scroll-area">
       @for (item of navItems; track item.path) {
         <li>
           <a [routerLink]="item.path" routerLinkActive="active">
