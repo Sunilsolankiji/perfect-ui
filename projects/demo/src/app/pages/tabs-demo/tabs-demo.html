@@ -1,0 +1,174 @@
+<div class="demo-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🗂️ PerfectUI Tabs</h1>
+      <p class="subtitle">Accessible, signal-based tab group with line / filled / pills / bordered variants</p>
+    </div>
+    <a rel="noopener noreferrer" class="package-badge">
+      <span class="package-name">{{ packageName }}</span>
+    </a>
+  </div>
+
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <span>Tabs inherit the global PerfectUI theme — switch themes from the sidebar to see them adapt instantly.</span>
+  </div>
+
+  <!-- Variant -->
+  <div class="section">
+    <h2>🎨 Variant</h2>
+    <div class="button-group">
+      @for (v of variants; track v) {
+        <button
+          class="btn btn-theme"
+          [class.active]="variant() === v"
+          (click)="setVariant(v)"
+        >{{ v }}</button>
+      }
+    </div>
+  </div>
+
+  <!-- Orientation -->
+  <div class="section">
+    <h2>📐 Orientation</h2>
+    <div class="button-group">
+      <button class="btn btn-theme" [class.active]="orientation() === 'horizontal'" (click)="setOrientation('horizontal')">Horizontal</button>
+      <button class="btn btn-theme" [class.active]="orientation() === 'vertical'"   (click)="setOrientation('vertical')">Vertical</button>
+    </div>
+  </div>
+
+  <!-- Size -->
+  <div class="section">
+    <h2>🔠 Size</h2>
+    <div class="button-group">
+      @for (s of sizes; track s) {
+        <button class="btn btn-theme" [class.active]="size() === s" (click)="setSize(s)">{{ s }}</button>
+      }
+    </div>
+  </div>
+
+  <!-- Alignment -->
+  <div class="section">
+    <h2>↔️ Alignment</h2>
+    <div class="button-group">
+      @for (a of aligns; track a) {
+        <button class="btn btn-theme" [class.active]="align() === a" (click)="setAlign(a)">{{ a }}</button>
+      }
+    </div>
+  </div>
+
+  <!-- Toggles -->
+  <div class="section">
+    <h2>⚙️ Options</h2>
+    <div class="button-group">
+      <button class="btn btn-theme" [class.active]="lazy()"     (click)="toggleLazy()">Lazy panels: {{ lazy() ? 'on' : 'off' }}</button>
+      <button class="btn btn-theme" [class.active]="animated()" (click)="toggleAnimated()">Animation: {{ animated() ? 'on' : 'off' }}</button>
+      <button class="btn btn-theme" [class.active]="disabled()" (click)="toggleDisabled()">Disable group: {{ disabled() ? 'on' : 'off' }}</button>
+    </div>
+  </div>
+
+  <!-- Live playground -->
+  <div class="section">
+    <h2>🧪 Playground</h2>
+
+    <div class="demo-card">
+      <pui-tabs
+        [variant]="variant()"
+        [orientation]="orientation()"
+        [size]="size()"
+        [align]="align()"
+        [lazy]="lazy()"
+        [animated]="animated()"
+        [disabled]="disabled()"
+        [(selectedIndex)]="active"
+        (tabChange)="onTabChange($event)"
+      >
+        <pui-tab label="Overview" icon="📊">
+          <h3>Overview</h3>
+          <p>Plain-text labels, optional icons, and full ARIA support out of the box.</p>
+          <p>This panel is rendered eagerly by default, which preserves form state across switches:</p>
+          <input type="text" placeholder="Type here, then switch tabs and back…" class="demo-input" />
+        </pui-tab>
+
+        <pui-tab label="Inbox" icon="📥" [badge]="12">
+          <h3>Inbox</h3>
+          <p>Tabs support badges (string or number) for unread counters, statuses, etc.</p>
+        </pui-tab>
+
+        <pui-tab>
+          <ng-template puiTabLabel>
+            <span>🔔 Notifications</span>
+            <span class="custom-pill">NEW</span>
+          </ng-template>
+          <h3>Custom label template</h3>
+          <p>This tab uses <code>&lt;ng-template puiTabLabel&gt;</code> to render rich label content.</p>
+        </pui-tab>
+
+        <pui-tab label="Settings" icon="⚙️">
+          <h3>Settings</h3>
+          <p>Use keyboard navigation: <kbd>←</kbd> / <kbd>→</kbd> (or <kbd>↑</kbd> / <kbd>↓</kbd> when vertical), <kbd>Home</kbd>, <kbd>End</kbd>.</p>
+        </pui-tab>
+
+        <pui-tab label="Disabled" [disabled]="true">
+          <h3>You should never see this</h3>
+          <p>The tab is disabled and will be skipped by keyboard nav.</p>
+        </pui-tab>
+      </pui-tabs>
+    </div>
+
+    <div class="event-log">
+      <strong>selectedIndex:</strong> {{ active() }}
+      @if (lastChange(); as ch) {
+        <span class="event-line">
+          last change → index: <strong>{{ ch.index }}</strong>,
+          previous: <strong>{{ ch.previousIndex }}</strong>,
+          label: <strong>{{ ch.label }}</strong>
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Quick examples -->
+  <div class="section">
+    <h2>💡 More examples</h2>
+
+    <div class="examples-grid">
+      <div class="demo-card">
+        <h4>Pills · centered</h4>
+        <pui-tabs variant="pills" align="center">
+          <pui-tab label="Day">Day view content.</pui-tab>
+          <pui-tab label="Week">Week view content.</pui-tab>
+          <pui-tab label="Month">Month view content.</pui-tab>
+        </pui-tabs>
+      </div>
+
+      <div class="demo-card">
+        <h4>Filled · stretch</h4>
+        <pui-tabs variant="filled" align="stretch">
+          <pui-tab label="Light">Light mode panel.</pui-tab>
+          <pui-tab label="Dark">Dark mode panel.</pui-tab>
+          <pui-tab label="Auto">Auto mode panel.</pui-tab>
+        </pui-tabs>
+      </div>
+
+      <div class="demo-card">
+        <h4>Bordered</h4>
+        <pui-tabs variant="bordered">
+          <pui-tab label="Description">Product description.</pui-tab>
+          <pui-tab label="Specs" [badge]="'2 new'">Specifications.</pui-tab>
+          <pui-tab label="Reviews" [badge]="42">User reviews.</pui-tab>
+        </pui-tabs>
+      </div>
+
+      <div class="demo-card">
+        <h4>Vertical · line</h4>
+        <pui-tabs orientation="vertical">
+          <pui-tab label="Profile" icon="👤">Profile settings.</pui-tab>
+          <pui-tab label="Account" icon="🔑">Account settings.</pui-tab>
+          <pui-tab label="Billing" icon="💳">Billing settings.</pui-tab>
+        </pui-tabs>
+      </div>
+    </div>
+  </div>
+</div>
+

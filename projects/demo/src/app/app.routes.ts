@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/select-demo/select-demo').then(m => m.SelectDemoComponent)
   },
   {
+    path: 'tabs',
+    loadComponent: () => import('./pages/tabs-demo/tabs-demo').then(m => m.TabsDemoComponent)
+  },
+  {
     path: 'theme',
     loadComponent: () => import('./pages/theme-config/theme-config').then(m => m.ThemeConfigComponent)
   },

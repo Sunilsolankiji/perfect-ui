@@ -1,0 +1,87 @@
+<div
+  #list
+  class="pui-tabs-list"
+  role="tablist"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-orientation]="orientation()"
+>
+  @for (tab of tabs(); track tab; let i = $index) {
+    <button
+      #tabHeader
+      type="button"
+      class="pui-tabs-tab"
+      [class.pui-tabs-tab-active]="i === activeIndex()"
+      [class.pui-tabs-tab-disabled]="tab.disabled()"
+      role="tab"
+      [id]="tabId(i)"
+      [attr.aria-selected]="i === activeIndex()"
+      [attr.aria-controls]="panelId(i)"
+      [attr.aria-disabled]="tab.disabled() || disabled() ? true : null"
+      [attr.tabindex]="i === activeIndex() ? 0 : -1"
+      (click)="onTabClick(i)"
+      (keydown)="onKeyDown($event, i)"
+    >
+      @if (tab.icon()) {
+        <span class="pui-tabs-tab-icon" aria-hidden="true">{{ tab.icon() }}</span>
+      }
+
+      <span class="pui-tabs-tab-label">
+        @if (tab.labelTpl(); as t) {
+          <ng-container *ngTemplateOutlet="t"></ng-container>
+        } @else {
+          {{ tab.label() }}
+        }
+      </span>
+
+      @if (tab.badge() != null) {
+        <span class="pui-tabs-tab-badge" aria-hidden="true">{{ tab.badge() }}</span>
+      }
+    </button>
+  }
+
+  @if (showIndicator()) {
+    <span
+      class="pui-tabs-indicator"
+      [class.pui-tabs-indicator-ready]="indicatorReady()"
+      [style.transform]="
+        isHorizontal()
+          ? 'translateX(' + indicatorOffset() + 'px)'
+          : 'translateY(' + indicatorOffset() + 'px)'
+      "
+      [style.width.px]="isHorizontal() ? indicatorSize() : null"
+      [style.height.px]="isHorizontal() ? null : indicatorSize()"
+      aria-hidden="true"
+    ></span>
+  }
+</div>
+
+<div class="pui-tabs-panels">
+  @for (tab of tabs(); track tab; let i = $index) {
+    @if (lazy()) {
+      @if (i === activeIndex()) {
+        <div
+          class="pui-tabs-panel pui-tabs-panel-active"
+          role="tabpanel"
+          [id]="panelId(i)"
+          [attr.aria-labelledby]="tabId(i)"
+          tabindex="0"
+        >
+          <ng-container *ngTemplateOutlet="tab.bodyTpl()"></ng-container>
+        </div>
+      }
+    } @else {
+      <div
+        class="pui-tabs-panel"
+        [class.pui-tabs-panel-active]="i === activeIndex()"
+        [hidden]="i !== activeIndex()"
+        role="tabpanel"
+        [id]="panelId(i)"
+        [attr.aria-labelledby]="tabId(i)"
+        [attr.tabindex]="i === activeIndex() ? 0 : -1"
+      >
+        <ng-container *ngTemplateOutlet="tab.bodyTpl()"></ng-container>
+      </div>
+    }
+  }
+</div>
+

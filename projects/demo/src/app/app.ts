@@ -52,6 +52,7 @@ export class App implements OnInit {
     { path: '/dialog', label: 'Dialog' },
     { path: '/otp', label: 'OTP' },
     { path: '/select', label: 'Select' },
+    { path: '/tabs', label: 'Tabs' },
     { path: '/theme', label: 'Theme' },
   ];
 

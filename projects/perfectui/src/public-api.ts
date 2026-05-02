@@ -14,6 +14,8 @@
  * import { provideDialog, PuiDialogService } from '@sunilsolankiji/perfectui/dialog';
  * import { provideToastr, PuiToastrService } from '@sunilsolankiji/perfectui/toastr';
  * import { provideOtp, PuiOtp } from '@sunilsolankiji/perfectui/otp';
+ * import { PuiSelect } from '@sunilsolankiji/perfectui/select';
+ * import { PuiTabs, PuiTab } from '@sunilsolankiji/perfectui/tabs';
  * ```
  *
  * Or import a prebuilt theme CSS:

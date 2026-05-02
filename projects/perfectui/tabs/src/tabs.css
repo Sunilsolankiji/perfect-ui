@@ -1,0 +1,279 @@
+/*
+ * PerfectUI Tabs
+ *
+ * Styles use ViewEncapsulation.None — every class is prefixed
+ * with `pui-tabs-` to avoid collisions. Theming consumes the
+ * global PerfectUI CSS variables (`--pui-primary-500`,
+ * `--pui-foreground-text`, …) so tabs automatically follow
+ * `providePerfectUI()` configuration.
+ */
+
+/* ===================== HOST ===================== */
+
+pui-tabs,
+.pui-tabs-host {
+  display: block;
+  font-family: var(--pui-font-family, inherit);
+  color: var(--pui-foreground-text, #111827);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pui-tabs-host.pui-tabs-vertical {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.pui-tabs-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ===================== TAB LIST ===================== */
+
+.pui-tabs-list {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+
+/* Vertical orientation */
+.pui-tabs-vertical .pui-tabs-list {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 0 0 auto;
+  min-width: 160px;
+}
+
+/* Alignment (horizontal only) */
+.pui-tabs-horizontal.pui-tabs-align-center  .pui-tabs-list { justify-content: center; }
+.pui-tabs-horizontal.pui-tabs-align-end     .pui-tabs-list { justify-content: flex-end; }
+.pui-tabs-horizontal.pui-tabs-align-stretch .pui-tabs-tab  { flex: 1 1 0; }
+
+/* Variant: pills / filled / bordered tweak the list separator */
+.pui-tabs-pills .pui-tabs-list,
+.pui-tabs-filled .pui-tabs-list {
+  border-bottom: none;
+  gap: 8px;
+}
+
+.pui-tabs-vertical.pui-tabs-pills .pui-tabs-list,
+.pui-tabs-vertical.pui-tabs-filled .pui-tabs-list {
+  border-right: none;
+}
+
+.pui-tabs-bordered .pui-tabs-list {
+  gap: 0;
+}
+
+/* ===================== TAB BUTTON ===================== */
+
+.pui-tabs-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  color: var(--pui-foreground-secondary-text, #6b7280);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  border-radius: var(--pui-border-radius, 8px);
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  user-select: none;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.pui-tabs-tab:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--pui-primary-500-rgb, 59, 130, 246), 0.35);
+}
+
+.pui-tabs-tab:hover:not(.pui-tabs-tab-disabled) {
+  color: var(--pui-foreground-text, #111827);
+  background: var(--pui-background-hover, rgba(0, 0, 0, 0.04));
+}
+
+.pui-tabs-tab-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pui-tabs-tab-disabled:hover {
+  background: transparent;
+}
+
+/* Sizes */
+.pui-tabs-small  .pui-tabs-tab { min-height: 32px; padding: 4px 10px; font-size: 0.8125rem; }
+.pui-tabs-medium .pui-tabs-tab { min-height: 40px; padding: 8px 14px; font-size: 0.9375rem; }
+.pui-tabs-large  .pui-tabs-tab { min-height: 48px; padding: 10px 18px; font-size: 1.0625rem; }
+
+/* Icon / label / badge */
+.pui-tabs-tab-icon  { display: inline-flex; line-height: 1; }
+.pui-tabs-tab-label { display: inline-flex; align-items: center; gap: 4px; }
+.pui-tabs-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--pui-primary-500, #3b82f6);
+  color: var(--pui-primary-contrast-500, #ffffff);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ===================== VARIANT: LINE (default) ===================== */
+
+.pui-tabs-line .pui-tabs-tab {
+  border-radius: 0;
+}
+.pui-tabs-line .pui-tabs-tab-active {
+  color: var(--pui-primary-500, #3b82f6);
+  background: transparent;
+}
+
+.pui-tabs-indicator {
+  position: absolute;
+  background: var(--pui-primary-500, #3b82f6);
+  border-radius: 2px 2px 0 0;
+  pointer-events: none;
+  opacity: 0;
+}
+.pui-tabs-animated .pui-tabs-indicator {
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    width    0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    height   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pui-tabs-indicator-ready { opacity: 1; }
+
+/* Horizontal indicator sits on the bottom edge of the list */
+.pui-tabs-horizontal .pui-tabs-indicator {
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+}
+
+/* Vertical indicator sits on the right edge of the list */
+.pui-tabs-vertical .pui-tabs-indicator {
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 0;
+  border-radius: 2px 0 0 2px;
+}
+
+/* ===================== VARIANT: FILLED ===================== */
+
+.pui-tabs-filled .pui-tabs-tab-active {
+  color: var(--pui-primary-contrast-500, #ffffff);
+  background: var(--pui-primary-500, #3b82f6);
+}
+.pui-tabs-filled .pui-tabs-tab-active:hover {
+  background: var(--pui-primary-600, var(--pui-primary-500, #3b82f6));
+  color: var(--pui-primary-contrast-500, #ffffff);
+}
+
+/* ===================== VARIANT: PILLS ===================== */
+
+.pui-tabs-pills .pui-tabs-tab {
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.pui-tabs-pills .pui-tabs-tab-active {
+  background: var(--pui-primary-50, rgba(59, 130, 246, 0.12));
+  color: var(--pui-primary-700, var(--pui-primary-500, #3b82f6));
+  border-color: var(--pui-primary-200, rgba(59, 130, 246, 0.35));
+}
+
+/* ===================== VARIANT: BORDERED ===================== */
+
+.pui-tabs-bordered .pui-tabs-list {
+  border-bottom: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+}
+.pui-tabs-bordered .pui-tabs-tab {
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--pui-border-radius, 8px) var(--pui-border-radius, 8px) 0 0;
+  margin-bottom: -1px;
+}
+.pui-tabs-bordered .pui-tabs-tab-active {
+  color: var(--pui-foreground-text, #111827);
+  background: var(--pui-background-card, #ffffff);
+  border-color: var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  border-bottom-color: var(--pui-background-card, #ffffff);
+}
+
+.pui-tabs-vertical.pui-tabs-bordered .pui-tabs-tab {
+  border: 1px solid transparent;
+  border-right: none;
+  border-radius: var(--pui-border-radius, 8px) 0 0 var(--pui-border-radius, 8px);
+  margin-bottom: 0;
+  margin-right: -1px;
+}
+.pui-tabs-vertical.pui-tabs-bordered .pui-tabs-tab-active {
+  border-color: var(--pui-foreground-divider, rgba(0, 0, 0, 0.12));
+  border-right-color: var(--pui-background-card, #ffffff);
+}
+
+/* ===================== PANELS ===================== */
+
+.pui-tabs-panels {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pui-tabs-panel {
+  padding: 16px 0;
+  outline: none;
+  animation: pui-tabs-fade 0.18s ease-out;
+}
+
+.pui-tabs-vertical .pui-tabs-panel {
+  padding: 0 0 0 16px;
+}
+
+@keyframes pui-tabs-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== SCROLLBAR POLISH ===================== */
+
+.pui-tabs-list::-webkit-scrollbar { height: 6px; width: 6px; }
+.pui-tabs-list::-webkit-scrollbar-thumb {
+  background: var(--pui-foreground-divider, rgba(0, 0, 0, 0.18));
+  border-radius: 3px;
+}
+.pui-tabs-list::-webkit-scrollbar-track { background: transparent; }
+
+/* ===================== REDUCED MOTION ===================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .pui-tabs-list { scroll-behavior: auto; }
+  .pui-tabs-animated .pui-tabs-indicator,
+  .pui-tabs-tab,
+  .pui-tabs-panel { transition: none !important; animation: none !important; }
+}
+
