@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0](https://github.com/sunilsolankiji/perfect-ui/compare/v2.0.1...v3.1.0) (2026-05-02)
+
+
+### Features
+
+* add tabs component with demo and styling ([f6dda55](https://github.com/sunilsolankiji/perfect-ui/commit/f6dda55a6cf03c32575151896d41dcd681b45c52))
+
+
+### Documentation
+
+* **tabs:** document tabs component in library readme ([af8fb63](https://github.com/sunilsolankiji/perfect-ui/commit/af8fb630cb99b87b49791955ce834e643d526c55))
+
 ## [3.0.0](https://github.com/sunilsolankiji/perfect-ui/compare/v1.2.0...v3.0.0) (2026-04-28)
 
 
