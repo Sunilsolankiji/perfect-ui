@@ -7,7 +7,7 @@
 .sidebar {
   width: 280px;
   background: var(--demo-sidebar-bg, linear-gradient(180deg, var(--pui-primary-700, #512da8) 0%, #1a0a30 100%));
-  padding: 24px 20px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -17,30 +17,33 @@
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
   transition: background 0.3s ease;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .sidebar-header {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 0 0 auto;
 }
 
 .logo-container {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .logo {
-  width: 72px;
-  height: 72px;
+  width: 56px;
+  height: 56px;
   border-radius: var(--pui-border-radius, 16px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar-header h1 {
-  font-size: 1.6rem;
-  margin: 0 0 6px 0;
+  font-size: 1.4rem;
+  margin: 0 0 4px 0;
   color: white;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -52,7 +55,7 @@
 
 .sidebar-header p {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
 }
@@ -61,43 +64,50 @@
 .theme-selector {
   background: rgba(255, 255, 255, 0.08);
   border-radius: var(--pui-border-radius, 12px);
-  padding: 14px;
-  margin-bottom: 24px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 0 0 auto;
+}
+
+.theme-selector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .theme-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 10px;
 }
 
 .theme-dropdown-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
 }
 
 .theme-dropdown {
   flex: 1;
-  padding: 10px 12px;
+  min-width: 0;
+  padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--pui-border-radius, 8px);
   background: rgba(0, 0, 0, 0.3);
   color: white;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 30px;
+  background-position: right 8px center;
+  padding-right: 26px;
 }
 
 .theme-dropdown:hover {
@@ -120,11 +130,12 @@
 .theme-preview {
   display: flex;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 .theme-preview .color-dot {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -132,8 +143,13 @@
 }
 
 .dark-mode-toggle {
-  width: 100%;
-  padding: 10px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--pui-border-radius, 8px);
   background: rgba(0, 0, 0, 0.2);
@@ -160,8 +176,31 @@
 
 .nav-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 0 4px 4px 4px;
+  margin: 0 -4px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.nav-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nav-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.nav-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .nav-list li {
@@ -228,12 +267,13 @@
 }
 
 .sidebar-footer {
-  margin-top: auto;
-  padding-top: 20px;
+  margin-top: 16px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .core-badge {
@@ -314,6 +354,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 16px;
+    overflow: visible;
   }
 
   .sidebar-header {
@@ -356,6 +397,9 @@
     display: flex;
     gap: 8px;
     flex: 1;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
   }
 
   .nav-list li {
