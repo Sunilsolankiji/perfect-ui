@@ -158,6 +158,44 @@ export class MyComponent {
 }
 ```
 
+### Tabs
+
+Accessible, signal-based tab group with line / filled / pills / bordered variants, horizontal & vertical orientations, lazy panels and rich label templates. No service or provider required — configure entirely through inputs.
+
+```typescript
+import { PuiTabs, PuiTab, PuiTabLabel } from 'perfectui/tabs';
+
+@Component({
+  imports: [PuiTabs, PuiTab, PuiTabLabel],
+  template: `
+    <pui-tabs [(selectedIndex)]="active" variant="line">
+      <pui-tab label="Overview" icon="📊">
+        <p>Overview content…</p>
+      </pui-tab>
+
+      <pui-tab label="Inbox" icon="📥" [badge]="12">
+        <p>You have new messages.</p>
+      </pui-tab>
+
+      <pui-tab>
+        <ng-template puiTabLabel>
+          <span>🔔 Notifications</span>
+          <span class="badge">NEW</span>
+        </ng-template>
+        <p>Custom rich label template.</p>
+      </pui-tab>
+
+      <pui-tab label="Disabled" [disabled]="true">…</pui-tab>
+    </pui-tabs>
+  `,
+})
+export class MyPage {
+  readonly active = signal(0);
+}
+```
+
+Available inputs: `variant` (`line` | `filled` | `pills` | `bordered`), `orientation`, `size`, `align`, `lazy`, `animated`, `disabled`, `autoScroll`, `ariaLabel`. Emits `tabChange` and supports two-way `[(selectedIndex)]`.
+
 ## Theming
 
 PerfectUI uses CSS custom properties for theming. Override them in your global styles:
