@@ -650,7 +650,7 @@
   }
 
   .mobile-theme-dropdown {
-    max-width: 50px;
+    max-width: 100px;
     font-size: 11px;
     padding: 4px 18px 4px 2px;
     background-position: right 2px center;
