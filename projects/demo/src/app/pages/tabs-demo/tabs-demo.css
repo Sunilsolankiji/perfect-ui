@@ -178,3 +178,49 @@ code {
   font-size: 0.9em;
 }
 
+@media (max-width: 768px) {
+  .demo-container {
+    padding: 24px 16px 48px;
+  }
+  .header-content h1 {
+    font-size: 1.8rem;
+  }
+  .header-content .subtitle {
+    font-size: 1rem;
+  }
+  .section {
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 1.05rem;
+  }
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .demo-card {
+    padding: 12px;
+  }
+  .event-log {
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-container {
+    padding: 16px 12px 40px;
+  }
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+  .demo-input {
+    max-width: 100%;
+  }
+}

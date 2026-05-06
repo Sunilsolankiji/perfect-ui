@@ -4,6 +4,161 @@
   min-height: 100vh;
 }
 
+/* Mobile top bar — hidden on desktop */
+.mobile-topbar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  height: var(--mobile-topbar-height, 60px);
+  background: var(--demo-sidebar-bg, linear-gradient(180deg, var(--pui-primary-700, #512da8) 0%, #1a0a30 100%));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.menu-toggle,
+.mobile-dark-toggle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--pui-border-radius, 8px);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-toggle:hover,
+.mobile-dark-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-icon {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 18px;
+  height: 14px;
+}
+
+.menu-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.mobile-brand {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: white;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.mobile-brand span {
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--pui-border-radius, 8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+/* Compact theme picker in the mobile topbar — hidden on desktop */
+.mobile-theme-picker {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  min-width: 0;
+  padding: 6px 8px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--pui-border-radius, 8px);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.mobile-theme-preview {
+  display: inline-flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.mobile-theme-preview .color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-theme-dropdown {
+  flex: 1;
+  min-width: 0;
+  max-width: 160px;
+  padding: 4px 22px 4px 4px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mobile-theme-dropdown:focus {
+  outline: none;
+}
+
+.mobile-theme-dropdown option {
+  background: #1a1a2e;
+  color: white;
+}
+
+/* Backdrop — hidden on desktop, only used for mobile drawer */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .sidebar {
   width: 280px;
   background: var(--demo-sidebar-bg, linear-gradient(180deg, var(--pui-primary-700, #512da8) 0%, #1a0a30 100%));
@@ -162,6 +317,67 @@
 .dark-mode-toggle:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Shared icon styling for the dark/light mode SVG toggles */
+.theme-icon {
+  display: block;
+  color: currentColor;
+  pointer-events: none;
+}
+
+/* Animated sun ↔ moon toggle */
+.theme-toggle-btn .theme-icon-stack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  line-height: 0;
+}
+
+.theme-toggle-btn .theme-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, opacity;
+}
+
+/* Light mode → show moon (clicking will switch to dark) */
+.theme-toggle-btn .theme-icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+.theme-toggle-btn .theme-icon-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* Dark mode → show sun (clicking will switch to light) */
+.theme-toggle-btn.is-dark .theme-icon-sun {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+.theme-toggle-btn.is-dark .theme-icon-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+
+.theme-toggle-btn:active .theme-icon {
+  transition-duration: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-btn .theme-icon {
+    transition: opacity 0.15s ease;
+    transform: none !important;
+  }
 }
 
 .nav-label {
@@ -345,77 +561,104 @@
   transition: background 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    position: relative;
-    padding: 16px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    overflow: visible;
-  }
-
-  .sidebar-header {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-    text-align: left;
+@media (max-width: 900px) {
+  /* Show mobile top bar, hide off-canvas sidebar by default */
+  .mobile-topbar {
     display: flex;
-    align-items: center;
-    gap: 12px;
   }
 
-  .logo-container {
-    margin-bottom: 0;
+  .mobile-theme-picker {
+    display: inline-flex;
   }
 
-  .logo {
-    width: 40px;
-    height: 40px;
+  /* Brand absorbs free space so the theme picker + dark toggle stay
+     right-aligned regardless of brand width. */
+  .mobile-brand {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
-  .sidebar-header h1 {
-    font-size: 1.2rem;
-  }
-
-  .sidebar-header p {
+  /* Hide the in-sidebar logo/title and full theme selector on small screens —
+     the topbar already shows them. */
+  .sidebar-header,
+  .sidebar > .theme-selector {
     display: none;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    /* Start backdrop below the sticky topbar so the topbar stays interactive */
+    top: var(--mobile-topbar-height, 60px);
   }
 
   .app-layout {
     flex-direction: column;
   }
 
+  .sidebar {
+    width: 280px;
+    max-width: 85vw;
+    /* Anchor the drawer below the topbar */
+    top: var(--mobile-topbar-height, 60px);
+    bottom: 0;
+    height: auto;
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 45;
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.35);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
   .main-content {
     margin-left: 0;
-    padding: 20px;
+    padding: 20px 18px;
+    min-height: calc(100vh - var(--mobile-topbar-height, 60px));
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 16px 14px;
   }
 
-  .nav-list {
-    display: flex;
+  .sidebar {
+    width: 260px;
+  }
+
+  .mobile-topbar {
     gap: 8px;
-    flex: 1;
-    overflow: visible;
-    padding: 0;
-    margin: 0;
+    padding: 10px 10px;
   }
 
-  .nav-list li {
-    margin-bottom: 0;
+  /* Keep the wordmark visible — just shrink it slightly */
+  .mobile-brand span {
+    font-size: 0.95rem;
   }
 
-  .nav-label {
-    display: none;
+  /* Shrink the theme dropdown to make room for the brand */
+  .mobile-theme-picker {
+    padding: 4px 6px 4px 8px;
+    gap: 6px;
   }
 
-  .sidebar-footer {
-    display: none;
+  .mobile-theme-preview .color-dot {
+    width: 10px;
+    height: 10px;
   }
 
-  .theme-selector {
-    width: 100%;
-    margin-bottom: 0;
+  .mobile-theme-dropdown {
+    max-width: 50px;
+    font-size: 11px;
+    padding: 4px 18px 4px 2px;
+    background-position: right 2px center;
+  }
+
+  .menu-toggle,
+  .mobile-dark-toggle {
+    width: 38px;
+    height: 38px;
   }
 }

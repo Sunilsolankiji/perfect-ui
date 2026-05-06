@@ -110,3 +110,35 @@
   word-break: break-all;
 }
 
+@media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 24px;
+  }
+  .header-content h1 {
+    font-size: 1.8rem;
+  }
+  .header-content .subtitle {
+    font-size: 1rem;
+  }
+  .package-badge {
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  .select-demo-box {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  .select-demo-box {
+    padding: 14px;
+    gap: 12px;
+  }
+  .select-value {
+    font-size: 0.85rem;
+    justify-content: flex-start;
+  }
+}

@@ -305,3 +305,65 @@
   font-size: 0.85rem;
   color: #e8e8e8;
 }
+
+@media (max-width: 768px) {
+  .demo-container {
+    padding: 24px 16px;
+  }
+  .demo-container h1 {
+    font-size: 2rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+  .config-section {
+    padding: 18px;
+  }
+  .theme-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .theme-card {
+    padding: 12px;
+  }
+  .usage-content pre {
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-container h1 {
+    font-size: 1.6rem;
+  }
+  .config-section {
+    padding: 16px;
+  }
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .color-dot {
+    width: 20px;
+    height: 20px;
+  }
+  .mode-toggle {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mode-btn {
+    max-width: none;
+    padding: 12px 18px;
+  }
+  .preview-section .preview-buttons {
+    gap: 8px;
+  }
+  .config-info {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .info-item {
+    justify-content: space-between;
+  }
+}

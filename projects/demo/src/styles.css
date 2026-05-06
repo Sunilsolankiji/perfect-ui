@@ -39,11 +39,22 @@
   --demo-card-bg: rgba(255, 255, 255, 0.1);
 }
 
-/* Dark mode adjustments */
+/* Dark mode adjustments — keep the dark surface tinted by the active theme
+   so switching themes is still visually obvious. */
 html.pui-dark {
-  --demo-bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-  --demo-sidebar-bg: linear-gradient(180deg, #1a1a2e 0%, #0f0f23 100%);
-  --demo-card-bg: rgba(255, 255, 255, 0.05);
+  --demo-bg-primary: linear-gradient(
+    135deg,
+    var(--pui-primary-900, #1a1a2e) 0%,
+    var(--pui-primary-800, #16213e) 55%,
+    #0b0b14 100%
+  );
+  --demo-sidebar-bg: linear-gradient(
+    180deg,
+    var(--pui-primary-900, #1a1a2e) 0%,
+    #0b0b14 100%
+  );
+  --demo-card-bg: rgba(255, 255, 255, 0.06);
+  --demo-border-color: rgba(255, 255, 255, 0.12);
 }
 
 body {
@@ -272,12 +283,66 @@ body {
   font-weight: 600;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .demo-container {
+    padding: 24px 16px;
+  }
+
   .demo-container h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+  }
+
+  .features {
+    margin-top: 30px;
+    padding: 20px;
+  }
+
+  .info-box {
+    padding: 14px 16px;
+    font-size: 0.9rem;
   }
 
   .btn {
-    width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-container {
+    padding: 16px 12px;
+  }
+
+  .demo-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+
+  .button-group {
+    gap: 8px;
+  }
+
+  .btn {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+
+  .features {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .features h2 {
+    font-size: 1.25rem;
+  }
+
+  .features li {
+    font-size: 0.9rem;
   }
 }

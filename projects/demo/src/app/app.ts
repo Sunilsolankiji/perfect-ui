@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+import { Component, inject, OnInit, effect, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { VERSION } from '@sunilsolankiji/perfectui';
@@ -33,6 +33,9 @@ export class App implements OnInit {
 
   coreVersion = VERSION;
   coreNpmUrl = 'https://www.npmjs.com/package/@sunilsolankiji/perfectui';
+
+  // Mobile sidebar drawer state
+  sidebarOpen = signal(false);
 
   // Theme state - synced with ThemeService
   currentThemeId = 'deep-purple-amber';
@@ -85,6 +88,16 @@ export class App implements OnInit {
 
   toggleDarkMode(): void {
     this.themeService.toggleDarkMode();
+  }
+
+  toggleSidebar(): void {
+    this.sidebarOpen.update(v => !v);
+  }
+
+  closeSidebar(): void {
+    if (this.sidebarOpen()) {
+      this.sidebarOpen.set(false);
+    }
   }
 
   getCurrentTheme(): ThemeOption {
