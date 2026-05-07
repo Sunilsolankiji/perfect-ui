@@ -5,7 +5,6 @@ import {
   model,
   OnInit,
   AfterViewInit,
-  OnDestroy,
   ChangeDetectionStrategy,
   signal,
   computed,
@@ -22,7 +21,15 @@ import {
   NG_VALUE_ACCESSOR,
   FormsModule,
 } from '@angular/forms';
-import { OtpInputType, OtpTheme, OtpSize, OtpStatus, OtpCompleteEvent, OtpChangeEvent, OtpInputStyle } from './otp.models';
+import {
+  OtpInputType,
+  OtpTheme,
+  OtpSize,
+  OtpStatus,
+  OtpCompleteEvent,
+  OtpChangeEvent,
+  OtpInputStyle
+} from './otp.models';
 import { OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
 
 @Component({
@@ -65,10 +72,11 @@ import { OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
           [class.pui-otp-input-focused]="focusedIndex() === $index"
           [value]="getDisplayValue($index)"
           [style]="getInputStyle()"
+          (beforeinput)="onBeforeInput($event, $index)"
           (input)="onInput($event, $index)"
           (keydown)="onKeyDown($event, $index)"
           (focus)="onFocus($index)"
-          (blur)="onBlur($index)"
+          (blur)="onBlur()"
           (paste)="onPaste($event, $index)"
         />
       }
@@ -76,7 +84,7 @@ import { OTP_CONFIG, DEFAULT_OTP_CONFIG } from './otp.config';
   `,
   styleUrl: './otp.css',
 })
-export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
+export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit {
   @ViewChildren('otpInput') private inputElements!: QueryList<ElementRef<HTMLInputElement>>;
 
   // Configuration inputs
@@ -123,12 +131,12 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
 
   readonly containerClasses = computed(() => {
     const classes = [
-      `pui-otp-theme-${this.theme()}`,
-      `pui-otp-${this.size()}`,
+      `pui-otp-theme-${ this.theme() }`,
+      `pui-otp-${ this.size() }`,
     ];
 
     if (this.status() !== 'default') {
-      classes.push(`pui-otp-status-${this.status()}`);
+      classes.push(`pui-otp-status-${ this.status() }`);
     }
 
     if (this.isDisabled()) {
@@ -169,8 +177,10 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
 
   // ControlValueAccessor
   private _disabled = false;
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => { /* empty */
+  };
+  private onTouched: () => void = () => { /* empty */
+  };
 
   constructor() {
     // Apply global config if provided
@@ -195,10 +205,6 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
     if (this.autoFocus() && !this.isDisabled()) {
       setTimeout(() => this.focusInput(0), 0);
     }
-  }
-
-  ngOnDestroy(): void {
-    // Cleanup if needed
   }
 
   // ControlValueAccessor implementation
@@ -363,6 +369,23 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
   }
 
   // Event handlers
+  /**
+   * Catch multi-character inserts (mobile clipboard paste, SMS autofill,
+   * Samsung/Gboard suggestions) BEFORE the browser truncates them via
+   * `maxlength="1"`. Native `paste` events are unreliable on Android, and by
+   * the time the `input` event fires, `target.value` has already been clipped
+   * to 1 character. `beforeinput` exposes the full intended data string.
+   */
+  onBeforeInput(event: InputEvent, index: number): void {
+    const data = event.data;
+    if (!data || data.length <= 1) {
+      return; // Single char — let onInput handle it normally
+    }
+
+    event.preventDefault();
+    this.fillFromString(data, index);
+  }
+
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     const rawValue = input.value ?? '';
@@ -372,56 +395,8 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
     // unreliable on mobile, so any time we receive more than one character we
     // treat it as a paste-style fill starting from the current index.
     if (rawValue.length > 1) {
-      if (!this.allowPaste()) {
-        // Restore previous value
-        input.value = this.values()[index] || '';
-        return;
-      }
-
-      const validChars = rawValue.split('').filter(char => this.isValidChar(char));
-
-      // Restore the input's visible value to the single slot's current value;
-      // we'll repopulate from the values signal below.
       input.value = '';
-
-      if (validChars.length === 0) {
-        // Reset slot if nothing usable was entered
-        const reset = [...this.values()];
-        reset[index] = '';
-        this.values.set(reset);
-        this.updateValue();
-        return;
-      }
-
-      const newValues = [...this.values()];
-      let currentIndex = index;
-      for (const char of validChars) {
-        if (currentIndex >= this.length()) break;
-        newValues[currentIndex] = char;
-        currentIndex++;
-      }
-      this.values.set(newValues);
-      this.updateValue();
-
-      this.changed.emit({
-        value: this.getValue(),
-        isComplete: this.isComplete(),
-        inputIndex: Math.min(currentIndex, this.length() - 1),
-      });
-
-      const focusIndex = Math.min(currentIndex, this.length() - 1);
-      this.focusInput(focusIndex);
-
-      if (this.isComplete()) {
-        this.completed.emit({
-          value: this.getValue(),
-          isValid: true,
-        });
-
-        if (this.autoSubmit()) {
-          this.inputElements?.last?.nativeElement?.blur();
-        }
-      }
+      this.fillFromString(rawValue, index);
       return;
     }
 
@@ -465,11 +440,66 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
     }
   }
 
+  /**
+   * Distribute a multi-character string across OTP slots starting at `index`.
+   * Shared by `onBeforeInput` (mobile paste/autofill), `onInput` (fallback),
+   * and `onPaste` (desktop).
+   */
+  private fillFromString(text: string, index: number): void {
+    if (!this.allowPaste()) {
+      // Restore visible value of the slot
+      const inputs = this.inputElements?.toArray();
+      if (inputs && inputs[index]) {
+        inputs[index].nativeElement.value = this.getDisplayValue(index);
+      }
+      return;
+    }
+
+    const validChars = text.split('').filter(char => this.isValidChar(char));
+    if (validChars.length === 0) {
+      const inputs = this.inputElements?.toArray();
+      if (inputs && inputs[index]) {
+        inputs[index].nativeElement.value = this.getDisplayValue(index);
+      }
+      return;
+    }
+
+    const newValues = [...this.values()];
+    let currentIndex = index;
+    for (const char of validChars) {
+      if (currentIndex >= this.length()) break;
+      newValues[currentIndex] = char;
+      currentIndex++;
+    }
+    this.values.set(newValues);
+    this.updateValue();
+
+    this.changed.emit({
+      value: this.getValue(),
+      isComplete: this.isComplete(),
+      inputIndex: Math.min(currentIndex, this.length() - 1),
+    });
+
+    const focusIndex = Math.min(currentIndex, this.length() - 1);
+    this.focusInput(focusIndex);
+
+    if (this.isComplete()) {
+      this.completed.emit({
+        value: this.getValue(),
+        isValid: true,
+      });
+
+      if (this.autoSubmit()) {
+        this.inputElements?.last?.nativeElement?.blur();
+      }
+    }
+  }
+
   onKeyDown(event: KeyboardEvent, index: number): void {
     const key = event.key;
 
     switch (key) {
-      case 'Backspace':
+      case 'Backspace': {
         event.preventDefault();
         const currentValue = this.values()[index];
         if (currentValue) {
@@ -487,14 +517,16 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
           this.focusInput(index - 1);
         }
         break;
+      }
 
-      case 'Delete':
+      case 'Delete': {
         event.preventDefault();
         const vals = [...this.values()];
         vals[index] = '';
         this.values.set(vals);
         this.updateValue();
         break;
+      }
 
       case 'ArrowLeft':
         event.preventDefault();
@@ -566,49 +598,17 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
     }
   }
 
-  onBlur(_: number): void {
+  onBlur(): void {
     this.focusedIndex.set(-1);
     this.onTouched();
   }
 
   onPaste(event: ClipboardEvent, index: number): void {
-    if (!this.allowPaste()) {
-      event.preventDefault();
-      return;
-    }
-
     event.preventDefault();
+    if (!this.allowPaste()) return;
     const pastedText = event.clipboardData?.getData('text') || '';
-
-    // Filter valid characters
-    const validChars = pastedText.split('').filter(char => this.isValidChar(char));
-
-    if (validChars.length === 0) return;
-
-    // Fill values starting from current index
-    const newValues = [...this.values()];
-    let currentIndex = index;
-
-    for (const char of validChars) {
-      if (currentIndex >= this.length()) break;
-      newValues[currentIndex] = char;
-      currentIndex++;
-    }
-
-    this.values.set(newValues);
-    this.updateValue();
-
-    // Focus appropriate input
-    const focusIndex = Math.min(currentIndex, this.length() - 1);
-    this.focusInput(focusIndex);
-
-    // Check if complete
-    if (this.isComplete()) {
-      this.completed.emit({
-        value: this.getValue(),
-        isValid: true,
-      });
-    }
+    if (!pastedText) return;
+    this.fillFromString(pastedText, index);
   }
 }
 
