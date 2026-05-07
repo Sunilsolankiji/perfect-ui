@@ -61,6 +61,8 @@
   padding: 18px 20px;
   border: 1px solid var(--pui-foreground-divider, rgba(0, 0, 0, 0.08));
   color: var(--pui-foreground-text, #111827);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .section h2 {
@@ -103,6 +105,14 @@
   border-radius: 10px;
   padding: 16px;
   margin-top: 8px;
+  min-width: 0;
+}
+
+/* The Tabs component renders a horizontally-scrollable tab list; ensure it
+   never forces its parent card wider than the available space. */
+.demo-card pui-tabs {
+  max-width: 100%;
+  min-width: 0;
 }
 
 .demo-card h4 {
@@ -144,8 +154,13 @@
 
 .examples-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 16px;
+}
+
+.examples-grid > .demo-card {
+  min-width: 0;
+  overflow: hidden;
 }
 
 .custom-pill {

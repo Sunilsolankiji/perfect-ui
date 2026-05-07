@@ -68,6 +68,12 @@
   color: white;
   font-weight: 700;
   letter-spacing: -0.3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mobile-brand:hover .mobile-logo {
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .mobile-brand span {
@@ -182,6 +188,10 @@
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   flex: 0 0 auto;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .logo-container {
@@ -341,9 +351,8 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  transition:
-    opacity 0.35s ease,
-    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.35s ease,
+  transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform, opacity;
 }
 
@@ -523,7 +532,6 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-
 .github-link {
   display: flex;
   align-items: center;
@@ -551,14 +559,15 @@
   flex-shrink: 0;
 }
 
-
 .main-content {
   flex: 1;
+  min-width: 0;
   margin-left: 280px;
   background: var(--demo-bg-primary, linear-gradient(135deg, var(--pui-primary-500, #673ab7) 0%, var(--pui-primary-700, #512da8) 50%, #1a0a30 100%));
   min-height: 100vh;
   padding: 24px 40px;
   transition: background 0.3s ease;
+  overflow-x: hidden;
 }
 
 @media (max-width: 900px) {

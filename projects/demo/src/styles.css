@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  /* Prevent horizontal page scroll: any wide content (code blocks, tables,
+     etc.) inside a demo page should scroll within its own container, not
+     break the whole layout. */
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 /*
  * PerfectUI Theme Integration
  * All buttons and UI elements use CSS variables from the theme system

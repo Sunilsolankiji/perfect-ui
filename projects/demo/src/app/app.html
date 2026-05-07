@@ -13,10 +13,10 @@
         <span></span><span></span><span></span>
       </span>
     </button>
-    <div class="mobile-brand">
+    <a routerLink="/" class="mobile-brand" (click)="closeSidebar()" aria-label="Go to home">
       <img src="logo.svg" alt="" class="mobile-logo" />
       <span>PerfectUI</span>
-    </div>
+    </a>
 
     <!-- Compact theme picker shown only on small screens -->
     <div class="mobile-theme-picker">
@@ -76,13 +76,13 @@
   ></div>
 
   <nav class="sidebar" id="app-sidebar" [class.open]="sidebarOpen()">
-    <div class="sidebar-header">
+    <a routerLink="/" class="sidebar-header" (click)="closeSidebar()" aria-label="Go to home">
       <div class="logo-container">
         <img src="logo.svg" alt="PerfectUI Logo" class="logo" />
       </div>
       <h1>PerfectUI</h1>
       <p>Angular Component Library</p>
-    </div>
+    </a>
 
     <!-- Global Theme Selector -->
     <div class="theme-selector">
