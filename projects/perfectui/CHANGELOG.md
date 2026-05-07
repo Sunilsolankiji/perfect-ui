@@ -2,6 +2,102 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.1.1](https://github.com/sunilsolankiji/perfect-ui/compare/v1.2.0...v3.1.1) (2026-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* Component services (PuiDialogService, PuiToastrService, PuiOtpService, PuiThemeService) are no longer registered with providedIn: 'root'. Consumers must call the matching provideX() function (provideDialog, provideToastr, provideOtp, providePerfectUI) in app.config.ts -- or in a route's providers -- before injecting the service. This matches Angular's recommended library DI pattern, keeps services lazy and tree-shakable, and makes accidental usage fail loudly at injection time instead of silently leaking the service into the root injector.
+
+Migration: add the relevant provideX() calls to app.config.ts. See projects/demo/src/app/app.config.ts for a working example.
+
+* chore(release): 3.0.0
+
+* chore(release): 2.0.1
+
+* chore(release): 3.0.0
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+
+* feat: add tabs component with demo and styling
+
+* chore(release): allow tabs and select scopes in commitlint
+
+* docs(tabs): document tabs component in library readme
+
+* chore(release): 3.1.0
+
+* style: update sidebar and theme selector styles for improved layout and responsiveness
+* Component services (PuiDialogService, PuiToastrService, PuiOtpService, PuiThemeService) are no longer registered with providedIn: 'root'. Consumers must call the matching provideX() function (provideDialog, provideToastr, provideOtp, providePerfectUI) in app.config.ts -- or in a route's providers -- before injecting the service. This matches Angular's recommended library DI pattern, keeps services lazy and tree-shakable, and makes accidental usage fail loudly at injection time instead of silently leaking the service into the root injector.
+
+Migration: add the relevant provideX() calls to app.config.ts. See projects/demo/src/app/app.config.ts for a working example.
+
+* chore(release): 3.0.0
+
+* chore(release): 2.0.1
+
+* chore(release): 3.0.0
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+
+* feat: add tabs component with demo and styling
+
+* chore(release): allow tabs and select scopes in commitlint
+
+* docs(tabs): document tabs component in library readme
+
+* chore(release): 3.1.0
+* Component services (PuiDialogService, PuiToastrService, PuiOtpService, PuiThemeService) are no longer registered with providedIn: 'root'. Consumers must call the matching provideX() function (provideDialog, provideToastr, provideOtp, providePerfectUI) in app.config.ts -- or in a route's providers -- before injecting the service. This matches Angular's recommended library DI pattern, keeps services lazy and tree-shakable, and makes accidental usage fail loudly at injection time instead of silently leaking the service into the root injector.
+
+Migration: add the relevant provideX() calls to app.config.ts. See projects/demo/src/app/app.config.ts for a working example.
+
+* chore(release): 3.0.0
+
+* chore(release): 2.0.1
+
+* chore(release): 3.0.0
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+
+* chore: update version to 3.0.0 and include additional package.json in versioning
+* use providePerfectUI() from core for theming
+
+* feat: update changelog and readme for new theming system and package structure
+feat: enhance OTP demo with theme and size selection, and improve UI
+feat: add toastr demo with theming support and updated package badge
+
+* fix: remove package-lock from .gitignore
+* use providePerfectUI() from core for theming
+
+* feat: update changelog and readme for new theming system and package structure
+feat: enhance OTP demo with theme and size selection, and improve UI
+feat: add toastr demo with theming support and updated package badge
+
+### Features
+
+* **demo:** create home component with hero section and features overview ([1707f5e](https://github.com/sunilsolankiji/perfect-ui/commit/1707f5e7325e6322033662adf239741be5d2369f))
+* implement mobile top bar and sidebar drawer for improved navigation ([92a4783](https://github.com/sunilsolankiji/perfect-ui/commit/92a478354730259fc1eb776ed073640750f60187))
+
+
+### Bug Fixes
+
+* increase max-width for mobile theme dropdown in app.css ([b4cf9bd](https://github.com/sunilsolankiji/perfect-ui/commit/b4cf9bd9702675eddccc6927a8b3f7e75be3946e))
+* increase maximum size limits for component styles in angular.json ([34cd149](https://github.com/sunilsolankiji/perfect-ui/commit/34cd149617c0f6f71225a818d3c83be85fab1e90))
+* **otp:** `OTP` input handling for multi-character pastes and validation ([b40cb59](https://github.com/sunilsolankiji/perfect-ui/commit/b40cb5982a054bdc062167d3ae39919e24baa2f1))
+* **otp:** enhance input handling for multi-character pastes and autofill ([875dae4](https://github.com/sunilsolankiji/perfect-ui/commit/875dae43b97c5a0b59ae24d3092c464cac1cea8a))
+* update variable declarations and improve linting configuration ([417a098](https://github.com/sunilsolankiji/perfect-ui/commit/417a098f72a774fa3c32a6921a6694d875fc78c0))
+
+
+* Development (#46) ([9c339cf](https://github.com/sunilsolankiji/perfect-ui/commit/9c339cfddb97315aa25be025087c3e92ee1d6990)), closes [#46](https://github.com/sunilsolankiji/perfect-ui/issues/46)
+* Development (#45) ([30b21fc](https://github.com/sunilsolankiji/perfect-ui/commit/30b21fc014774f6767d79ac93173c346091c2490)), closes [#45](https://github.com/sunilsolankiji/perfect-ui/issues/45)
+* Release v3.0.0 ([8a12e6c](https://github.com/sunilsolankiji/perfect-ui/commit/8a12e6ce80480361f838e7084cc42f47873d0098))
+* Combine libs (#32) ([53ccb11](https://github.com/sunilsolankiji/perfect-ui/commit/53ccb11987092e7087940f2c15e520db545e0374)), closes [#32](https://github.com/sunilsolankiji/perfect-ui/issues/32)
+* Combine libs (#31) ([017f555](https://github.com/sunilsolankiji/perfect-ui/commit/017f555e4c220c99f9435092cade564649a8c2cb)), closes [#31](https://github.com/sunilsolankiji/perfect-ui/issues/31)
+
 ## [3.1.0](https://github.com/sunilsolankiji/perfect-ui/compare/v2.0.1...v3.1.0) (2026-05-02)
 
 
