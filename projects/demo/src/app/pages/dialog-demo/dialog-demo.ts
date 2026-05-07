@@ -1,6 +1,7 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { PuiDialogService, DialogSize } from '@sunilsolankiji/perfectui/dialog';
 import { UserFormDialogComponent, UserFormData } from './user-form-dialog.component';
+import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
   selector: 'app-dialog-demo',
@@ -17,10 +18,10 @@ export class DialogDemo {
   version = '2.0.0';
 
   // Template references
-  customTemplate = viewChild<TemplateRef<any>>('customTemplate');
+  customTemplate = viewChild<TemplateRef<NgTemplateOutlet>>('customTemplate');
 
   selectedSize: DialogSize = 'md';
-  lastResult: string = '';
+  lastResult = '';
 
   async showAlert() {
     await this.dialog.alert(

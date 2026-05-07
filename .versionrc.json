@@ -28,6 +28,10 @@
       "type": "json"
     },
     {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
       "filename": "projects/perfectui/src/public-api.ts",
       "updater": "scripts/version-updater.js"
     }

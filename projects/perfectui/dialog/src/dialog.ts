@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule, NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dialog, DialogResult } from './dialog.models';
@@ -87,7 +87,7 @@ import { Dialog, DialogResult } from './dialog.models';
   `,
   styleUrl: './dialog.css'
 })
-export class PuiDialog {
+export class PuiDialog implements OnInit {
   @Input() dialog!: Dialog;
   @Output() closeDialog = new EventEmitter<DialogResult>();
 

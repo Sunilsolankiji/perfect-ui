@@ -32,6 +32,15 @@
           "options": {
             "tsConfig": "projects/perfectui/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/perfectui/**/*.ts",
+              "projects/perfectui/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -120,6 +129,15 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/demo/**/*.ts",
+              "projects/demo/**/*.html"
+            ]
+          }
         }
       }
     }

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { PuiOtp, OtpCompleteEvent, OtpChangeEvent, PuiOtpService, OtpTheme, OtpSize, OtpInputType } from '@sunilsolankiji/perfectui/otp';
@@ -15,6 +15,8 @@ type OtpGenerateType = 'numeric' | 'alphanumeric' | 'alphabetic';
 export class OtpDemoComponent {
   readonly packageName = '@sunilsolankiji/perfectui/otp';
 
+  private readonly otpService = inject(PuiOtpService);
+
   // Theme and size selection
   selectedTheme: OtpTheme = 'default';
   selectedSize: OtpSize = 'medium';
@@ -30,8 +32,6 @@ export class OtpDemoComponent {
 
   // Service example
   generatedOtp = signal('');
-
-  constructor(private otpService: PuiOtpService) {}
 
   setTheme(theme: OtpTheme) {
     this.selectedTheme = theme;

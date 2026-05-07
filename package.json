@@ -1,6 +1,6 @@
 {
   "name": "perfect-ui-workspace",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo",
@@ -51,11 +51,15 @@
     "@angular/compiler-cli": "^21.1.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "@eslint/js": "^10.0.1",
+    "angular-eslint": "21.3.1",
+    "eslint": "^10.0.3",
     "husky": "^9.0.0",
     "jsdom": "^27.4.0",
     "ng-packagr": "^21.1.0",
     "standard-version": "^9.5.0",
     "typescript": "~5.9.2",
+    "typescript-eslint": "8.56.1",
     "vitest": "^4.0.17"
   }
 }

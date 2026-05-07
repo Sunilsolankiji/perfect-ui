@@ -365,7 +365,7 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
   // Event handlers
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
-    let char = input.value.slice(-1); // Get last character
+    const char = input.value.slice(-1); // Get last character
 
     // Validate character
     if (char && !this.isValidChar(char)) {

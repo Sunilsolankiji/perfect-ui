@@ -92,7 +92,7 @@ export class PuiOtpService {
    * Format an OTP string with separators
    * Useful for display purposes
    */
-  formatOtp(otp: string, separatorAfter: number = 3, separator: string = '-'): string {
+  formatOtp(otp: string, separatorAfter = 3, separator = '-'): string {
     if (separatorAfter <= 0) return otp;
 
     const parts: string[] = [];
