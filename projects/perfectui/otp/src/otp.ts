@@ -365,7 +365,67 @@ export class PuiOtp implements ControlValueAccessor, OnInit, AfterViewInit, OnDe
   // Event handlers
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
-    const char = input.value.slice(-1); // Get last character
+    const rawValue = input.value ?? '';
+
+    // Handle multi-character input (mobile clipboard paste, SMS autofill via
+    // `one-time-code`, IME composition, etc.). Native `paste` events are
+    // unreliable on mobile, so any time we receive more than one character we
+    // treat it as a paste-style fill starting from the current index.
+    if (rawValue.length > 1) {
+      if (!this.allowPaste()) {
+        // Restore previous value
+        input.value = this.values()[index] || '';
+        return;
+      }
+
+      const validChars = rawValue.split('').filter(char => this.isValidChar(char));
+
+      // Restore the input's visible value to the single slot's current value;
+      // we'll repopulate from the values signal below.
+      input.value = '';
+
+      if (validChars.length === 0) {
+        // Reset slot if nothing usable was entered
+        const reset = [...this.values()];
+        reset[index] = '';
+        this.values.set(reset);
+        this.updateValue();
+        return;
+      }
+
+      const newValues = [...this.values()];
+      let currentIndex = index;
+      for (const char of validChars) {
+        if (currentIndex >= this.length()) break;
+        newValues[currentIndex] = char;
+        currentIndex++;
+      }
+      this.values.set(newValues);
+      this.updateValue();
+
+      this.changed.emit({
+        value: this.getValue(),
+        isComplete: this.isComplete(),
+        inputIndex: Math.min(currentIndex, this.length() - 1),
+      });
+
+      const focusIndex = Math.min(currentIndex, this.length() - 1);
+      this.focusInput(focusIndex);
+
+      if (this.isComplete()) {
+        this.completed.emit({
+          value: this.getValue(),
+          isValid: true,
+        });
+
+        if (this.autoSubmit()) {
+          this.inputElements?.last?.nativeElement?.blur();
+        }
+      }
+      return;
+    }
+
+    const char = rawValue.slice(-1); // Get last character
 
     // Validate character
     if (char && !this.isValidChar(char)) {
